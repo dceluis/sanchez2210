@@ -1,4 +1,3 @@
-
 html{
   scroll-behavior: smooth;
 }
@@ -9,17 +8,6 @@ h2, h3{
 
 nav{
   padding: 1rem !important;
-}
-
-#portrait {
-  border-radius: 50%;
-
-  display: block;
-  margin: 0 auto;
-  text-align: center;
-
-  border: 1px solid rgba(0,0,0,0.1);
-
 }
 
 #hero-1, nav{
@@ -86,10 +74,6 @@ footer .row{
 
 /* Mobile Devices */
 @media only screen and (max-width: 768px) {
-  #portrait{
-    max-width: 80%;
-  }
-
   .h-card {
     width: 100%;
 
@@ -112,10 +96,6 @@ footer .row{
 
 /* Tablet Screens */
 @media only screen and (min-width: 769px) {
-  #portrait{
-    max-width: 30%;
-  }
-
   .h-card {
     width: 85%;
   }
@@ -128,10 +108,6 @@ footer .row{
 
 /* Deskopt Screens */
 @media only screen and (min-width: 1024px) {
-  #portrait{
-    max-width: 30%;
-  }
-
   .h-card {
     width: 85%;
   }

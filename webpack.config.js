@@ -6,8 +6,15 @@ module.exports = {
     filename: 'application.js',
     path: path.resolve(__dirname),
   },
+  // optimization: {
+  //   minimize: false
+  // },
   module: {
     rules: [
+      {
+        test: /\.(js)$/,
+        use: ['babel-loader']
+      },
       {
         test: /\.css$/,
         use: [

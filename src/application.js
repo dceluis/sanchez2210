@@ -1,12 +1,8 @@
 import './styles.css';
-// import _ from 'lodash';
+import { Application } from "@hotwired/stimulus"
 
-// function component() {
-//   const element = document.createElement('div');
-//
-//   element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-//
-//   return element;
-// }
-//
-// document.body.appendChild(component());
+const application = Application.start()
+
+// Import and register all TailwindCSS Components
+import { Toggle } from "tailwindcss-stimulus-components"
+application.register('toggle', Toggle)

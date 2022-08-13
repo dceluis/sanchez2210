@@ -19,15 +19,17 @@
   },
   "homepage": "https://github.com/dceluis/sanchez2210#readme",
   "devDependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "babel-loader": "^8.2.5",
     "css-loader": "^4.2.1",
     "postcss-loader": "^3.0.0",
     "style-loader": "^1.2.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
-  },
-  "dependencies": {
-    "lodash": "^4.17.21",
-    "tailwindcss": "^1.6.2"
+    "webpack-dev-server": "^3.11.0",
+    "@hotwired/stimulus": "^3.1.0",
+    "tailwindcss": "^1.6.2",
+    "tailwindcss-stimulus-components": "^3.0.4"
   }
 }
