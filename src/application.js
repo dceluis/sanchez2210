@@ -20,7 +20,7 @@ class ProjectHoverController extends Controller {
     event.preventDefault();
     this.modalTarget.classList.remove("hidden");
     const video = this.modalTarget.querySelector("video");
-    if (video && video.dataset.src) {
+    if (video && video.dataset.src && video.src != video.dataset.src) {
       video.src = video.dataset.src;
     }
   }
@@ -30,7 +30,6 @@ class ProjectHoverController extends Controller {
     this.modalTarget.classList.add("hidden");
     const video = this.modalTarget.querySelector("video");
     if (video) {
-      video.src = ""; // Stop loading by clearing src
       video.pause();  // Pause playback if active
     }
   }
