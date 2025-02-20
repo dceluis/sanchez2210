@@ -1,3 +1,4 @@
+import './tailwind.css';
 import './styles.css';
 import { Application } from "@hotwired/stimulus"
 
