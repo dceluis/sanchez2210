@@ -53,8 +53,17 @@
         <div class="px-4 sm:px-8 xl:pr-16 lg:w-1/2 text-center lg:text-left">
           <img class="lg:hidden rounded-full w-56 md:w-64 m-auto mb-8" src="img/portrait_small.jpeg" alt="Luis Sanchez portrait">
           <h1 class="text-4xl tracking-tight font-bold text-gray-900 sm:text-5xl sm:tracking-tight md:text-6xl md:tracking-tight lg:text-5xl lg:tracking-tight xl:text-6xl xl:tracking-tight">
-            <span class="block xl:inline">Luis makes</span>
-            <span class="block text-indigo-600 xl:inline">applications</span>
+            <span class="inline-flex">Luis makes</span>
+            <span class="inline-flex overflow-hidden relative">
+              <span class="absolute inset-0" style="animation: flipWord 20s ease-in-out infinite; animation-delay: 0s;">AI</span>
+              <span class="absolute inset-0 opacity-0" style="animation: flipWord 20s ease-in-out infinite; animation-delay: 4s;">web</span>
+              <span class="absolute inset-0 opacity-0" style="animation: flipWord 20s ease-in-out infinite; animation-delay: 8s;">python</span>
+              <span class="absolute inset-0 opacity-0" style="animation: flipWord 20s ease-in-out infinite; animation-delay: 12s;">ruby</span>
+              <span class="absolute inset-0 opacity-0" style="animation: flipWord 20s ease-in-out infinite; animation-delay: 16s;">fast</span>
+              <span class="opacity-0">python</span>
+            </span>
+            <br>
+            <span class="inline-flex text-indigo-600">applications</span>
           </h1>
           <p class="mt-3 max-w-md mx-auto text-lg text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl">
             I'm a software engineer who loves creating apps,
@@ -117,9 +126,10 @@
       Here are some of the projects I've built in my road to learn AI.
     </p>
     <div class="mt-12 grid gap-8 lg:grid-cols-3">
+
       <!-- Project 1: VacoCam -->
       <div class="bg-white shadow-lg rounded-lg border border-gray-200 p-6 w-full" data-controller="project-hover">
-        <img src="https://socialify.git.ci/dceluis/vacocam_render/image?description=1&font=Inter&language=1&name=1&owner=1&pattern=Plus&stargazers=1&theme=Light" alt="VacoCam Project" class="rounded-t-lg w-full h-40 object-cover">
+        <img src="https://socialify.git.ci/dceluis/vacocam_render/image?description=1&font=Inter&language=1&name=1&owner=1&pattern=Plus&stargazers=1&theme=Light" loading="lazy" alt="VacoCam Project" class="rounded-t-lg w-full object-cover">
         <div class="mt-4">
           <h3 class="text-xl font-semibold text-gray-900 font-normal">VacoCam</h3>
           <p class="mt-2 text-gray-600">
@@ -147,7 +157,17 @@
                 <div class="text-gray-700 mb-6">
                   <p class="mb-3">
                     VacoCam uses a Visual Large Language Model to generate focused sports video from unfocused raw footage.
+                    I learned how to maintain an object detection dataset and train and evaluate a custom YoloV8 model.
+                  </p>
+                  <p class="mb-3">
+                    The main challenge was figuring out how to present the tracked information to the VLLMs AND evaluate the performance of different approaches.
+                    I created a custom benchmark that allowed me to try different methods and read many papers on arXiv to find inspiration.
+                  </p>
+                  <p class="mb-3">
                     I wrote this project when I knew absolutely nothing about LLMs or AI models in general.
+                    Used Label Studio, Weights & Biases, and learned Python for this project.
+                  </p>
+                  <p class="mb-3">
                     This was my first introduction into the field and I challenged myself to learn through a moderately ambitious project.
                   </p>
                   <p>Built with <span class="font-medium text-indigo-600">YoloV8</span> for object detection, <span class="font-medium text-indigo-600">Gemini 1.0</span> for visual understanding, and <span class="font-medium text-indigo-600">ffmpeg</span> for video rendering.</p>
@@ -170,7 +190,7 @@
 
       <!-- Project 2: LibreAgent -->
       <div class="bg-white shadow-lg rounded-lg border border-gray-200 p-6 w-full" data-controller="project-hover">
-        <img src="img/libre_agent.png" alt="Task Management App Placeholder" class="rounded-t-lg w-full h-40 object-cover">
+        <img src="img/libre_agent_bot.png" alt="Task Management App Placeholder" class="rounded-t-lg w-full object-cover">
         <div class="mt-4">
           <h3 class="text-xl font-semibold text-gray-900 font-normal">LibreAgent</h3>
           <p class="mt-2 text-gray-600">A long-lived reasoning agent that stores memories as a living entity.</p>
@@ -182,22 +202,28 @@
             <div class="bg-white p-8 rounded-lg shadow-lg relative max-w-2xl w-full">
               <button class="absolute top-4 right-4 text-gray-600 text-2xl font-bold" data-action="click->project-hover#closeModal">×</button>
               <div class="modal-content">
-                <h4 class="text-2xl font-semibold text-gray-900 mb-4">Task Management App</h4>
+                <h4 class="text-2xl font-semibold text-gray-900 mb-4">LibreAgent</h4>
 
                 <!-- Media Item -->
                 <div class="mb-6">
-                  <img src="img/placeholder2.jpg" alt="Task Management App Demo" class="w-full h-72 object-cover rounded-md border border-gray-200">
-                  <p class="text-sm text-gray-500 mt-2 italic text-center">Task Management App screenshot.</p>
+                  <img src="img/libre_agent.png" alt="Task Management App Demo" class="w-full h-72 object-cover rounded-md border border-gray-200">
+                  <p class="text-sm text-gray-500 mt-2 italic text-center">LibreAgent running as a Telegram bot.</p>
                 </div>
 
                 <!-- Description -->
                 <div class="text-gray-700 mb-6">
                   <p class="mb-3">
-                    This Task Management App is a productivity tool designed to help users organize tasks efficiently.
-                    It leverages Stimulus.js to create dynamic, interactive experiences without the overhead of a full SPA framework.
-                    The project was an exploration into modern JavaScript frameworks and responsive design principles.
+                    LibreAgent is a long-lived agentic system that gathers and refines memories to feel like a living being.
                   </p>
-                  <p>Built with <span class="font-medium text-indigo-600">Stimulus.js</span> for interactivity, <span class="font-medium text-indigo-600">Tailwind CSS</span> for styling, and <span class="font-medium text-indigo-600">Ruby on Rails</span> for the backend.</p>
+                  <p class="mb-3">
+                    I started this project initially unaware of agentic frameworks, so it took me quite a while to get it to work properly as I was encountering the agentic challenges these frameworks solve.
+                  </p>
+                  <p class="mb-3">
+                    When I encountered established frameworks later, I recognized their strengths and selectively integrated key insights, while preserving the unique elements that define LibreAgent.
+                  </p>
+                  <p>
+                    Built with <span class="font-medium text-indigo-600">Gemini 2.0 Flash</span> for reasoning, <span class="font-medium text-indigo-600">Aiogram</span> for creating the Telegram bot, and <span class="font-medium text-indigo-600">OpenTelemetry</span> for instrumentation.
+                  </p>
                 </div>
 
                 <!-- Styled Links -->
@@ -215,12 +241,12 @@
         </div>
       </div>
 
-      <!-- Project 3: Portfolio Website -->
+      <!-- Project 3: Phone Operator -->
       <div class="bg-white shadow-lg rounded-lg border border-gray-200 p-6 w-full" data-controller="project-hover">
-        <img src="img/placeholder3.jpg" alt="Portfolio Website Placeholder" class="rounded-t-lg w-full h-40 object-cover">
+        <img src="img/phone_operator.png" alt="Phone Operator screenshot" slass="rounded-t-lg w-full object-cover">
         <div class="mt-4">
-          <h3 class="text-xl font-semibold text-gray-900 font-normal">Portfolio Website</h3>
-          <p class="mt-2 text-gray-600">This very site, built with Vite and Tailwind CSS.</p>
+          <h3 class="text-xl font-semibold text-gray-900 font-normal">Phone Operator</h3>
+          <p class="mt-2 text-gray-600">An MCP server to control your phone through any LLM chat app.</p>
           <a href="#" class="mt-4 inline-block text-indigo-600" data-action="click->project-hover#openModal">Learn More</a>
 
           <!-- Pre-rendered modal popup -->
@@ -229,30 +255,31 @@
             <div class="bg-white p-8 rounded-lg shadow-lg relative max-w-2xl w-full">
               <button class="absolute top-4 right-4 text-gray-600 text-2xl font-bold" data-action="click->project-hover#closeModal">×</button>
               <div class="modal-content">
-                <h4 class="text-2xl font-semibold text-gray-900 mb-4">Portfolio Website</h4>
+                <h4 class="text-2xl font-semibold text-gray-900 mb-4">Phone Operator</h4>
 
                 <!-- Media Item -->
                 <div class="mb-6">
-                  <img src="img/placeholder3.jpg" alt="Portfolio Website Demo" class="w-full h-72 object-cover rounded-md border border-gray-200">
-                  <p class="text-sm text-gray-500 mt-2 italic text-center">Portfolio Website screenshot.</p>
+                  <img src="img/phone_operator.png" alt="Phone Operator screenshot" class="w-full h-72 object-cover rounded-md border border-gray-200">
+                  <p class="text-sm text-gray-500 mt-2 italic text-center">Phone Operator running.</p>
                 </div>
 
                 <!-- Description -->
                 <div class="text-gray-700 mb-6">
                   <p class="mb-3">
-                    This portfolio website (the one you're viewing!) showcases my work and skills as a developer.
-                    It was built to be fast, responsive, and visually appealing, using modern tools like Vite for a streamlined development experience and Tailwind CSS for rapid, utility-first styling.
+                    Phone Operator bridges AI assistants and automating your phone capabilities. Allowing tools like Claude, Cursor, and any MCP compatible client operate on your phone.
                   </p>
-                  <p>Built with <span class="font-medium text-indigo-600">Vite</span> for the build tool, <span class="font-medium text-indigo-600">Tailwind CSS</span> for styling, and vanilla <span class="font-medium text-indigo-600">HTML/JavaScript</span>.</p>
+                  <p class="mb-3">
+                    This project was built over a weekend for Toolhouse.ai and pulsemcp.com's Hackathon, and won third place among 23 participants.
+                  </p>
+                  <p>
+                    Built with <span class="font-medium text-indigo-600">Python</span>, <span class="font-medium text-indigo-600">Termux</span>, and <span class="font-medium text-indigo-600">Tasker</span>.
+                  </p>
                 </div>
 
                 <!-- Styled Links -->
                 <div class="flex flex-col sm:flex-row gap-4">
-                  <a href="https://github.com/dceluis/portfolio-website" target="_blank" class="flex items-center justify-center px-4 py-2 bg-gray-800 text-white rounded-md">
+                  <a href="https://github.com/dceluis/mcp-hackathon" target="_blank" class="flex items-center justify-center px-4 py-2 bg-gray-800 text-white rounded-md">
                     <i class="fab fa-github mr-2"></i> View on GitHub
-                  </a>
-                  <a href="https://x.com/dceluis" target="_blank" class="flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-md">
-                    <i class="fab fa-twitter mr-2"></i> See Twitter Thread
                   </a>
                 </div>
               </div>
@@ -260,6 +287,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>

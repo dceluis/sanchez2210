@@ -1,4 +1,5 @@
 import './tailwind.css';
+import './styles.css';
 import { Application } from "@hotwired/stimulus";
 import { Toggle } from "tailwindcss-stimulus-components";
 
