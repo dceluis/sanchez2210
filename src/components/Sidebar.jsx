@@ -1,6 +1,7 @@
 import React from 'react';
+import StatusToolbar from './StatusToolbar';
 
-function Sidebar({ activeSection, onSectionChange }) {
+function Sidebar({ activeSection, onSectionChange, languageModelStatus, downloadProgress, onDownloadModel }) {
   const sections = [
     { id: 'about', label: 'About', file: 'about.md' },
     { id: 'projects', label: 'Projects', file: 'projects.md' },
@@ -9,8 +10,8 @@ function Sidebar({ activeSection, onSectionChange }) {
   ];
 
   return (
-    <div className="size-full bg-white overflow-y-scroll">
-      <div className="p-6">
+    <div className="size-full bg-white overflow-y-scroll flex flex-col">
+      <div className="flex-1 p-6">
         {/* Profile Section */}
         <div className="flex items-center mb-6">
           <img 
@@ -44,6 +45,12 @@ function Sidebar({ activeSection, onSectionChange }) {
           ))}
         </nav>
       </div>
+      
+      <StatusToolbar 
+        languageModelStatus={languageModelStatus}
+        downloadProgress={downloadProgress}
+        onDownloadModel={onDownloadModel}
+      />
     </div>
   );
 }

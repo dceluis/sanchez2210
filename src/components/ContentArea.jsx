@@ -17,7 +17,7 @@ const sectionContents = {
   contact: contactContent
 };
 
-function ContentArea({ activeSection, onPromptSubmit, onDownloadModel, languageModelStatus, downloadProgress }) {
+function ContentArea({ activeSection, onPromptSubmit, languageModelStatus }) {
   const [viewModes, setViewModes] = useState({});
   const editorRef = useRef(null);
   const editorViewRef = useRef(null);
@@ -78,10 +78,8 @@ function ContentArea({ activeSection, onPromptSubmit, onDownloadModel, languageM
       <div className="flex-none">
         <PromptInput 
           onPromptSubmit={onPromptSubmit} 
-          onDownloadModel={onDownloadModel}
           fileContent={currentSectionContent}
           languageModelStatus={languageModelStatus}
-          downloadProgress={downloadProgress}
         />
       </div>
     </div>

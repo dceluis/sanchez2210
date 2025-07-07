@@ -153,15 +153,16 @@ function App() {
             <Sidebar 
               activeSection={activeSection} 
               onSectionChange={setActiveSection} 
+              languageModelStatus={languageModelStatus}
+              downloadProgress={downloadProgress}
+              onDownloadModel={handleDownloadModel}
             />
           </div>
           <div className="flex-1 overflow-scroll">
             <ContentArea 
               activeSection={activeSection} 
               onPromptSubmit={handlePromptSubmit}
-              onDownloadModel={handleDownloadModel}
               languageModelStatus={languageModelStatus}
-              downloadProgress={downloadProgress}
             />
           </div>
         </div>
