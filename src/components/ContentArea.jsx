@@ -197,7 +197,7 @@ function ContentArea({ activeSection, onPromptSubmit }) {
   }
 
   return (
-    <div className="flex flex-col flex-1 bg-white">
+    <div className="size-full flex flex-col bg-white">
       {/* View Mode Switcher */}
       <div className="flex-none border-b border-gray-200 p-4">
         <ViewModeSwitcher 
@@ -206,7 +206,7 @@ function ContentArea({ activeSection, onPromptSubmit }) {
         />
       </div>
       
-      <div className="flex flex-1 justify-around overflow-y-scroll">
+      <div className="flex flex-1 justify-around">
         {currentSectionViewMode === 'edit' ? (
           <div ref={editorRef} className="flex-1 w-full overflow-hidden" />
         ) : (

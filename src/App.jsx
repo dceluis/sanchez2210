@@ -23,10 +23,12 @@ function App() {
               onSectionChange={setActiveSection} 
             />
           </div>
-          <ContentArea 
-            activeSection={activeSection} 
-            onPromptSubmit={handlePromptSubmit}
-          />
+          <div className="flex-1 overflow-scroll">
+            <ContentArea 
+              activeSection={activeSection} 
+              onPromptSubmit={handlePromptSubmit}
+            />
+          </div>
         </div>
         
         <ConversationPopup 
