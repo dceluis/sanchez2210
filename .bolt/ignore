@@ -5,11 +5,11 @@
 .repomixignore
 CNAME
 README.md
-# index.html
-# netlify.toml
+index.html
+netlify.toml
 package-lock.json
 # package.json
-# postcss.config.js
+postcss.config.js
 public/img/agency-h.png
 public/img/checkmate.png
 public/img/libre_agent.png
@@ -30,18 +30,18 @@ public/img/tavour.png
 public/videos/vacocam_demo.mp4
 repomix.config.json
 # src/App.jsx
-# src/application.jsx
+src/application.jsx
 # src/components/ContactSection.jsx
 # src/components/ExperienceSection.jsx
-# src/components/Footer.jsx
+src/components/Footer.jsx
 # src/components/HeroSection.jsx
-# src/components/Navbar.jsx
-# src/components/ProjectCard.jsx
-# src/components/ProjectModal.jsx
+src/components/Navbar.jsx
+src/components/ProjectCard.jsx
+src/components/ProjectModal.jsx
 # src/components/ProjectShowcase.jsx
 # src/components/Testimonials.jsx
-# src/styles.css
-# src/tailwind.css
-# tailwind.config.js
-# vite.config.js
+src/styles.css
+src/tailwind.css
+tailwind.config.js
+vite.config.js
 # ==== BOLT-ASSISTANT AUTO-GENERATED END ====
