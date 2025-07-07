@@ -57,7 +57,7 @@ function ContentArea({ activeSection, onPromptSubmit, onDownloadModel, languageM
         }
 
         // Fetch content if we don't have it
-        const response = await fetch(`/src/content/${activeSection}.md`);
+        const response = await fetch(`/content/${activeSection}.md`);
         if (response.ok) {
           const content = await response.text();
           updateSection({ content, viewMode: 'preview' });
