@@ -1,6 +1,7 @@
 import { Wllama } from '@wllama/wllama';
 import singleThreadWasm from '@wllama/wllama/esm/single-thread/wllama.wasm?url';
 import multiThreadWasm from '@wllama/wllama/esm/multi-thread/wllama.wasm?url';
+import multiThreadWorkerMjs from '@wllama/wllama/esm/multi-thread/wllama.worker.mjs?url';
 
 let wllama = null;
 let isModelLoaded = false;
@@ -20,57 +21,67 @@ const MODEL_CONFIG = {
 };
 
 // Initialize wllama
-async function initializeWllama() {
+export async function initWllama(statusCallback) {
   try {
     if (!wllama) {
-      // Use locally embedded WASM files
-      wllama = new Wllama({
-        pathConfig: {
-          'single-thread/wllama.wasm': singleThreadWasm,
-          'multi-thread/wllama.wasm': multiThreadWasm,
-        }
-      });
+      const pathConfig = {
+        'single-thread/wllama.wasm': singleThreadWasm,
+        'multi-thread/wllama.wasm': multiThreadWasm,
+        'multi-thread/wllama.worker.mjs': multiThreadWorkerMjs,
+      };
+      
+      wllama = new Wllama(pathConfig);
     }
+    
+    // Report ready to download status
+    statusCallback('ready_to_download');
     return true;
   } catch (error) {
     console.error('Failed to initialize wllama:', error);
+    statusCallback('unavailable');
     return false;
   }
 }
 
-// Load model from Hugging Face
-async function loadModel() {
+// Download and load model from Hugging Face
+export async function downloadModel(progressCallback, statusCallback) {
   try {
-    postMessage({ type: 'status', status: 'loading_model' });
+    statusCallback('loading_model');
     
     // Progress callback for download tracking
-    const progressCallback = ({ loaded, total }) => {
+    const onProgress = ({ loaded, total }) => {
       const progress = Math.round((loaded / total) * 100);
       console.log(`AI model download progress: ${progress}%`);
-      postMessage({ type: 'status', status: 'downloading', progress });
+      progressCallback(progress);
+      statusCallback('downloading', progress);
     };
 
     // Load model from Hugging Face with progress tracking
     await wllama.loadModelFromHF(HF_REPO, MODEL_FILE, {
-      progressCallback,
+      progressCallback: onProgress,
       ...MODEL_CONFIG
     });
     
     isModelLoaded = true;
-    postMessage({ type: 'status', status: 'available' });
+    statusCallback('available');
   } catch (error) {
     console.error('Failed to load model:', error);
-    postMessage({ type: 'error', message: 'Failed to load AI model. Please try again.' });
+    statusCallback('unavailable');
+    throw new Error('Failed to load AI model. Please try again.');
   }
 }
 
-// Generate response
-async function generateResponse(prompt, context) {
+// Generate response using the loaded model
+export async function promptWllama(prompt, context, thinkingCallback, responseCallback, errorCallback) {
   if (!wllama || !isModelLoaded) {
-    throw new Error('Model not loaded');
+    errorCallback('Model not loaded');
+    return;
   }
   
   try {
+    // Show thinking status
+    thinkingCallback();
+    
     // Construct the full prompt with context
     const systemPrompt = "You are a helpful AI assistant for Luis Sanchez's portfolio. Answer questions about his work, projects, and experience based on the provided context. Be concise, professional, and helpful.";
     
@@ -98,51 +109,9 @@ Based on this context, please answer the following question: ${prompt}<|eot_id|>
       stopSequence: ['<|eot_id|>']
     });
     
-    return response.trim();
+    responseCallback(response.trim());
   } catch (error) {
     console.error('Failed to generate response:', error);
-    throw error;
+    errorCallback('Failed to generate response. Please try again.');
   }
 }
-
-// Message handler
-self.onmessage = async function(e) {
-  const { type, data } = e.data;
-  
-  try {
-    switch (type) {
-      case 'init':
-        const initialized = await initializeWllama();
-        if (!initialized) {
-          postMessage({ type: 'error', message: 'Failed to initialize AI assistant' });
-          return;
-        }
-        
-        // Always start with ready_to_download since wllama.loadModelFromHF handles caching internally
-        postMessage({ type: 'status', status: 'ready_to_download' });
-        break;
-        
-      case 'download':
-        await loadModel();
-        break;
-        
-      case 'prompt':
-        const { prompt, context } = data;
-        postMessage({ type: 'thinking' });
-        
-        try {
-          const response = await generateResponse(prompt, context);
-          postMessage({ type: 'response', response });
-        } catch (error) {
-          postMessage({ type: 'error', message: 'Failed to generate response. Please try again.' });
-        }
-        break;
-        
-      default:
-        console.warn('Unknown message type:', type);
-    }
-  } catch (error) {
-    console.error('Worker error:', error);
-    postMessage({ type: 'error', message: error.message });
-  }
-};
