@@ -3,87 +3,57 @@ import ViewModeSwitcher from './ViewModeSwitcher';
 import ContentDisplay from './ContentDisplay';
 import PromptInput from './PromptInput';
 
+// Import markdown content at build time
+import aboutContent from '../../public/content/about.md?raw';
+import projectsContent from '../../public/content/projects.md?raw';
+import testimonialsContent from '../../public/content/testimonials.md?raw';
+import contactContent from '../../public/content/contact.md?raw';
+
+// Map section IDs to their content
+const sectionContents = {
+  about: aboutContent,
+  projects: projectsContent,
+  testimonials: testimonialsContent,
+  contact: contactContent
+};
+
 function ContentArea({ activeSection, onPromptSubmit, onDownloadModel, languageModelStatus, downloadProgress }) {
-  const [allSectionData, setAllSectionData] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [viewModes, setViewModes] = useState({});
   const editorRef = useRef(null);
   const editorViewRef = useRef(null);
 
-  // Load data from localStorage on component mount
+  // Load view modes from localStorage on component mount
   useEffect(() => {
     try {
-      const savedData = localStorage.getItem('portfolioSectionData');
-      if (savedData) {
-        setAllSectionData(JSON.parse(savedData));
+      const savedViewModes = localStorage.getItem('portfolioViewModes');
+      if (savedViewModes) {
+        setViewModes(JSON.parse(savedViewModes));
       }
     } catch (error) {
-      console.error('Failed to load data from localStorage:', error);
+      console.error('Failed to load view modes from localStorage:', error);
     }
   }, []);
 
-  // Save data to localStorage whenever allSectionData changes
+  // Save view modes to localStorage whenever they change
   useEffect(() => {
     try {
-      localStorage.setItem('portfolioSectionData', JSON.stringify(allSectionData));
+      localStorage.setItem('portfolioViewModes', JSON.stringify(viewModes));
     } catch (error) {
-      console.error('Failed to save data to localStorage:', error);
+      console.error('Failed to save view modes to localStorage:', error);
     }
-  }, [allSectionData]);
+  }, [viewModes]);
 
   // Get current section data
-  const currentSectionData = allSectionData[activeSection] || { content: '', viewMode: 'preview' };
-  const currentSectionContent = currentSectionData.content;
-  const currentSectionViewMode = currentSectionData.viewMode;
+  const currentSectionContent = sectionContents[activeSection] || '# Content not found';
+  const currentSectionViewMode = viewModes[activeSection] || 'preview';
 
-  // Update section data
-  const updateSection = (updates) => {
-    setAllSectionData(prev => ({
+  // Update view mode for current section
+  const updateViewMode = (viewMode) => {
+    setViewModes(prev => ({
       ...prev,
-      [activeSection]: {
-        ...prev[activeSection],
-        ...updates
-      }
+      [activeSection]: viewMode
     }));
   };
-
-  useEffect(() => {
-    const loadMarkdownContent = async () => {
-      setLoading(true);
-      try {
-        // Check if we already have content for this section
-        if (currentSectionContent) {
-          setLoading(false);
-          return;
-        }
-
-        // Fetch content if we don't have it
-        const response = await fetch(`/content/${activeSection}.md`);
-        if (response.ok) {
-          const content = await response.text();
-          updateSection({ content, viewMode: 'preview' });
-        } else {
-          updateSection({ content: '# Content not found', viewMode: 'preview' });
-        }
-      } catch (error) {
-        console.error('Failed to load markdown content:', error);
-        updateSection({ content: '# Error loading content', viewMode: 'preview' });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (activeSection) {
-      loadMarkdownContent();
-    }
-  }, [activeSection, currentSectionContent]);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-gray-500">Loading...</div>
-      </div>
-    );
-  }
 
   return (
     <div className="size-full flex flex-col bg-white">
@@ -91,7 +61,7 @@ function ContentArea({ activeSection, onPromptSubmit, onDownloadModel, languageM
       <div className="flex flex-none justify-end p-2">
         <ViewModeSwitcher 
           mode={currentSectionViewMode} 
-          onModeChange={(mode) => updateSection({ viewMode: mode })} 
+          onModeChange={updateViewMode} 
         />
       </div>
       
@@ -99,7 +69,7 @@ function ContentArea({ activeSection, onPromptSubmit, onDownloadModel, languageM
         <ContentDisplay
           viewMode={currentSectionViewMode}
           content={currentSectionContent}
-          onContentChange={(newContent) => updateSection({ content: newContent })}
+          onContentChange={() => {}} // Content is now read-only from imports
           editorRef={editorRef}
           editorViewRef={editorViewRef}
         />
