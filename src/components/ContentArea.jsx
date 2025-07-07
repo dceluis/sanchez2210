@@ -8,12 +8,99 @@ import { EditorState } from '@codemirror/state';
 import { markdown } from '@codemirror/lang-markdown';
 import { oneDark } from '@codemirror/theme-one-dark';
 
-function ContentArea({ activeSection, viewMode, onPromptSubmit }) {
-  const [editedContent, setEditedContent] = useState('');
+// ViewModeSwitcher component
+function ViewModeSwitcher({ mode, onModeChange }) {
+  const previewRef = useRef(null);
+  const editRef = useRef(null);
+  const [pillStyle, setPillStyle] = useState({});
+
+  useEffect(() => {
+    // Wait until the refs are attached to an element
+    if (!previewRef.current || !editRef.current) return;
+
+    const activeRef = mode === 'preview' ? previewRef : editRef;
+    const { offsetWidth, offsetLeft } = activeRef.current;
+    const parentPadding = 4; // Corresponds to p-1 (0.25rem * 16px/rem)
+
+    setPillStyle({
+      width: `${offsetWidth}px`,
+      transform: `translateX(${offsetLeft - parentPadding}px)`,
+    });
+
+  }, [mode]);
+
+  return (
+    <div className="relative flex w-fit items-center rounded-full bg-gray-200 p-1">
+      <button
+        ref={editRef}
+        onClick={() => onModeChange('edit')}
+        className={`relative z-10 rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+          mode === 'edit' ? 'text-gray-800' : 'text-gray-600 hover:text-gray-800'
+        }`}
+      >
+        Edit
+      </button>
+      <button
+        ref={previewRef}
+        onClick={() => onModeChange('preview')}
+        className={`relative z-10 rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+          mode === 'preview' ? 'text-gray-800' : 'text-gray-600 hover:text-gray-800'
+        }`}
+      >
+        Preview
+      </button>
+      {/* The moving pill background with smooth width and position transitions */}
+      <div
+        className="absolute top-1 h-[calc(100%-8px)] rounded-full bg-white shadow-md transition-all duration-300 ease-in-out"
+        style={pillStyle}
+      />
+    </div>
+  );
+}
+
+function ContentArea({ activeSection, onPromptSubmit }) {
+  const [allSectionData, setAllSectionData] = useState({});
   const [loading, setLoading] = useState(true);
   const [promptValue, setPromptValue] = useState('');
   const editorRef = useRef(null);
   const editorViewRef = useRef(null);
+
+  // Load data from localStorage on component mount
+  useEffect(() => {
+    try {
+      const savedData = localStorage.getItem('portfolioSectionData');
+      if (savedData) {
+        setAllSectionData(JSON.parse(savedData));
+      }
+    } catch (error) {
+      console.error('Failed to load data from localStorage:', error);
+    }
+  }, []);
+
+  // Save data to localStorage whenever allSectionData changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('portfolioSectionData', JSON.stringify(allSectionData));
+    } catch (error) {
+      console.error('Failed to save data to localStorage:', error);
+    }
+  }, [allSectionData]);
+
+  // Get current section data
+  const currentSectionData = allSectionData[activeSection] || { content: '', viewMode: 'preview' };
+  const currentSectionContent = currentSectionData.content;
+  const currentSectionViewMode = currentSectionData.viewMode;
+
+  // Update section data
+  const updateSection = (updates) => {
+    setAllSectionData(prev => ({
+      ...prev,
+      [activeSection]: {
+        ...prev[activeSection],
+        ...updates
+      }
+    }));
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && promptValue.trim()) {
@@ -26,16 +113,23 @@ function ContentArea({ activeSection, viewMode, onPromptSubmit }) {
     const loadMarkdownContent = async () => {
       setLoading(true);
       try {
+        // Check if we already have content for this section
+        if (currentSectionContent) {
+          setLoading(false);
+          return;
+        }
+
+        // Fetch content if we don't have it
         const response = await fetch(`/src/content/${activeSection}.md`);
         if (response.ok) {
           const content = await response.text();
-          setEditedContent(content);
+          updateSection({ content, viewMode: 'preview' });
         } else {
-          setEditedContent('# Content not found');
+          updateSection({ content: '# Content not found', viewMode: 'preview' });
         }
       } catch (error) {
         console.error('Failed to load markdown content:', error);
-        setEditedContent('# Error loading content');
+        updateSection({ content: '# Error loading content', viewMode: 'preview' });
       } finally {
         setLoading(false);
       }
@@ -44,20 +138,20 @@ function ContentArea({ activeSection, viewMode, onPromptSubmit }) {
     if (activeSection) {
       loadMarkdownContent();
     }
-  }, [activeSection]);
+  }, [activeSection, currentSectionContent]);
 
   useEffect(() => {
     // Create editor only when in 'edit' mode
-    if (viewMode === 'edit' && editorRef.current && !editorViewRef.current) {
+    if (currentSectionViewMode === 'edit' && editorRef.current && !editorViewRef.current) {
       const state = EditorState.create({
-        doc: editedContent,
+        doc: currentSectionContent,
         extensions: [
           basicSetup,
           markdown(),
           oneDark,
           EditorView.updateListener.of((update) => {
             if (update.docChanged) {
-              setEditedContent(update.state.doc.toString());
+              updateSection({ content: update.state.doc.toString() });
             }
           }),
           EditorView.theme({
@@ -92,7 +186,7 @@ function ContentArea({ activeSection, viewMode, onPromptSubmit }) {
       }
     };
   // The effect depends on the viewMode now
-  }, [viewMode, editedContent]); 
+  }, [currentSectionViewMode, currentSectionContent]);
 
   if (loading) {
     return (
@@ -104,8 +198,16 @@ function ContentArea({ activeSection, viewMode, onPromptSubmit }) {
 
   return (
     <div className="flex flex-col flex-1 bg-white">
+      {/* View Mode Switcher */}
+      <div className="flex-none border-b border-gray-200 p-4">
+        <ViewModeSwitcher 
+          mode={currentSectionViewMode} 
+          onModeChange={(mode) => updateSection({ viewMode: mode })} 
+        />
+      </div>
+      
       <div className="flex flex-1 justify-around overflow-y-scroll">
-        {viewMode === 'edit' ? (
+        {currentSectionViewMode === 'edit' ? (
           <div ref={editorRef} className="flex-1 w-full overflow-hidden" />
         ) : (
           <div className="prose prose-lg max-w-4xl h-fit flex-1 py-8">
@@ -113,7 +215,7 @@ function ContentArea({ activeSection, viewMode, onPromptSubmit }) {
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeRaw]}
               >
-                {editedContent}
+                {currentSectionContent}
               </ReactMarkdown>
           </div>
         )}

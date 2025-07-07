@@ -6,7 +6,6 @@ import ConversationPopup from './components/ConversationPopup';
 
 function App() {
   const [activeSection, setActiveSection] = useState('about');
-  const [viewMode, setViewMode] = useState('preview');
   const [showConversationPopup, setShowConversationPopup] = useState(false);
 
   const handlePromptSubmit = (prompt) => {
@@ -22,13 +21,10 @@ function App() {
             <Sidebar 
               activeSection={activeSection} 
               onSectionChange={setActiveSection} 
-              viewMode={viewMode}
-              onViewModeChange={setViewMode}
             />
           </div>
           <ContentArea 
             activeSection={activeSection} 
-            viewMode={viewMode} 
             onPromptSubmit={handlePromptSubmit}
           />
         </div>
