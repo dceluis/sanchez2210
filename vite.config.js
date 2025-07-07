@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import fs from 'fs/promises';
 import path from 'path';
+import react from '@vitejs/plugin-react';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -13,6 +14,7 @@ export default defineConfig({
     outDir: 'docs', // Output directory defined here
   },
   plugins: [
+    react(),
     {
       name: 'copy-cname',
       configResolved(config) {

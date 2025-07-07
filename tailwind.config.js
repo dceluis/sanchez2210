@@ -1,5 +1,5 @@
 export default {
-  content: ['./index.html', './src/**/*.{js,html}'],
+  content: ['./index.html', './src/**/*.{js,jsx,html}'],
   theme: {
     fontSize: {
       'xs': '.75rem',
