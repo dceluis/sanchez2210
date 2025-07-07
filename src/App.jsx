@@ -57,6 +57,7 @@ function App() {
           monitor(m) {
             m.addEventListener("downloadprogress", (e) => {
               const progress = Math.round(e.loaded * 100);
+              console.log(`AI model download progress: ${progress}%`);
               setConversationHistory(prev => {
                 const newHistory = [...prev];
                 const lastMessage = newHistory[newHistory.length - 1];
