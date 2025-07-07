@@ -1,5 +1,5 @@
-module.exports = {
-  purge: ['./index.html', './src/**/*.{js,html}'],
+export default {
+  content: ['./index.html', './src/**/*.{js,html}'],
   theme: {
     fontSize: {
       'xs': '.75rem',
@@ -17,6 +17,5 @@ module.exports = {
     },
     extend: {},
   },
-  variants: {},
   plugins: [],
 };
