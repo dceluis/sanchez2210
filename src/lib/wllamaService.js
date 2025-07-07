@@ -1,7 +1,6 @@
 import { Wllama } from '@wllama/wllama';
 import singleThreadWasm from '@wllama/wllama/esm/single-thread/wllama.wasm?url';
 import multiThreadWasm from '@wllama/wllama/esm/multi-thread/wllama.wasm?url';
-import multiThreadWorkerMjs from '@wllama/wllama/esm/multi-thread/wllama.worker.mjs?url';
 
 let wllama = null;
 let isModelLoaded = false;
@@ -27,7 +26,6 @@ export async function initWllama(statusCallback) {
       const pathConfig = {
         'single-thread/wllama.wasm': singleThreadWasm,
         'multi-thread/wllama.wasm': multiThreadWasm,
-        'multi-thread/wllama.worker.mjs': multiThreadWorkerMjs,
       };
       
       wllama = new Wllama(pathConfig);
