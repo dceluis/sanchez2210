@@ -19,7 +19,7 @@ function PromptInput({ onPromptSubmit }) {
           onChange={(e) => setPromptValue(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Ask me anything about my work, projects, or experience..."
-          className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"
+          className="flex-1 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"
         />
         <button
           onClick={() => {
