@@ -26,7 +26,7 @@
   "ignore": {
     "useGitignore": true,
     "useDefaultPatterns": true,
-    "customPatterns": []
+    "customPatterns": ["docs/"]
   },
   "security": {
     "enableSecurityCheck": true
