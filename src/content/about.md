@@ -7,7 +7,7 @@ I'm a software engineer who loves creating apps, websites, and building AI proje
 Some of the clients I have worked with:
 
 
-<img class="rounded-full w-16 md:w-24 m-auto mb-8" src="/img/portrait_small.jpeg" alt="Luis Sanchez portrait" />
+<img class="rounded-full max-w-16 md:w-24 m-auto mb-8" src="/img/portrait_small.jpeg" alt="Luis Sanchez portrait" />
 
 <a href="#contact" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
   Get in touch
