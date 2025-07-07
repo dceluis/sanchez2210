@@ -121,7 +121,7 @@ function ContentArea({ activeSection }) {
           }),
           EditorView.theme({
             '&': {
-              height: 'calc(100vh - 200px)', // Example dynamic height
+              height: '100%', // Dynamic height to fill parent
               fontSize: '14px'
             },
             '.cm-scroller': {
@@ -162,8 +162,8 @@ function ContentArea({ activeSection }) {
   }
 
   return (
-    <div className="flex-1 ml-64">
-      <div className="max-w-7xl mx-auto border border-gray-300 rounded-lg overflow-hidden">
+    <div className="flex-1 ml-64 h-screen flex flex-col">
+      <div className="flex-1 w-full border border-gray-300 rounded-lg overflow-hidden">
         <HeaderArea
           activeSection={activeSection}
           viewMode={viewMode}
@@ -171,11 +171,11 @@ function ContentArea({ activeSection }) {
         />
         
         {/* Container for content ensures a consistent height */}
-        <div className="bg-white">
+        <div className="bg-white flex-1 flex flex-col">
           {viewMode === 'edit' ? (
-            <div ref={editorRef} />
+            <div ref={editorRef} className="flex-1 overflow-hidden" />
           ) : (
-            <div className="prose prose-lg max-w-4xl mx-auto py-8 px-4">
+            <div className="prose prose-lg w-full flex-1 overflow-y-auto py-8 px-4">
               <ReactMarkdown 
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeRaw]}
