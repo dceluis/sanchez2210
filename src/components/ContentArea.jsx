@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import { EditorView, basicSetup } from '@codemirror/view';
+import { basicSetup } from 'codemirror';
+import { EditorView } from '@codemirror/view';
 import { EditorState } from '@codemirror/state';
 import { markdown } from '@codemirror/lang-markdown';
 import { oneDark } from '@codemirror/theme-one-dark';
@@ -95,16 +96,6 @@ function ContentArea({ activeSection }) {
     setIsEditing(!isEditing);
   };
 
-  const handleSave = () => {
-    console.log('Edited content:', editedContent);
-    alert('Changes saved to memory! Note: Changes are not persisted to the actual file and will be lost on page refresh.');
-    setIsEditing(false);
-    if (editorViewRef.current) {
-      editorViewRef.current.destroy();
-      editorViewRef.current = null;
-    }
-  };
-
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -129,14 +120,6 @@ function ContentArea({ activeSection }) {
             >
               {isEditing ? 'Preview' : 'Edit'}
             </button>
-            {isEditing && (
-              <button
-                onClick={handleSave}
-                className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
-              >
-                Save
-              </button>
-            )}
           </div>
         </div>
 
