@@ -37,4 +37,6 @@ Some of the clients I have worked with:
         <div class="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
           <img class="max-h-12" src="/img/syncta-h.png" alt="Syncta" />
         </div>
-        <div class="col-span-1 flex justify-center py-8 px
+        <div class="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
+          <img class="max-h-12" src="/img/agency-h.png" alt="Agency" />
+        </div>
