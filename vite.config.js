@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite';
-import tailwindcss from '@tailwindcss/vite';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -14,7 +13,6 @@ export default defineConfig({
     outDir: 'docs', // Output directory defined here
   },
   plugins: [
-    tailwindcss(),
     {
       name: 'copy-cname',
       configResolved(config) {
