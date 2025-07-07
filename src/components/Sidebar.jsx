@@ -11,18 +11,6 @@ function Sidebar({ activeSection, onSectionChange }) {
   return (
     <div className="w-64 bg-white shadow-lg h-screen overflow-y-auto">
       <div className="p-6">
-        <div className="flex items-center mb-8">
-          <img 
-            className="w-12 h-12 rounded-full mr-3" 
-            src="/img/portrait_small.jpeg" 
-            alt="Luis Sanchez" 
-          />
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900">Luis Sanchez</h2>
-            <p className="text-sm text-gray-600">Software Engineer</p>
-          </div>
-        </div>
-        
         <nav className="space-y-2">
           {sections.map((section) => (
             <button
