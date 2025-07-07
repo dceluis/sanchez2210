@@ -162,7 +162,7 @@ function ContentArea({ activeSection }) {
   }
 
   return (
-    <div className="flex flex-1 flex-col h-screen border border-gray-300 overflow-hidden">
+    <div className="flex flex-1 flex-col border border-gray-300 overflow-hidden">
       <HeaderArea
         activeSection={activeSection}
         viewMode={viewMode}
@@ -170,17 +170,17 @@ function ContentArea({ activeSection }) {
       />
       
       {/* Container for content ensures a consistent height */}
-      <div className="flex flex-1 flex-col overflow-y-scroll items-center bg-white">
+      <div className="flex flex-1 justify-around overflow-y-scroll bg-white">
         {viewMode === 'edit' ? (
           <div ref={editorRef} className="flex-1 w-full overflow-hidden" />
         ) : (
-          <div className="prose prose-lg max-w-4xl flex-1 py-8">
-            <ReactMarkdown 
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeRaw]}
-            >
-              {editedContent}
-            </ReactMarkdown>
+          <div className="prose prose-lg max-w-4xl h-fit flex-1 py-8">
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw]}
+              >
+                {editedContent}
+              </ReactMarkdown>
           </div>
         )}
       </div>

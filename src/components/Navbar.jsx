@@ -2,7 +2,7 @@ import React from 'react';
 
 function Navbar() {
   return (
-    <div className="w-full bg-white shadow-sm border-b border-gray-200">
+    <div className="size-full bg-white shadow-sm border-b border-gray-200">
       <div className="px-6 py-4">
         <div className="flex items-center">
           <img 
