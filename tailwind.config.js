@@ -2,7 +2,7 @@ import typography from '@tailwindcss/typography';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,jsx,html}', './public/**/*.md'],
+  content: ['./index.html', './src/**/*.{js,jsx,md,html}'],
   theme: {
     fontSize: {
       'xs': '.75rem',
