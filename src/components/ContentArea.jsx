@@ -20,7 +20,7 @@ function ViewModeSwitcher({ mode, onModeChange }) {
 
     const activeRef = mode === 'preview' ? previewRef : editRef;
     const { offsetWidth, offsetLeft } = activeRef.current;
-    const parentPadding = 4; // Corresponds to p-1 (0.25rem * 16px/rem)
+    const parentPadding = 2;
 
     setPillStyle({
       width: `${offsetWidth}px`,
@@ -34,18 +34,14 @@ function ViewModeSwitcher({ mode, onModeChange }) {
       <button
         ref={editRef}
         onClick={() => onModeChange('edit')}
-        className={`relative z-10 rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-          mode === 'edit' ? 'text-gray-800' : 'text-gray-600 hover:text-gray-800'
-        }`}
+        className={`relative z-10 rounded-full px-3 py-1 text-xs font-medium transition-colors ${ mode === 'edit' ? 'text-gray-800' : 'text-gray-600 hover:text-gray-800' }`}
       >
         Edit
       </button>
       <button
         ref={previewRef}
         onClick={() => onModeChange('preview')}
-        className={`relative z-10 rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-          mode === 'preview' ? 'text-gray-800' : 'text-gray-600 hover:text-gray-800'
-        }`}
+        className={`relative z-10 rounded-full px-3 py-1 text-xs font-medium transition-colors ${ mode === 'preview' ? 'text-gray-800' : 'text-gray-600 hover:text-gray-800' }`}
       >
         Preview
       </button>

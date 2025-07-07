@@ -23,11 +23,12 @@ function Sidebar({ activeSection, onSectionChange }) {
             <p className="text-sm text-gray-600">Software Engineer</p>
           </div>
         </div>
-        
+
         {/* Divider */}
-        <div className="border-b border-gray-200 pb-6 mb-6"></div>
-        
-        <nav className="space-y-2">
+        <div className="border-b border-gray-200"></div>
+
+        {/* Explorer Section */}
+        <nav className="space-y-2 mt-6">
           {sections.map((section) => (
             <button
               key={section.id}
