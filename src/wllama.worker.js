@@ -1,8 +1,6 @@
 import { Wllama } from '@wllama/wllama';
 import singleThreadWasm from '@wllama/wllama/esm/single-thread/wllama.wasm?url';
 import multiThreadWasm from '@wllama/wllama/esm/multi-thread/wllama.wasm?url';
-import singleThreadJs from '@wllama/wllama/esm/single-thread/wllama.js?url';
-import multiThreadJs from '@wllama/wllama/esm/multi-thread/wllama.js?url';
 import multiThreadWorkerMjs from '@wllama/wllama/esm/multi-thread/wllama.worker.mjs?url';
 
 let wllama = null;
@@ -29,9 +27,7 @@ async function initializeWllama() {
       // Use locally embedded WASM files
       wllama = new Wllama({
         pathConfig: {
-          'single-thread/wllama.js': singleThreadJs,
           'single-thread/wllama.wasm': singleThreadWasm,
-          'multi-thread/wllama.js': multiThreadJs,
           'multi-thread/wllama.wasm': multiThreadWasm,
           'multi-thread/wllama.worker.mjs': multiThreadWorkerMjs,
         }
