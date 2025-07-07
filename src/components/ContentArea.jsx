@@ -162,29 +162,27 @@ function ContentArea({ activeSection }) {
   }
 
   return (
-    <div className="flex-1 ml-64 h-screen flex flex-col">
-      <div className="flex-1 w-full border border-gray-300 rounded-lg overflow-hidden">
-        <HeaderArea
-          activeSection={activeSection}
-          viewMode={viewMode}
-          onViewModeChange={setViewMode}
-        />
-        
-        {/* Container for content ensures a consistent height */}
-        <div className="bg-white flex-1 flex flex-col">
-          {viewMode === 'edit' ? (
-            <div ref={editorRef} className="flex-1 overflow-hidden" />
-          ) : (
-            <div className="prose prose-lg w-full flex-1 overflow-y-auto py-8 px-4">
-              <ReactMarkdown 
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeRaw]}
-              >
-                {editedContent}
-              </ReactMarkdown>
-            </div>
-          )}
-        </div>
+    <div className="flex flex-1 flex-col h-screen border border-gray-300 overflow-hidden">
+      <HeaderArea
+        activeSection={activeSection}
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
+      />
+      
+      {/* Container for content ensures a consistent height */}
+      <div className="flex flex-1 flex-col overflow-y-scroll items-center bg-white">
+        {viewMode === 'edit' ? (
+          <div ref={editorRef} className="flex-1 w-full overflow-hidden" />
+        ) : (
+          <div className="prose prose-lg max-w-4xl flex-1 py-8">
+            <ReactMarkdown 
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeRaw]}
+            >
+              {editedContent}
+            </ReactMarkdown>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ function App() {
   const [activeSection, setActiveSection] = useState('about');
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
+    <div className="flex min-w-screen min-h-screen bg-gray-100">
       <Sidebar 
         activeSection={activeSection} 
         onSectionChange={setActiveSection} 
