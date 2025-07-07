@@ -1,16 +1,51 @@
-import React, { useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 
-function ConversationPopup({ isOpen, onClose }) {
-  const [inputValue, setInputValue] = useState('');
+function ConversationPopup({ isOpen, onClose, messages = [] }) {
+  const conversationEndRef = useRef(null);
+
+  // Auto-scroll to bottom when new messages are added
+  useEffect(() => {
+    if (conversationEndRef.current) {
+      conversationEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
   if (!isOpen) return null;
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && inputValue.trim()) {
-      // TODO: Handle message sending
-      console.log('Message sent:', inputValue);
-      setInputValue('');
-    }
+  const renderMessage = (message, index) => {
+    const isUser = message.sender === 'user';
+    const isSystem = message.sender === 'system';
+    const isAI = message.sender === 'ai';
+
+    return (
+      <div key={index} className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}>
+        {!isUser && (
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 flex-shrink-0 ${
+            isSystem ? 'bg-gray-500' : 'bg-indigo-600'
+          }`}>
+            <span className="text-white text-sm font-medium">
+              {isSystem ? 'S' : 'AI'}
+            </span>
+          </div>
+        )}
+        
+        <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+          isUser 
+            ? 'bg-indigo-600 text-white' 
+            : isSystem
+            ? 'bg-gray-100 text-gray-700 border border-gray-200'
+            : 'bg-gray-100 text-gray-700'
+        } ${message.isThinking ? 'animate-pulse' : ''}`}>
+          <p className="text-sm whitespace-pre-wrap">{message.text}</p>
+        </div>
+
+        {isUser && (
+          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center ml-3 flex-shrink-0">
+            <span className="text-white text-sm font-medium">U</span>
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -31,44 +66,16 @@ function ConversationPopup({ isOpen, onClose }) {
 
         {/* Conversation Area */}
         <div className="flex-1 p-4 overflow-y-auto">
-          <div className="space-y-4">
-            {/* Placeholder conversation */}
-            <div className="flex items-start space-x-3">
-              <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-medium">AI</span>
-              </div>
-              <div className="bg-gray-100 rounded-lg p-3 max-w-xs">
-                <p className="text-sm text-gray-700">Hello! How can I help you today?</p>
-              </div>
+          {messages.length === 0 ? (
+            <div className="flex items-center justify-center h-full text-gray-500">
+              <p>Start a conversation by asking a question below.</p>
             </div>
-          </div>
-        </div>
-
-        {/* Input Area */}
-        <div className="p-4 border-t border-gray-200">
-          <div className="flex space-x-3">
-            <input
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Type your message..."
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              autoFocus
-            />
-            <button
-              onClick={() => {
-                if (inputValue.trim()) {
-                  console.log('Message sent:', inputValue);
-                  setInputValue('');
-                }
-              }}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={!inputValue.trim()}
-            >
-              Send
-            </button>
-          </div>
+          ) : (
+            <div className="space-y-1">
+              {messages.map((message, index) => renderMessage(message, index))}
+              <div ref={conversationEndRef} />
+            </div>
+          )}
         </div>
       </div>
     </div>
