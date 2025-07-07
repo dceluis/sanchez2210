@@ -5,7 +5,7 @@ function HeroSection() {
     <main>
       <div className="flex justify-center mx-auto max-w-7xl w-full pt-16 lg:pt-32">
         <div className="px-4 sm:px-8 xl:pr-16 lg:w-1/2 text-center lg:text-left">
-          <img className="lg:hidden rounded-full w-56 md:w-64 m-auto mb-8" src="img/portrait_small.jpeg" alt="Luis Sanchez portrait" />
+          <img className="lg:hidden rounded-full w-56 md:w-64 m-auto mb-8" src="/img/portrait_small.jpeg" alt="Luis Sanchez portrait" />
           <h1 className="text-4xl tracking-tight font-bold text-gray-900 sm:text-5xl sm:tracking-tight md:text-6xl md:tracking-tight lg:text-5xl lg:tracking-tight xl:text-6xl xl:tracking-tight">
             <span className="inline-flex">Luis makes</span>
             <span className="inline-flex overflow-hidden relative">
@@ -33,7 +33,7 @@ function HeroSection() {
           </div>
         </div>
         <div className="hidden lg:block px-4 lg:w-1/2 sm:px-8 -mt-8">
-          <img className="rounded-full w-56 md:w-96 mx-auto mb-8" src="./img/portrait_small.jpeg" alt="Luis Sanchez portrait" />
+          <img className="rounded-full w-56 md:w-96 mx-auto mb-8" src="/img/portrait_small.jpeg" alt="Luis Sanchez portrait" />
         </div>
       </div>
     </main>

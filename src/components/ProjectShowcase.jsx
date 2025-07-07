@@ -42,12 +42,12 @@ function ProjectShowcase() {
     },
     {
       id: 'libreagent',
-      image: 'img/libre_agent_bot.png',
+      image: '/img/libre_agent_bot.png',
       imageAlt: 'Task Management App Placeholder',
       title: 'LibreAgent',
       description: 'A long-lived reasoning agent that stores memories as a living entity.',
       modalTitle: 'LibreAgent',
-      modalImage: 'img/libre_agent.png',
+      modalImage: '/img/libre_agent.png',
       modalImageAlt: 'Task Management App Demo',
       mediaCaption: 'LibreAgent running as a Telegram bot.',
       modalDescription: [
@@ -67,12 +67,12 @@ function ProjectShowcase() {
     },
     {
       id: 'phoneoperator',
-      image: 'img/phone_operator.png',
+      image: '/img/phone_operator.png',
       imageAlt: 'Phone Operator screenshot',
       title: 'Phone Operator',
       description: 'An MCP server to control your phone through any LLM chat app.',
       modalTitle: 'Phone Operator',
-      modalImage: 'img/phone_operator.png',
+      modalImage: '/img/phone_operator.png',
       modalImageAlt: 'Phone Operator screenshot',
       mediaCaption: 'Phone Operator running.',
       modalDescription: [

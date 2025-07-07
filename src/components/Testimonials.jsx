@@ -17,7 +17,7 @@ function Testimonials() {
           </svg>
 
           <div className="relative">
-            <img className="mx-auto h-16" src="img/suspendus-h.png" alt="Suspend'us" />
+            <img className="mx-auto h-16" src="/img/suspendus-h.png" alt="Suspend'us" />
             <blockquote className="mt-10">
               <div className="max-w-3xl mx-auto text-center text-2xl leading-9 font-medium text-gray-900">
                 <p>
@@ -50,7 +50,7 @@ function Testimonials() {
         <div className="max-w-7xl mx-auto md:grid md:grid-cols-2 md:px-6 lg:px-8">
           <div className="py-12 px-4 sm:px-6 md:flex md:flex-col md:py-16 md:pl-0 md:pr-10 md:border-r md:border-gray-900 lg:pr-16">
             <div className="md:flex-shrink-0">
-              <img className="h-12" src="img/agency-h.png" alt="Agency LA" />
+              <img className="h-12" src="/img/agency-h.png" alt="Agency LA" />
             </div>
             <blockquote className="mt-6 md:flex-grow md:flex md:flex-col">
               <div className="relative text-lg font-medium text-white md:flex-grow">
@@ -76,7 +76,7 @@ function Testimonials() {
           </div>
           <div className="py-12 px-4 border-t-2 border-gray-900 sm:px-6 md:py-16 md:pr-0 md:pl-10 md:border-t-0 md:border-l lg:pl-16">
             <div className="md:flex-shrink-0">
-              <img className="h-12 contrast-50 invert" src="img/tavour.png" alt="Tavour" />
+              <img className="h-12 contrast-50 invert" src="/img/tavour.png" alt="Tavour" />
             </div>
             <blockquote className="mt-6 md:flex-grow md:flex md:flex-col">
               <div className="relative text-lg font-medium text-white md:flex-grow">
