@@ -1,3 +1,5 @@
+import typography from '@tailwindcss/typography';
+
 export default {
   content: ['./index.html', './src/**/*.{js,jsx,html,md}'],
   theme: {
@@ -17,5 +19,7 @@ export default {
     },
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    typography, // Add the plugin here
+  ],
 };

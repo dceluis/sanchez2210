@@ -1,1 +1,75 @@
-/* Removed flipWord animation as it's no longer needed */
+/* Custom styles for the .prose class from @tailwindcss/typography */
+
+.prose {
+  /* General text color */
+  --tw-prose-body: theme('colors.gray.700');
+  --tw-prose-headings: theme('colors.gray.900');
+  --tw-prose-lead: theme('colors.gray.600');
+  
+  /* Link styles */
+  --tw-prose-links: theme('colors.indigo.600');
+  --tw-prose-links-hover: theme('colors.indigo.700');
+  
+  /* Strong (bold) text */
+  --tw-prose-strong: theme('colors.gray.900');
+
+  /* Horizontal rule */
+  --tw-prose-hr: theme('colors.gray.200');
+
+  /* Quotes and blockquotes */
+  --tw-prose-quotes: theme('colors.gray.900');
+  --tw-prose-quote-borders: theme('colors.indigo.200');
+
+  /* Code blocks */
+  --tw-prose-code: theme('colors.indigo.700');
+  --tw-prose-pre-code: theme('colors.gray.200');
+  --tw-prose-pre-bg: theme('colors.gray.800');
+  
+  /* Tables */
+  --tw-prose-th-borders: theme('colors.gray.300');
+  --tw-prose-td-borders: theme('colors.gray.200');
+}
+
+/* Further custom overrides */
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.prose a {
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.prose a:hover {
+  text-decoration: underline;
+}
+
+.prose blockquote {
+  border-left-width: 3px;
+  padding-left: 1rem;
+}
+
+.prose pre {
+  border-radius: 0.5rem; /* 8px */
+  border: 1px solid theme('colors.gray.700');
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.prose code {
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+/* Style for inline code */
+.prose code:not(pre > code) {
+  background-color: theme('colors.indigo.50');
+  color: theme('colors.indigo.700');
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}
+
+.prose shadowed {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
