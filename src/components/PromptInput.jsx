@@ -14,12 +14,8 @@ function PromptInput({ onPromptSubmit, onDownloadModel, fileContent, languageMod
         return 'Click "Download AI Assistant" to get started...';
       case 'downloading':
         return `Downloading AI model... ${downloadProgress}%`;
-      case 'loading_from_cache':
-        return 'Loading AI model from cache...';
       case 'loading_model':
         return 'Initializing AI model...';
-      case 'cached_available':
-        return 'Loading cached AI model...';
       case 'unavailable':
         return 'AI assistant is unavailable.';
       case 'available':
@@ -55,9 +51,7 @@ function PromptInput({ onPromptSubmit, onDownloadModel, fileContent, languageMod
         return 'Download AI Assistant';
       case 'downloading':
         return `Downloading... ${downloadProgress}%`;
-      case 'loading_from_cache':
       case 'loading_model':
-      case 'cached_available':
         return 'Loading...';
       case 'unavailable':
         return 'Unavailable';

@@ -55,18 +55,6 @@ function App() {
                   sender: 'system',
                   text: 'AI assistant is ready to download. Click "Download AI Assistant" to get started.'
                 }]);
-              } else if (status === 'cached_available') {
-                setConversationHistory(prev => [...prev, {
-                  sender: 'system',
-                  text: 'AI model found in cache. Loading...'
-                }]);
-                // Automatically load cached model
-                workerInstance.postMessage({ type: 'load_cached' });
-              } else if (status === 'loading_from_cache') {
-                setConversationHistory(prev => [...prev, {
-                  sender: 'system',
-                  text: 'Loading AI model from cache...'
-                }]);
               } else if (status === 'loading_model') {
                 setConversationHistory(prev => [...prev, {
                   sender: 'system',
