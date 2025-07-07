@@ -10,6 +10,7 @@ function PromptInput({ onPromptSubmit, fileContent, languageModelStatus }) {
       case 'checking':
         return 'Checking AI assistant availability...';
       case 'downloadable':
+        return 'AI model needs to be downloaded. Starting download...'
       case 'downloading':
         return 'AI model is downloading...';
       case 'unavailable':
