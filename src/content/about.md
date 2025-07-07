@@ -2,10 +2,6 @@
 
 I'm a software engineer who loves creating apps, websites, and building AI projects.
 
-## Extensive industry experience
-
-Some of the clients I have worked with:
-
 <div class="mt-8">
   <div class="flex justify-center mx-auto max-w-7xl w-full">
     <div class="px-4 sm:px-8 xl:pr-16 lg:w-1/2 text-center lg:text-left">
@@ -16,6 +12,10 @@ Some of the clients I have worked with:
 <a href="#contact" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
   Get in touch
 </a>
+
+## Extensive industry experience
+
+Some of the clients I have worked with:
 
 <div class="mt-16">
   <div class="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
