@@ -1,3 +1,5 @@
+// src/components/ProjectShowcase.jsx
+
 import React, { useState } from 'react';
 import ProjectCard from './ProjectCard';
 import ProjectModal from './ProjectModal';
@@ -16,7 +18,7 @@ function ProjectShowcase() {
       modalTitle: 'Vision-Assisted Camera Orientation',
       video: 'videos/vacocam_demo.mp4',
       mediaCaption: 'VacoCam demonstration video.',
-      description: [
+      modalDescription: [
         'VacoCam uses a Visual Large Language Model to generate focused sports video from unfocused raw footage. I learned how to maintain an object detection dataset and train and evaluate a custom YoloV8 model.',
         'The main challenge was figuring out how to present the tracked information to the VLLMs AND evaluate the performance of different approaches. I created a custom benchmark that allowed me to try different methods and read many papers on arXiv to find inspiration.',
         'I wrote this project when I knew absolutely nothing about LLMs or AI models in general. Used Label Studio, Weights & Biases, and learned Python for this project.',
@@ -48,7 +50,7 @@ function ProjectShowcase() {
       modalImage: 'img/libre_agent.png',
       modalImageAlt: 'Task Management App Demo',
       mediaCaption: 'LibreAgent running as a Telegram bot.',
-      description: [
+      modalDescription: [
         'LibreAgent is a long-lived agentic system that gathers and refines memories to feel like a living being.',
         'I started this project initially unaware of agentic frameworks, so it took me quite a while to get it to work properly as I was encountering the agentic challenges these frameworks solve.',
         'When I encountered established frameworks later, I recognized their strengths and selectively integrated key insights, while preserving the unique elements that define LibreAgent.',
@@ -73,7 +75,7 @@ function ProjectShowcase() {
       modalImage: 'img/phone_operator.png',
       modalImageAlt: 'Phone Operator screenshot',
       mediaCaption: 'Phone Operator running.',
-      description: [
+      modalDescription: [
         'Phone Operator bridges AI assistants and automating your phone capabilities. Allowing tools like Claude, Cursor, and any MCP compatible client operate on your phone.',
         'This project was built over a weekend for Toolhouse.ai and pulsemcp.com\'s Hackathon, and won third place among 23 participants.',
         'Built with <span class="font-medium text-indigo-600">Python</span>, <span class="font-medium text-indigo-600">Termux</span>, and <span class="font-medium text-indigo-600">Tasker</span>.'

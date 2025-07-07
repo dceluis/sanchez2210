@@ -4,11 +4,11 @@ function ProjectModal({ project, isOpen, onClose }) {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    if (isOpen && videoRef.current && project.video) {
+    if (isOpen && project && project.video && videoRef.current) {
       videoRef.current.src = project.video;
       videoRef.current.load();
     }
-  }, [isOpen, project.video]);
+  }, [isOpen, project]);
 
   if (!isOpen || !project) return null;
 
@@ -52,7 +52,7 @@ function ProjectModal({ project, isOpen, onClose }) {
 
           {/* Description */}
           <div className="text-gray-700 mb-6">
-            {project.description.map((paragraph, index) => (
+            {project.modalDescription.map((paragraph, index) => (
               <p key={index} className="mb-3" dangerouslySetInnerHTML={{ __html: paragraph }} />
             ))}
           </div>
