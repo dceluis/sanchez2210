@@ -12,10 +12,9 @@ function Navbar({ onPromptSubmit }) {
   };
 
   return (
-    <div className="size-full bg-white shadow-sm border-b border-gray-200">
-      <div className="flex px-6 py-4">
-        {/* Profile Section - Fixed width to match sidebar */}
-        <div className="w-64 flex items-center">
+    <div className="size-full bg-white shadow-sm">
+      <div className="flex">
+        <div className="w-64 flex items-center border-r border-gray-300 px-6 py-4">
           <img 
             className="w-12 h-12 rounded-full mr-3" 
             src="/img/portrait_small.jpeg" 

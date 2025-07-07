@@ -17,11 +17,8 @@ function App() {
 
   return (
     <div className="flex flex-col w-screen h-screen bg-gray-100">
-      <div className="flex-none">
-        <Navbar onPromptSubmit={handlePromptSubmit} />
-      </div>
       <div className="flex flex-1 overflow-hidden">
-        <div className="h-full w-64">
+        <div className="h-full w-64 border-r border-gray-200">
           <Sidebar 
             activeSection={activeSection} 
             onSectionChange={setActiveSection} 
@@ -30,6 +27,10 @@ function App() {
           />
         </div>
         <ContentArea activeSection={activeSection} viewMode={viewMode} />
+      </div>
+
+      <div className="flex-none border-t border-gray-200">
+        <Navbar onPromptSubmit={handlePromptSubmit} />
       </div>
       
       <ConversationPopup 

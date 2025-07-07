@@ -61,11 +61,8 @@ function Sidebar({ activeSection, onSectionChange, viewMode, onViewModeChange })
 
   return (
     <div className="size-full bg-white shadow-lg overflow-y-scroll">
-      <div className="p-6">
-        <div className="mb-6 flex justify-center">
-          <ViewModeSwitcher mode={viewMode} onModeChange={onViewModeChange} />
-        </div>
-        <nav className="space-y-2">
+      <div className="flex flex-col size-full p-6">
+        <nav className="flex-1 space-y-2">
           {sections.map((section) => (
             <button
               key={section.id}
@@ -80,6 +77,9 @@ function Sidebar({ activeSection, onSectionChange, viewMode, onViewModeChange })
             </button>
           ))}
         </nav>
+        <div className="mt-6 flex justify-center">
+          <ViewModeSwitcher mode={viewMode} onModeChange={onViewModeChange} />
+        </div>
       </div>
     </div>
   );
