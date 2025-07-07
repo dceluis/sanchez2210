@@ -6,6 +6,7 @@ import ContentArea from './components/ContentArea';
 
 function App() {
   const [activeSection, setActiveSection] = useState('about');
+  const [viewMode, setViewMode] = useState('preview');
 
   return (
     <div className="flex flex-col w-screen h-screen bg-gray-100">
@@ -17,9 +18,11 @@ function App() {
           <Sidebar 
             activeSection={activeSection} 
             onSectionChange={setActiveSection} 
+            viewMode={viewMode}
+            onViewModeChange={setViewMode}
           />
         </div>
-        <ContentArea activeSection={activeSection} />
+        <ContentArea activeSection={activeSection} viewMode={viewMode} />
       </div>
     </div>
   );
