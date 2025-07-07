@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import HeroSection from './HeroSection';
-import ExperienceSection from './ExperienceSection';
-import ProjectShowcase from './ProjectShowcase';
-import Testimonials from './Testimonials';
-import ContactSection from './ContactSection';
 
 function ContentArea({ activeSection }) {
   const [markdownContent, setMarkdownContent] = useState('');
@@ -33,26 +28,6 @@ function ContentArea({ activeSection }) {
     loadMarkdownContent();
   }, [activeSection]);
 
-  const renderSectionComponent = () => {
-    switch (activeSection) {
-      case 'about':
-        return (
-          <>
-            <HeroSection />
-            <ExperienceSection />
-          </>
-        );
-      case 'projects':
-        return <ProjectShowcase />;
-      case 'testimonials':
-        return <Testimonials />;
-      case 'contact':
-        return <ContactSection />;
-      default:
-        return null;
-    }
-  };
-
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -64,13 +39,11 @@ function ContentArea({ activeSection }) {
   return (
     <div className="flex-1 ml-64">
       <div className="max-w-4xl mx-auto px-6 py-8">
-        <div className="prose prose-lg max-w-none mb-12">
+        <div className="prose prose-lg max-w-none">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {markdownContent}
           </ReactMarkdown>
         </div>
-        
-        {renderSectionComponent()}
       </div>
     </div>
   );
