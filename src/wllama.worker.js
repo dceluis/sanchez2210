@@ -1,11 +1,12 @@
 import { Wllama } from '@wllama/wllama';
+import WasmFromCDN from '@wllama/wllama/esm/wasm-from-cdn.js';
 
 let wllama = null;
 let isModelLoaded = false;
 
 // Model configuration
-const HF_REPO = 'bartowski/Meta-Llama-3-8B-Instruct-GGUF';
-const MODEL_FILE = 'Meta-Llama-3-8B-Instruct-Q4_K_M.gguf';
+const HF_REPO = 'bartowski/Llama-3.2-1B-Instruct-GGUF';
+const MODEL_FILE = 'Llama-3.2-1B-Instruct-Q4_K_M.gguf';
 const MODEL_CONFIG = {
   seed: -1,
   n_threads: navigator.hardwareConcurrency || 4,
@@ -21,14 +22,8 @@ const MODEL_CONFIG = {
 async function initializeWllama() {
   try {
     if (!wllama) {
-      wllama = new Wllama({
-        // Use CDN for wllama assets
-        'single-thread/wllama.js': 'https://cdn.jsdelivr.net/npm/@wllama/wllama@latest/esm/single-thread/wllama.js',
-        'single-thread/wllama.wasm': 'https://cdn.jsdelivr.net/npm/@wllama/wllama@latest/esm/single-thread/wllama.wasm',
-        'multi-thread/wllama.js': 'https://cdn.jsdelivr.net/npm/@wllama/wllama@latest/esm/multi-thread/wllama.js',
-        'multi-thread/wllama.wasm': 'https://cdn.jsdelivr.net/npm/@wllama/wllama@latest/esm/multi-thread/wllama.wasm',
-        'multi-thread/wllama.worker.mjs': 'https://cdn.jsdelivr.net/npm/@wllama/wllama@latest/esm/multi-thread/wllama.worker.mjs',
-      });
+      // Use WasmFromCDN for Web Worker compatibility
+      wllama = new Wllama(WasmFromCDN);
     }
     return true;
   } catch (error) {
