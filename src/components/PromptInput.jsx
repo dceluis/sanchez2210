@@ -11,7 +11,7 @@ function PromptInput({ onPromptSubmit, onDownloadModel, fileContent, languageMod
       case 'checking':
         return 'Checking AI assistant availability...';
       case 'ready_to_download':
-        return 'Click "Download AI Assistant" to get started...';
+        return 'press enter to download AI assistant...';
       case 'downloading':
         return `Downloading AI model... ${downloadProgress}%`;
       case 'loading_model':
@@ -19,7 +19,7 @@ function PromptInput({ onPromptSubmit, onDownloadModel, fileContent, languageMod
       case 'unavailable':
         return 'AI assistant is unavailable.';
       case 'available':
-        return 'Ask me anything about my work, projects, or experience...';
+        return 'type your question here...';
       default:
         return 'Loading...';
     }
@@ -48,45 +48,67 @@ function PromptInput({ onPromptSubmit, onDownloadModel, fileContent, languageMod
   const getButtonText = () => {
     switch (languageModelStatus) {
       case 'ready_to_download':
-        return 'Download AI Assistant';
+        return '';
       case 'downloading':
-        return `Downloading... ${downloadProgress}%`;
+        return `${downloadProgress}%`;
       case 'loading_model':
-        return 'Loading...';
+        return '';
       case 'unavailable':
-        return 'Unavailable';
+        return '';
       case 'available':
-        return 'Send';
+        return '';
       default:
-        return 'Loading...';
+        return '';
     }
   };
+
+  const getButtonIcon = () => {
+    switch (languageModelStatus) {
+      case 'ready_to_download':
+        return '⬇';
+      case 'downloading':
+        return '⬇';
+      case 'loading_model':
+        return '⏳';
+      case 'unavailable':
+        return '❌';
+      case 'available':
+        return '→';
+      default:
+        return '⏳';
+    }
+  };
+
   return (
     <div className="flex-none border-t border-gray-200 p-4">
-      <div className="flex space-x-3">
-        <input
-          type="text"
-          value={promptValue}
-          onChange={(e) => setPromptValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={getPlaceholderText()}
-          disabled={isInputDisabled}
-          className={`flex-1 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm ${
-            isInputDisabled 
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-              : 'bg-white text-gray-900'
-          }`}
-        />
+      <div className="flex items-center space-x-3">
+        <div className={`flex-1 flex items-center px-4 py-3 rounded-lg border transition-colors font-mono text-sm ${
+          isInputDisabled 
+            ? 'bg-gray-50 border-gray-200 text-gray-400' 
+            : 'bg-gray-900 border-gray-700 text-green-400 focus-within:border-green-500'
+        }`}>
+          <span className="text-green-500 mr-2">ask:</span>
+          <input
+            type="text"
+            value={promptValue}
+            onChange={(e) => setPromptValue(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder={getPlaceholderText()}
+            disabled={isInputDisabled}
+            className="flex-1 bg-transparent outline-none placeholder-gray-500 font-mono"
+          />
+          <span className="blinking-cursor text-green-400 ml-1">|</span>
+        </div>
         <button
           onClick={handleSubmit}
           disabled={isButtonDisabled || (languageModelStatus === 'available' && !promptValue.trim())}
-          className={`px-4 py-2 rounded-lg transition-colors ${
+          className={`px-4 py-3 rounded-lg transition-colors font-mono text-lg ${
             isButtonDisabled || (languageModelStatus === 'available' && !promptValue.trim())
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'bg-indigo-600 text-white hover:bg-indigo-700'
+              ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              : 'bg-gray-800 text-green-400 hover:bg-gray-700 border border-gray-600'
           }`}
         >
-          {getButtonText()}
+          {getButtonIcon()} {getButtonText()}
         </button>
       </div>
     </div>
