@@ -31,7 +31,7 @@ public/videos/vacocam_demo.mp4
 repomix.config.json
 src/App.jsx
 src/application.jsx
-src/components/ContentArea.jsx
+# src/components/ContentArea.jsx
 src/components/ConversationPopup.jsx
 src/components/Sidebar.jsx
 src/content/about.md
