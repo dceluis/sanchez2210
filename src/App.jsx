@@ -9,99 +9,145 @@ function App() {
   const [showConversationPopup, setShowConversationPopup] = useState(false);
   const [conversationHistory, setConversationHistory] = useState([]);
   const [languageModelStatus, setLanguageModelStatus] = useState('checking');
-  const [languageModelSession, setLanguageModelSession] = useState(null);
+  const [downloadProgress, setDownloadProgress] = useState(0);
+  const [worker, setWorker] = useState(null);
 
-  // Initialize Language Model
+  // Initialize wllama Worker
   useEffect(() => {
-    let session = null;
+    let workerInstance = null;
 
-    const initializeLanguageModel = async () => {
+    const initializeWorker = () => {
       try {
-        // Check if LanguageModel is available
-        if (typeof window.LanguageModel === 'undefined') {
+        // Create worker
+        workerInstance = new Worker(new URL('./wllama.worker.js', import.meta.url), {
+          type: 'module'
+        });
+        
+        setWorker(workerInstance);
+        
+        // Set up message handler
+        workerInstance.onmessage = (e) => {
+          const { type, status, progress, response, message } = e.data;
+          
+          switch (type) {
+            case 'status':
+              setLanguageModelStatus(status);
+              
+              if (status === 'downloading' && progress !== undefined) {
+                setDownloadProgress(progress);
+                console.log(`AI model download progress: ${progress}%`);
+                
+                setConversationHistory(prev => {
+                  const newHistory = [...prev];
+                  const lastMessage = newHistory[newHistory.length - 1];
+                  if (lastMessage && lastMessage.sender === 'system' && lastMessage.text.includes('downloading')) {
+                    lastMessage.text = `AI model downloading... ${progress}%`;
+                  } else {
+                    newHistory.push({
+                      sender: 'system',
+                      text: `AI model downloading... ${progress}%`
+                    });
+                  }
+                  return newHistory;
+                });
+              } else if (status === 'ready_to_download') {
+                setConversationHistory(prev => [...prev, {
+                  sender: 'system',
+                  text: 'AI assistant is ready to download. Click "Download AI Assistant" to get started.'
+                }]);
+              } else if (status === 'cached_available') {
+                setConversationHistory(prev => [...prev, {
+                  sender: 'system',
+                  text: 'AI model found in cache. Loading...'
+                }]);
+                // Automatically load cached model
+                workerInstance.postMessage({ type: 'load_cached' });
+              } else if (status === 'loading_from_cache') {
+                setConversationHistory(prev => [...prev, {
+                  sender: 'system',
+                  text: 'Loading AI model from cache...'
+                }]);
+              } else if (status === 'loading_model') {
+                setConversationHistory(prev => [...prev, {
+                  sender: 'system',
+                  text: 'Initializing AI model...'
+                }]);
+              } else if (status === 'available') {
+                setConversationHistory(prev => [...prev, {
+                  sender: 'system',
+                  text: 'AI assistant is ready! Ask me anything about Luis\'s work and experience.'
+                }]);
+              }
+              break;
+              
+            case 'thinking':
+              setConversationHistory(prev => [...prev, {
+                sender: 'ai',
+                text: 'Thinking...',
+                isThinking: true
+              }]);
+              break;
+              
+            case 'response':
+              setConversationHistory(prev => {
+                const newHistory = prev.filter(msg => !msg.isThinking);
+                return [...newHistory, {
+                  sender: 'ai',
+                  text: response
+                }];
+              });
+              break;
+              
+            case 'error':
+              setConversationHistory(prev => {
+                const newHistory = prev.filter(msg => !msg.isThinking);
+                return [...newHistory, {
+                  sender: 'system',
+                  text: message || 'An error occurred. Please try again.'
+                }];
+              });
+              setLanguageModelStatus('unavailable');
+              break;
+          }
+        };
+        
+        workerInstance.onerror = (error) => {
+          console.error('Worker error:', error);
           setLanguageModelStatus('unavailable');
           setConversationHistory(prev => [...prev, {
             sender: 'system',
-            text: 'AI assistant is not available in this browser. Please use Chrome 138+ with the required hardware specifications.'
+            text: 'AI assistant failed to initialize. Please refresh the page and try again.'
           }]);
-          return;
-        }
-
-        // Check model availability
-        const availability = await window.LanguageModel.availability();
-        setLanguageModelStatus(availability);
-
-        if (availability === 'unavailable') {
-          setConversationHistory(prev => [...prev, {
-            sender: 'system',
-            text: 'AI assistant is not available on this device. Please check the hardware requirements.'
-          }]);
-          return;
-        }
-
-        if (availability === 'downloadable' || availability === 'downloading') {
-          setConversationHistory(prev => [...prev, {
-            sender: 'system',
-            text: availability === 'downloadable' 
-              ? 'AI model needs to be downloaded. Starting download...'
-              : 'AI model is downloading...'
-          }]);
-        }
-
-        // Create session with download progress monitoring
-        session = await window.LanguageModel.create({
-          initialPrompts: [{
-            role: 'system',
-            content: 'You are a helpful AI assistant for Luis Sanchez\'s portfolio. Answer questions about his work, projects, and experience based on the provided context. Be concise, professional, and helpful.'
-          }],
-          monitor(m) {
-            m.addEventListener("downloadprogress", (e) => {
-              const progress = Math.round(e.loaded * 100);
-              console.log(`AI model download progress: ${progress}%`);
-              setConversationHistory(prev => {
-                const newHistory = [...prev];
-                const lastMessage = newHistory[newHistory.length - 1];
-                if (lastMessage && lastMessage.sender === 'system' && lastMessage.text.includes('downloading')) {
-                  lastMessage.text = `AI model downloading... ${progress}%`;
-                } else {
-                  newHistory.push({
-                    sender: 'system',
-                    text: `AI model downloading... ${progress}%`
-                  });
-                }
-                return newHistory;
-              });
-            });
-          }
-        });
-
-        setLanguageModelSession(session);
-        setLanguageModelStatus('available');
-        setConversationHistory(prev => [...prev, {
-          sender: 'system',
-          text: 'AI assistant is ready! Ask me anything about Luis\'s work and experience.'
-        }]);
+        };
+        
+        // Initialize the worker
+        workerInstance.postMessage({ type: 'init' });
 
       } catch (error) {
-        console.error('Failed to initialize language model:', error);
+        console.error('Failed to initialize worker:', error);
         setLanguageModelStatus('unavailable');
         setConversationHistory(prev => [...prev, {
           sender: 'system',
-          text: 'Failed to initialize AI assistant. Please try refreshing the page.'
+          text: 'Failed to initialize AI assistant. Please refresh the page and try again.'
         }]);
       }
     };
 
-    initializeLanguageModel();
+    initializeWorker();
 
     // Cleanup function
     return () => {
-      if (session) {
-        session.destroy();
+      if (workerInstance) {
+        workerInstance.terminate();
       }
     };
   }, []);
 
+  const handleDownloadModel = () => {
+    if (worker && languageModelStatus === 'ready_to_download') {
+      worker.postMessage({ type: 'download' });
+    }
+  };
   const handlePromptSubmit = async (prompt, fileContent) => {
     // Add user message to conversation
     setConversationHistory(prev => [...prev, {
@@ -112,54 +158,20 @@ function App() {
     // Show conversation popup
     setShowConversationPopup(true);
 
-    // Check if language model session is available
-    if (!languageModelSession || languageModelStatus !== 'available') {
+    // Check if worker and model are available
+    if (!worker || languageModelStatus !== 'available') {
       setConversationHistory(prev => [...prev, {
         sender: 'system',
-        text: 'AI assistant is not available right now. Please wait for it to initialize or check your browser compatibility.'
+        text: 'AI assistant is not available right now. Please wait for it to initialize or download the model.'
       }]);
       return;
     }
 
-    // Add thinking message
-    setConversationHistory(prev => [...prev, {
-      sender: 'ai',
-      text: 'Thinking...',
-      isThinking: true
-    }]);
-
-    try {
-      // Construct the full prompt with context
-      const fullPrompt = `Here is the content of the current section:
-
-${fileContent}
-
-Based on this context, please answer the following question: ${prompt}`;
-
-      // Call the language model
-      const response = await languageModelSession.prompt(fullPrompt);
-
-      // Remove thinking message and add AI response
-      setConversationHistory(prev => {
-        const newHistory = prev.filter(msg => !msg.isThinking);
-        return [...newHistory, {
-          sender: 'ai',
-          text: response
-        }];
-      });
-
-    } catch (error) {
-      console.error('Failed to get AI response:', error);
-      
-      // Remove thinking message and add error message
-      setConversationHistory(prev => {
-        const newHistory = prev.filter(msg => !msg.isThinking);
-        return [...newHistory, {
-          sender: 'system',
-          text: 'Sorry, I encountered an error while processing your request. Please try again.'
-        }];
-      });
-    }
+    // Send prompt to worker
+    worker.postMessage({ 
+      type: 'prompt', 
+      data: { prompt, context: fileContent } 
+    });
   };
 
   return (
@@ -176,7 +188,9 @@ Based on this context, please answer the following question: ${prompt}`;
             <ContentArea 
               activeSection={activeSection} 
               onPromptSubmit={handlePromptSubmit}
+              onDownloadModel={handleDownloadModel}
               languageModelStatus={languageModelStatus}
+              downloadProgress={downloadProgress}
             />
           </div>
         </div>

@@ -3,7 +3,7 @@ import ViewModeSwitcher from './ViewModeSwitcher';
 import ContentDisplay from './ContentDisplay';
 import PromptInput from './PromptInput';
 
-function ContentArea({ activeSection, onPromptSubmit, languageModelStatus }) {
+function ContentArea({ activeSection, onPromptSubmit, onDownloadModel, languageModelStatus, downloadProgress }) {
   const [allSectionData, setAllSectionData] = useState({});
   const [loading, setLoading] = useState(true);
   const editorRef = useRef(null);
@@ -108,8 +108,10 @@ function ContentArea({ activeSection, onPromptSubmit, languageModelStatus }) {
       <div className="flex-none">
         <PromptInput 
           onPromptSubmit={onPromptSubmit} 
+          onDownloadModel={onDownloadModel}
           fileContent={currentSectionContent}
           languageModelStatus={languageModelStatus}
+          downloadProgress={downloadProgress}
         />
       </div>
     </div>
