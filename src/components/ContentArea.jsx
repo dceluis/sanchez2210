@@ -4,10 +4,10 @@ import ContentDisplay from './ContentDisplay';
 import PromptInput from './PromptInput';
 
 // Import markdown content at build time
-import aboutContent from '../../public/content/about.md?raw';
-import projectsContent from '../../public/content/projects.md?raw';
-import testimonialsContent from '../../public/content/testimonials.md?raw';
-import contactContent from '../../public/content/contact.md?raw';
+import aboutContent from '@/src/content/about.md?raw';
+import projectsContent from '@/src/public/content/projects.md?raw';
+import testimonialsContent from '@/src/public/content/testimonials.md?raw';
+import contactContent from '@/src/public/content/contact.md?raw';
 
 // Map section IDs to their content
 const sectionContents = {
