@@ -12,14 +12,7 @@ Some of the clients I have worked with:
       <img class="lg:hidden rounded-full w-56 md:w-64 m-auto mb-8" src="/img/portrait_small.jpeg" alt="Luis Sanchez portrait" />
       <div class="text-4xl tracking-tight font-bold text-gray-900 sm:text-5xl sm:tracking-tight md:text-6xl md:tracking-tight lg:text-5xl lg:tracking-tight xl:text-6xl xl:tracking-tight">
         <span class="inline-flex">Luis makes</span>
-        <span class="inline-flex overflow-hidden relative">
-          <span class="absolute inset-0" style="animation: flipWord 20s ease-in-out infinite; animation-delay: 0s;">AI</span>
-          <span class="absolute inset-0 opacity-0" style="animation: flipWord 20s ease-in-out infinite; animation-delay: 4s;">web</span>
-          <span class="absolute inset-0 opacity-0" style="animation: flipWord 20s ease-in-out infinite; animation-delay: 8s;">python</span>
-          <span class="absolute inset-0 opacity-0" style="animation: flipWord 20s ease-in-out infinite; animation-delay: 12s;">ruby</span>
-          <span class="absolute inset-0 opacity-0" style="animation: flipWord 20s ease-in-out infinite; animation-delay: 16s;">fast</span>
-          <span class="opacity-0">python</span>
-        </span>
+        <span class="inline-flex text-indigo-600">AI</span>
         <br />
         <span class="inline-flex text-indigo-600">applications</span>
       </div>
