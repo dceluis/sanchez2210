@@ -16,15 +16,15 @@ Some of the clients I have worked with:
       </div>
       <div class="mt-8 sm:flex sm:justify-center lg:justify-start">
         <div class="rounded-md shadow">
-          <a href="#contact" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
-            Get in touch
-          </a>
+
         </div>
       </div>
     </div>
   </div>
 </div>
-
+<a href="#contact" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+  Get in touch
+</a>
 <div class="mt-16">
   <div class="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
     <div class="lg:grid lg:grid-cols-2 lg:gap-24 lg:items-center">
