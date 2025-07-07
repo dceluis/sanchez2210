@@ -4,7 +4,7 @@ import ContentDisplay from './ContentDisplay';
 import PromptInput from './PromptInput';
 
 // Import markdown content at build time
-import aboutContent from '../../content/about.md?raw';
+import aboutContent from '../content/about.md?raw';
 import projectsContent from '../public/content/projects.md?raw';
 import testimonialsContent from '../public/content/testimonials.md?raw';
 import contactContent from '../public/content/contact.md?raw';
