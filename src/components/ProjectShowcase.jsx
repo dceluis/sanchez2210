@@ -102,15 +102,9 @@ function ProjectShowcase() {
   };
 
   return (
-    <section className="mt-32" id="projects">
+    <section className="mt-16" id="projects">
       <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
-        <h2 className="text-3xl font-bold text-gray-900 tracking-tight sm:text-4xl sm:tracking-tight font-normal">
-          Project Showcase
-        </h2>
-        <p className="mt-6 max-w-3xl text-lg leading-7 text-gray-500">
-          Here are some of the projects I've built in my road to learn AI.
-        </p>
-        <div className="mt-12 grid gap-8 lg:grid-cols-3">
+        <div className="grid gap-8 lg:grid-cols-3">
           {projects.map((project) => (
             <ProjectCard 
               key={project.id} 

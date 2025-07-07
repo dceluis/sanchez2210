@@ -2,11 +2,11 @@ import React from 'react';
 
 function HeroSection() {
   return (
-    <main>
-      <div className="flex justify-center mx-auto max-w-7xl w-full pt-16 lg:pt-32">
+    <main className="mt-8">
+      <div className="flex justify-center mx-auto max-w-7xl w-full">
         <div className="px-4 sm:px-8 xl:pr-16 lg:w-1/2 text-center lg:text-left">
           <img className="lg:hidden rounded-full w-56 md:w-64 m-auto mb-8" src="/img/portrait_small.jpeg" alt="Luis Sanchez portrait" />
-          <h1 className="text-4xl tracking-tight font-bold text-gray-900 sm:text-5xl sm:tracking-tight md:text-6xl md:tracking-tight lg:text-5xl lg:tracking-tight xl:text-6xl xl:tracking-tight">
+          <div className="text-4xl tracking-tight font-bold text-gray-900 sm:text-5xl sm:tracking-tight md:text-6xl md:tracking-tight lg:text-5xl lg:tracking-tight xl:text-6xl xl:tracking-tight">
             <span className="inline-flex">Luis makes</span>
             <span className="inline-flex overflow-hidden relative">
               <span className="absolute inset-0" style={{animation: 'flipWord 20s ease-in-out infinite', animationDelay: '0s'}}>AI</span>
@@ -18,13 +18,8 @@ function HeroSection() {
             </span>
             <br />
             <span className="inline-flex text-indigo-600">applications</span>
-          </h1>
-          <p className="mt-3 max-w-md mx-auto text-lg text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl">
-            I'm a software engineer who loves creating apps,
-            <br />
-            websites, and building AI projects.
-          </p>
-          <div className="mt-10 sm:flex sm:justify-center lg:justify-start">
+          </div>
+          <div className="mt-8 sm:flex sm:justify-center lg:justify-start">
             <div className="rounded-md shadow">
               <a href="#contact" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
                 Get in touch

@@ -1,21 +1,19 @@
 import React from 'react';
-import Navbar from './components/Navbar';
-import HeroSection from './components/HeroSection';
-import ExperienceSection from './components/ExperienceSection';
-import ProjectShowcase from './components/ProjectShowcase';
-import Testimonials from './components/Testimonials';
-import ContactSection from './components/ContactSection';
+import { useState } from 'react';
+import Sidebar from './components/Sidebar';
+import ContentArea from './components/ContentArea';
 import Footer from './components/Footer';
 
 function App() {
+  const [activeSection, setActiveSection] = useState('about');
+
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Navbar />
-      <HeroSection />
-      <ExperienceSection />
-      <ProjectShowcase />
-      <Testimonials />
-      <ContactSection />
+    <div className="min-h-screen bg-gray-100 flex">
+      <Sidebar 
+        activeSection={activeSection} 
+        onSectionChange={setActiveSection} 
+      />
+      <ContentArea activeSection={activeSection} />
       <Footer />
     </div>
   );

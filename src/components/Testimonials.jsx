@@ -4,7 +4,7 @@ function Testimonials() {
   return (
     <>
       {/* First Testimonial Section */}
-      <section className="bg-gray-50 overflow-hidden mt-32 py-12 md:py-20 lg:py-24" id="testimonials">
+      <section className="bg-gray-50 overflow-hidden mt-16 py-12 md:py-20 lg:py-24" id="testimonials">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <svg className="absolute top-full right-full transform translate-x-1/3 -translate-y-1/4 lg:translate-x-1/2 xl:-translate-y-1/2" width="404" height="404" fill="none" viewBox="0 0 404 404" role="img" aria-labelledby="svg-workcation">
             <title id="svg-workcation">Workcation</title>

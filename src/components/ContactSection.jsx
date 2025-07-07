@@ -2,15 +2,9 @@ import React from 'react';
 
 function ContactSection() {
   return (
-    <section className="mt-32" id="contact">
+    <section className="mt-16" id="contact">
       <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
-        <h2 className="text-3xl font-bold text-gray-900 tracking-tight sm:text-4xl sm:tracking-tight font-normal">
-          Get in Touch
-        </h2>
-        <p className="mt-6 text-lg leading-7 text-gray-500">
-          Reach out to me through any of these channels.
-        </p>
-        <div className="mt-12 grid gap-8 lg:grid-cols-3">
+        <div className="grid gap-8 lg:grid-cols-3">
           {/* Twitter */}
           <a 
             href="https://twitter.com/dceluis" 
