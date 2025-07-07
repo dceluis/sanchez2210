@@ -88,22 +88,26 @@ function ContentArea({ activeSection, onPromptSubmit }) {
   return (
     <div className="size-full flex flex-col bg-white">
       {/* View Mode Switcher */}
-      <div className="flex-none justify-end flex p-2">
+      <div className="flex flex-none justify-end p-2">
         <ViewModeSwitcher 
           mode={currentSectionViewMode} 
           onModeChange={(mode) => updateSection({ viewMode: mode })} 
         />
       </div>
       
-      <ContentDisplay
-        viewMode={currentSectionViewMode}
-        content={currentSectionContent}
-        onContentChange={(newContent) => updateSection({ content: newContent })}
-        editorRef={editorRef}
-        editorViewRef={editorViewRef}
-      />
+      <div className="flex flex-1 overflow-scroll">
+        <ContentDisplay
+          viewMode={currentSectionViewMode}
+          content={currentSectionContent}
+          onContentChange={(newContent) => updateSection({ content: newContent })}
+          editorRef={editorRef}
+          editorViewRef={editorViewRef}
+        />
+      </div>
       
-      <PromptInput onPromptSubmit={onPromptSubmit} />
+      <div className="flex-none">
+        <PromptInput onPromptSubmit={onPromptSubmit} />
+      </div>
     </div>
   );
 }
