@@ -60,9 +60,30 @@ function Sidebar({ activeSection, onSectionChange, viewMode, onViewModeChange })
   ];
 
   return (
-    <div className="size-full bg-white shadow-lg overflow-y-scroll">
-      <div className="flex flex-col size-full p-6">
-        <nav className="flex-1 space-y-2">
+    <div className="size-full bg-white overflow-y-scroll">
+      <div className="p-6">
+        {/* Profile Section */}
+        <div className="flex items-center mb-6">
+          <img 
+            className="w-12 h-12 rounded-full mr-3" 
+            src="/img/portrait_small.jpeg" 
+            alt="Luis Sanchez" 
+          />
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900">Luis Sanchez</h2>
+            <p className="text-sm text-gray-600">Software Engineer</p>
+          </div>
+        </div>
+        
+        {/* Divider */}
+        <div className="border-b border-gray-200 pb-6 mb-6"></div>
+        
+        {/* View Mode Switcher */}
+        <div className="mb-6 flex justify-center">
+          <ViewModeSwitcher mode={viewMode} onModeChange={onViewModeChange} />
+        </div>
+        
+        <nav className="space-y-2">
           {sections.map((section) => (
             <button
               key={section.id}
@@ -77,9 +98,6 @@ function Sidebar({ activeSection, onSectionChange, viewMode, onViewModeChange })
             </button>
           ))}
         </nav>
-        <div className="mt-6 flex justify-center">
-          <ViewModeSwitcher mode={viewMode} onModeChange={onViewModeChange} />
-        </div>
       </div>
     </div>
   );

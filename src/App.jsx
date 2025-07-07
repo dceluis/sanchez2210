@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import ContentArea from './components/ContentArea';
 import ConversationPopup from './components/ConversationPopup';
@@ -16,27 +15,29 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col w-screen h-screen bg-gray-100">
-      <div className="flex flex-1 overflow-hidden">
-        <div className="h-full w-64 border-r border-gray-200">
-          <Sidebar 
+    <div className="w-screen h-screen bg-gray-100 p-4">
+      <div className="flex flex-col w-full h-full bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="flex flex-1 overflow-hidden">
+          <div className="h-full w-64 border-r border-gray-200">
+            <Sidebar 
+              activeSection={activeSection} 
+              onSectionChange={setActiveSection} 
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
+            />
+          </div>
+          <ContentArea 
             activeSection={activeSection} 
-            onSectionChange={setActiveSection} 
-            viewMode={viewMode}
-            onViewModeChange={setViewMode}
+            viewMode={viewMode} 
+            onPromptSubmit={handlePromptSubmit}
           />
         </div>
-        <ContentArea activeSection={activeSection} viewMode={viewMode} />
+        
+        <ConversationPopup 
+          isOpen={showConversationPopup}
+          onClose={() => setShowConversationPopup(false)}
+        />
       </div>
-
-      <div className="flex-none border-t border-gray-200">
-        <Navbar onPromptSubmit={handlePromptSubmit} />
-      </div>
-      
-      <ConversationPopup 
-        isOpen={showConversationPopup}
-        onClose={() => setShowConversationPopup(false)}
-      />
     </div>
   );
 }

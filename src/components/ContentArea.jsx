@@ -8,11 +8,19 @@ import { EditorState } from '@codemirror/state';
 import { markdown } from '@codemirror/lang-markdown';
 import { oneDark } from '@codemirror/theme-one-dark';
 
-function ContentArea({ activeSection, viewMode }) {
+function ContentArea({ activeSection, viewMode, onPromptSubmit }) {
   const [editedContent, setEditedContent] = useState('');
   const [loading, setLoading] = useState(true);
+  const [promptValue, setPromptValue] = useState('');
   const editorRef = useRef(null);
   const editorViewRef = useRef(null);
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && promptValue.trim()) {
+      onPromptSubmit(promptValue);
+      setPromptValue('');
+    }
+  };
 
   useEffect(() => {
     const loadMarkdownContent = async () => {
@@ -95,7 +103,8 @@ function ContentArea({ activeSection, viewMode }) {
   }
 
   return (
-    <div className="flex flex-1 justify-around overflow-y-scroll bg-white">
+    <div className="flex flex-col flex-1 bg-white">
+      <div className="flex flex-1 justify-around overflow-y-scroll">
         {viewMode === 'edit' ? (
           <div ref={editorRef} className="flex-1 w-full overflow-hidden" />
         ) : (
@@ -108,6 +117,33 @@ function ContentArea({ activeSection, viewMode }) {
               </ReactMarkdown>
           </div>
         )}
+      </div>
+      
+      {/* Prompt Input Section */}
+      <div className="flex-none border-t border-gray-200 p-4">
+        <div className="flex space-x-3">
+          <input
+            type="text"
+            value={promptValue}
+            onChange={(e) => setPromptValue(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Ask me anything about my work, projects, or experience..."
+            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"
+          />
+          <button
+            onClick={() => {
+              if (promptValue.trim()) {
+                onPromptSubmit(promptValue);
+                setPromptValue('');
+              }
+            }}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={!promptValue.trim()}
+          >
+            Send
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
