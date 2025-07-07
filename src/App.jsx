@@ -2,7 +2,6 @@ import React from 'react';
 import { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import ContentArea from './components/ContentArea';
-import Footer from './components/Footer';
 
 function App() {
   const [activeSection, setActiveSection] = useState('about');
@@ -14,7 +13,6 @@ function App() {
         onSectionChange={setActiveSection} 
       />
       <ContentArea activeSection={activeSection} />
-      <Footer />
     </div>
   );
 }
