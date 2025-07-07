@@ -81,13 +81,13 @@ function PromptInput({ onPromptSubmit, onDownloadModel, fileContent, languageMod
 
   return (
     <div className="flex-none border-t border-gray-200 p-4">
-      <div className="flex items-center space-x-3">
-        <div className={`flex-1 flex items-center px-4 py-3 rounded-lg border transition-colors font-mono text-sm ${
+      <div className="flex items-center">
+        <div className={`flex-1 flex items-center px-4 py-3 rounded-l-md border border-r-0 transition-colors font-mono text-sm ${
           isInputDisabled 
-            ? 'bg-gray-50 border-gray-200 text-gray-400' 
-            : 'bg-gray-900 border-gray-700 text-green-400 focus-within:border-green-500'
+            ? 'bg-gray-100 border-gray-200 text-gray-400' 
+            : 'bg-white border-gray-300 text-gray-900 focus-within:border-indigo-500'
         }`}>
-          <span className="text-green-500 mr-2">ask:</span>
+          <span className="text-gray-500 mr-2">ask:</span>
           <input
             type="text"
             value={promptValue}
@@ -95,17 +95,16 @@ function PromptInput({ onPromptSubmit, onDownloadModel, fileContent, languageMod
             onKeyDown={handleKeyDown}
             placeholder={getPlaceholderText()}
             disabled={isInputDisabled}
-            className="flex-1 bg-transparent outline-none placeholder-gray-500 font-mono"
+            className="flex-1 bg-transparent outline-none placeholder-gray-400 font-mono"
           />
-          <span className="blinking-cursor text-green-400 ml-1">|</span>
         </div>
         <button
           onClick={handleSubmit}
           disabled={isButtonDisabled || (languageModelStatus === 'available' && !promptValue.trim())}
-          className={`px-4 py-3 rounded-lg transition-colors font-mono text-lg ${
+          className={`px-4 py-3 rounded-r-md ml-0 border-l-0 border-transparent transition-colors font-mono text-lg ${
             isButtonDisabled || (languageModelStatus === 'available' && !promptValue.trim())
-              ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-              : 'bg-gray-800 text-green-400 hover:bg-gray-700 border border-gray-600'
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : 'bg-indigo-600 text-white hover:bg-indigo-700'
           }`}
         >
           {getButtonIcon()} {getButtonText()}
