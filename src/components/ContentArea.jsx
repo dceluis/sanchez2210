@@ -8,11 +8,74 @@ import { EditorState } from '@codemirror/state';
 import { markdown } from '@codemirror/lang-markdown';
 import { oneDark } from '@codemirror/theme-one-dark';
 
+// New, dynamic, and smoothly animating ViewModeSwitcher component
+function ViewModeSwitcher({ mode, onModeChange }) {
+  const previewRef = useRef(null);
+  const editRef = useRef(null);
+  const [pillStyle, setPillStyle] = useState({});
+
+  useEffect(() => {
+    // Wait until the refs are attached to an element
+    if (!previewRef.current || !editRef.current) return;
+
+    const activeRef = mode === 'preview' ? previewRef : editRef;
+    const { offsetWidth, offsetLeft } = activeRef.current;
+    const parentPadding = 4; // Corresponds to p-1 (0.25rem * 16px/rem)
+
+    setPillStyle({
+      width: `${offsetWidth}px`,
+      transform: `translateX(${offsetLeft - parentPadding}px)`,
+    });
+
+  }, [mode]);
+
+  return (
+    <div className="relative flex w-fit items-center rounded-full bg-gray-200 p-1">
+      <button
+        ref={editRef}
+        onClick={() => onModeChange('edit')}
+        // Using longer text to better demonstrate the smooth width change
+        className={`relative z-10 rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+          mode === 'edit' ? 'text-gray-800' : 'text-gray-600 hover:text-gray-800'
+        }`}
+      >
+        Edit
+      </button>
+      <button
+        ref={previewRef}
+        onClick={() => onModeChange('preview')}
+        className={`relative z-10 rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+          mode === 'preview' ? 'text-gray-800' : 'text-gray-600 hover:text-gray-800'
+        }`}
+      >
+        Preview
+      </button>
+      {/* The moving pill background with smooth width and position transitions */}
+      <div
+        className="absolute top-1 h-[calc(100%-8px)] rounded-full bg-white shadow-md transition-all duration-300 ease-in-out"
+        style={pillStyle}
+      />
+    </div>
+  );
+}
+
+
+// Updated HeaderArea to use the new ViewModeSwitcher
+function HeaderArea({ activeSection, viewMode, onViewModeChange }) {
+  return (
+    <div className="flex justify-between items-center bg-gray-100 px-4 py-3 border-b border-gray-300">
+      <h1 className="text-lg font-bold text-gray-900 capitalize">{activeSection}</h1>
+      <ViewModeSwitcher mode={viewMode} onModeChange={onViewModeChange} />
+    </div>
+  );
+}
+
+// Updated ContentArea with new state management and logic
 function ContentArea({ activeSection }) {
-  const [markdownContent, setMarkdownContent] = useState('');
   const [editedContent, setEditedContent] = useState('');
   const [loading, setLoading] = useState(true);
-  const [isEditing, setIsEditing] = useState(false);
+  // State is now a string 'preview' or 'edit' for clarity
+  const [viewMode, setViewMode] = useState('preview'); 
   const editorRef = useRef(null);
   const editorViewRef = useRef(null);
 
@@ -23,18 +86,13 @@ function ContentArea({ activeSection }) {
         const response = await fetch(`/src/content/${activeSection}.md`);
         if (response.ok) {
           const content = await response.text();
-          setMarkdownContent(content);
           setEditedContent(content);
         } else {
-          const fallbackContent = '# Content not found';
-          setMarkdownContent(fallbackContent);
-          setEditedContent(fallbackContent);
+          setEditedContent('# Content not found');
         }
       } catch (error) {
         console.error('Failed to load markdown content:', error);
-        const errorContent = '# Error loading content';
-        setMarkdownContent(errorContent);
-        setEditedContent(errorContent);
+        setEditedContent('# Error loading content');
       } finally {
         setLoading(false);
       }
@@ -42,12 +100,14 @@ function ContentArea({ activeSection }) {
 
     if (activeSection) {
       loadMarkdownContent();
-      setIsEditing(false); // Reset to preview mode when switching sections
+      // Reset to preview mode when switching sections
+      setViewMode('preview'); 
     }
   }, [activeSection]);
 
   useEffect(() => {
-    if (isEditing && editorRef.current && !editorViewRef.current) {
+    // Create editor only when in 'edit' mode
+    if (viewMode === 'edit' && editorRef.current && !editorViewRef.current) {
       const state = EditorState.create({
         doc: editedContent,
         extensions: [
@@ -61,8 +121,11 @@ function ContentArea({ activeSection }) {
           }),
           EditorView.theme({
             '&': {
-              height: '500px',
+              height: 'calc(100vh - 200px)', // Example dynamic height
               fontSize: '14px'
+            },
+            '.cm-scroller': {
+              overflow: 'auto',
             },
             '.cm-content': {
               padding: '16px'
@@ -80,21 +143,15 @@ function ContentArea({ activeSection }) {
       });
     }
 
+    // The cleanup function will run when viewMode changes from 'edit' to 'preview'
     return () => {
-      if (editorViewRef.current && !isEditing) {
+      if (editorViewRef.current) {
         editorViewRef.current.destroy();
         editorViewRef.current = null;
       }
     };
-  }, [isEditing, editedContent]);
-
-  const handleToggleEdit = () => {
-    if (isEditing && editorViewRef.current) {
-      editorViewRef.current.destroy();
-      editorViewRef.current = null;
-    }
-    setIsEditing(!isEditing);
-  };
+  // The effect depends on the viewMode now
+  }, [viewMode, editedContent]); 
 
   if (loading) {
     return (
@@ -106,37 +163,28 @@ function ContentArea({ activeSection }) {
 
   return (
     <div className="flex-1 ml-64">
-      <div className="max-w-4xl mx-auto px-6 py-8">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-900 capitalize">{activeSection}</h1>
-          <div className="flex gap-2">
-            <button
-              onClick={handleToggleEdit}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                isEditing
-                  ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  : 'bg-indigo-600 text-white hover:bg-indigo-700'
-              }`}
-            >
-              {isEditing ? 'Preview' : 'Edit'}
-            </button>
-          </div>
-        </div>
-
-        {isEditing ? (
-          <div className="border border-gray-300 rounded-lg overflow-hidden">
+      <div className="max-w-7xl mx-auto border border-gray-300 rounded-lg overflow-hidden">
+        <HeaderArea
+          activeSection={activeSection}
+          viewMode={viewMode}
+          onViewModeChange={setViewMode}
+        />
+        
+        {/* Container for content ensures a consistent height */}
+        <div className="bg-white">
+          {viewMode === 'edit' ? (
             <div ref={editorRef} />
-          </div>
-        ) : (
-          <div className="prose prose-lg max-w-none mb-12">
-            <ReactMarkdown 
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeRaw]}
-            >
-              {editedContent}
-            </ReactMarkdown>
-          </div>
-        )}
+          ) : (
+            <div className="prose prose-lg max-w-4xl mx-auto py-8 px-4">
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw]}
+              >
+                {editedContent}
+              </ReactMarkdown>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import typography from '@tailwindcss/typography';
 
+/** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,jsx,html,md}'],
   theme: {
@@ -17,7 +18,11 @@ export default {
       '7xl': '5rem',
       '20xl': '18rem',
     },
-    extend: {},
+    extend: {
+      transitionProperty: {
+        'width': 'width',
+      },
+    },
   },
   plugins: [
     typography, // Add the plugin here
