@@ -14,8 +14,8 @@ Follow me for updates on my latest projects and thoughts on AI development.
 
 Send me a message directly for project inquiries or collaboration opportunities.
 
-<a href="mailto:contact@luisfelipesanchez.me" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; border-radius: 8px; background-color: #4f46e5; color: white; text-decoration: none; margin-bottom: 16px;">
-  <i class="fas fa-envelope" style="margin-right: 8px; font-size: 20px;"></i> contact@luisfelipesanchez.me
+<a href="mailto:contact@dceluis.dev" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; border-radius: 8px; background-color: #4f46e5; color: white; text-decoration: none; margin-bottom: 16px;">
+  <i class="fas fa-envelope" style="margin-right: 8px; font-size: 20px;"></i> contact@dceluis.dev
 </a>
 
 ## LinkedIn

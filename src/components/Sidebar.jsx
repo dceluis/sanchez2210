@@ -1,7 +1,6 @@
 import React from 'react';
-import StatusToolbar from './StatusToolbar';
 
-function Sidebar({ activeSection, onSectionChange, languageModelStatus, downloadProgress, onDownloadModel }) {
+function Sidebar({ activeSection, onSectionChange }) {
   const sections = [
     { id: 'about', label: 'About', file: 'about.md' },
     { id: 'projects', label: 'Projects', file: 'projects.md' },
@@ -45,12 +44,6 @@ function Sidebar({ activeSection, onSectionChange, languageModelStatus, download
           ))}
         </nav>
       </div>
-      
-      <StatusToolbar 
-        languageModelStatus={languageModelStatus}
-        downloadProgress={downloadProgress}
-        onDownloadModel={onDownloadModel}
-      />
     </div>
   );
 }

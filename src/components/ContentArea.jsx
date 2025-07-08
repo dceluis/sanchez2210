@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ViewModeSwitcher from './ViewModeSwitcher';
 import ContentDisplay from './ContentDisplay';
-import PromptInput from './PromptInput';
 
 // Import markdown content at build time
 import aboutContent from '../content/about.md?raw';
@@ -17,7 +16,7 @@ const sectionContents = {
   contact: contactContent
 };
 
-function ContentArea({ activeSection, onPromptSubmit, languageModelStatus }) {
+function ContentArea({ activeSection }) {
   const [viewModes, setViewModes] = useState({});
   const editorRef = useRef(null);
   const editorViewRef = useRef(null);
@@ -72,14 +71,6 @@ function ContentArea({ activeSection, onPromptSubmit, languageModelStatus }) {
           onContentChange={() => {}} // Content is now read-only from imports
           editorRef={editorRef}
           editorViewRef={editorViewRef}
-        />
-      </div>
-      
-      <div className="flex-none">
-        <PromptInput 
-          onPromptSubmit={onPromptSubmit} 
-          fileContent={currentSectionContent}
-          languageModelStatus={languageModelStatus}
         />
       </div>
     </div>

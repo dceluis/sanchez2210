@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import ContentArea from './components/ContentArea';
 import ConversationPopup from './components/ConversationPopup';
+import StatusToolbar from './components/StatusToolbar';
+import PromptInput from './components/PromptInput';
 import { initWllama, downloadModel, promptWllama } from './lib/wllamaService';
 
 function App() {
@@ -147,26 +149,33 @@ function App() {
 
   return (
     <div className="w-screen h-screen bg-gray-100 p-4">
-      <div className="flex flex-col w-full h-full bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="grid grid-rows-[1fr_auto] w-full h-full bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="flex flex-1 overflow-hidden">
           <div className="h-full w-64 border-r border-gray-200">
             <Sidebar 
               activeSection={activeSection} 
               onSectionChange={setActiveSection} 
-              languageModelStatus={languageModelStatus}
-              downloadProgress={downloadProgress}
-              onDownloadModel={handleDownloadModel}
             />
           </div>
           <div className="flex-1 overflow-scroll">
             <ContentArea 
               activeSection={activeSection} 
-              onPromptSubmit={handlePromptSubmit}
-              languageModelStatus={languageModelStatus}
             />
           </div>
         </div>
         
+        <div className="grid grid-cols-[256px_1fr] border-t border-gray-200">
+          <StatusToolbar 
+            languageModelStatus={languageModelStatus}
+            downloadProgress={downloadProgress}
+            onDownloadModel={handleDownloadModel}
+          />
+          <PromptInput 
+            onPromptSubmit={handlePromptSubmit}
+            languageModelStatus={languageModelStatus}
+          />
+        </div>
+
         <ConversationPopup 
           isOpen={showConversationPopup}
           onClose={() => setShowConversationPopup(false)}
