@@ -7,8 +7,8 @@ let modelManager = null;
 let isModelLoaded = false;
 
 // Model configuration
-const HF_REPO = 'bartowski/Llama-3.2-1B-Instruct-GGUF';
-const MODEL_FILE = 'Llama-3.2-1B-Instruct-Q4_K_M.gguf';
+const HF_REPO = 'bartowski/google_gemma-3-1b-it-GGUF';
+const MODEL_FILE = 'google_gemma-3-1b-it-Q4_K_M.gguf';
 const MODEL_URL = `https://huggingface.co/${HF_REPO}/resolve/main/${MODEL_FILE}`;
 
 const MODEL_CONFIG = {
@@ -127,8 +127,9 @@ export async function promptWllama(prompt, context, thinkingCallback, responseCa
     thinkingCallback();
     
     const systemPrompt = "You are a helpful AI assistant for Luis Sanchez's portfolio. Answer questions about his work, projects, and experience based on the provided context. Be concise, professional, and helpful.";
+    const userMessage = `Here is the content of the current section:\n\n${context}\n\nBased on this context, please answer the following question: ${prompt}`;
     
-    const fullPrompt = `<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n${systemPrompt}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\nHere is the content of the current section:\n\n${context}\n\nBased on this context, please answer the following question: ${prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n`;
+    const fullPrompt = `<bos><start_of_turn>user\n${systemPrompt}\n\n${userMessage}<end_of_turn>\n<start_of_turn>model\n`;
 
     const response = await wllama.createCompletion(fullPrompt, {
       nPredict: 512,
@@ -139,7 +140,7 @@ export async function promptWllama(prompt, context, thinkingCallback, responseCa
       },
       repeatPenalty: 1.1,
       seed: -1,
-      stopSequence: ['<|eot_id|>']
+      stopSequence: ['<end_of_turn>']
     });
     
     responseCallback(response.trim());
