@@ -1,13 +1,16 @@
-import { Wllama } from '@wllama/wllama';
+import { Wllama, ModelManager } from '@wllama/wllama';
 import singleThreadWasm from '@wllama/wllama/esm/single-thread/wllama.wasm?url';
 import multiThreadWasm from '@wllama/wllama/esm/multi-thread/wllama.wasm?url';
 
 let wllama = null;
+let modelManager = null;
 let isModelLoaded = false;
 
 // Model configuration
 const HF_REPO = 'bartowski/Llama-3.2-1B-Instruct-GGUF';
 const MODEL_FILE = 'Llama-3.2-1B-Instruct-Q4_K_M.gguf';
+const MODEL_URL = `https://huggingface.co/${HF_REPO}/resolve/main/${MODEL_FILE}`;
+
 const MODEL_CONFIG = {
   seed: -1,
   n_threads: navigator.hardwareConcurrency || 4,
@@ -29,10 +32,22 @@ export async function initWllama(statusCallback) {
       };
       
       wllama = new Wllama(pathConfig);
+      modelManager = new ModelManager();
     }
     
-    // Report ready to download status
-    statusCallback('ready_to_download');
+    // Check if model is already cached
+    const models = await modelManager.getModels();
+    const cachedModel = models.find(m => m.url === MODEL_URL);
+
+    if (cachedModel) {
+      statusCallback('loading_model');
+      await wllama.loadModel(cachedModel, MODEL_CONFIG);
+      isModelLoaded = true;
+      statusCallback('available');
+    } else {
+      statusCallback('ready_to_download');
+    }
+    
     return true;
   } catch (error) {
     console.error('Failed to initialize wllama:', error);
@@ -55,10 +70,11 @@ export async function downloadModel(progressCallback, statusCallback) {
     };
 
     // Load model from Hugging Face with progress tracking
-    await wllama.loadModelFromHF(HF_REPO, MODEL_FILE, {
+    const model = await modelManager.downloadModel(MODEL_URL, {
       progressCallback: onProgress,
-      ...MODEL_CONFIG
     });
+    
+    await wllama.loadModel(model, MODEL_CONFIG);
     
     isModelLoaded = true;
     statusCallback('available');
@@ -66,6 +82,23 @@ export async function downloadModel(progressCallback, statusCallback) {
     console.error('Failed to load model:', error);
     statusCallback('unavailable');
     throw new Error('Failed to load AI model. Please try again.');
+  }
+}
+
+// Purge model from cache
+export async function purgeModel() {
+  if (!modelManager) return;
+  
+  try {
+    const models = await modelManager.getModels();
+    for (const model of models) {
+      await model.remove();
+    }
+    isModelLoaded = false;
+    console.log('AI model cache purged.');
+  } catch (error) {
+    console.error('Failed to purge model cache:', error);
+    throw new Error('Failed to purge model cache. Please try again.');
   }
 }
 

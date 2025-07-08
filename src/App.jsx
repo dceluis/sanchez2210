@@ -2,14 +2,13 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import ContentArea from './components/ContentArea';
-import ConversationPopup from './components/ConversationPopup';
-import StatusToolbar from './components/StatusToolbar';
-import PromptInput from './components/PromptInput';
-import { initWllama, downloadModel, promptWllama } from './lib/wllamaService';
+import ActivityBar from './components/ActivityBar';
+import ChatPanel from './components/ChatPanel';
+import { initWllama, downloadModel, promptWllama, purgeModel } from './lib/wllamaService';
 
 function App() {
   const [activeSection, setActiveSection] = useState('about');
-  const [showConversationPopup, setShowConversationPopup] = useState(false);
+  const [isChatPanelOpen, setIsChatPanelOpen] = useState(false);
   const [conversationHistory, setConversationHistory] = useState([]);
   const [languageModelStatus, setLanguageModelStatus] = useState('checking');
   const [downloadProgress, setDownloadProgress] = useState(0);
@@ -24,6 +23,16 @@ function App() {
           setConversationHistory(prev => [...prev, {
             sender: 'system',
             text: 'AI assistant is ready to download. Click "Download AI Assistant" to get started.'
+          }]);
+        } else if (status === 'available') {
+          setConversationHistory(prev => [...prev, {
+            sender: 'system',
+            text: 'AI assistant is ready! Ask me anything about Luis\'s work and experience.'
+          }]);
+        } else if (status === 'loading_model') {
+          setConversationHistory(prev => [...prev, {
+            sender: 'system',
+            text: 'Loading AI model from cache...'
           }]);
         } else if (status === 'unavailable') {
           setConversationHistory(prev => [...prev, {
@@ -94,6 +103,23 @@ function App() {
       });
     }
   };
+
+  const handlePurgeModel = async () => {
+    try {
+      await purgeModel();
+      setLanguageModelStatus('ready_to_download');
+      setConversationHistory(prev => [...prev, {
+        sender: 'system',
+        text: 'AI model cache has been purged. You can now re-download the model.'
+      }]);
+    } catch (error) {
+      console.error('Failed to purge model:', error);
+      setConversationHistory(prev => [...prev, {
+        sender: 'system',
+        text: 'Failed to purge AI model from cache. Please try again.'
+      }]);
+    }
+  };
   
   const handlePromptSubmit = async (prompt, fileContent) => {
     // Add user message to conversation
@@ -101,9 +127,6 @@ function App() {
       sender: 'user',
       text: prompt
     }]);
-
-    // Show conversation popup
-    setShowConversationPopup(true);
 
     // Check if model is available
     if (languageModelStatus !== 'available') {
@@ -149,8 +172,9 @@ function App() {
 
   return (
     <div className="w-screen h-screen bg-gray-100 p-4">
-      <div className="grid grid-rows-[1fr_auto] w-full h-full bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="flex flex-1 overflow-hidden">
+      <div className="flex w-full h-full bg-white rounded-lg shadow-lg overflow-hidden">
+        {/* Main Content (Sidebar + ContentArea) */}
+        <div className="flex-1 flex overflow-hidden">
           <div className="h-full w-64 border-r border-gray-200">
             <Sidebar 
               activeSection={activeSection} 
@@ -163,23 +187,23 @@ function App() {
             />
           </div>
         </div>
-        
-        <div className="grid grid-cols-[256px_1fr] border-t border-gray-200">
-          <StatusToolbar 
-            languageModelStatus={languageModelStatus}
-            downloadProgress={downloadProgress}
-            onDownloadModel={handleDownloadModel}
-          />
-          <PromptInput 
-            onPromptSubmit={handlePromptSubmit}
-            languageModelStatus={languageModelStatus}
-          />
-        </div>
 
-        <ConversationPopup 
-          isOpen={showConversationPopup}
-          onClose={() => setShowConversationPopup(false)}
-          messages={conversationHistory}
+        {/* The New Chat Panel (shows/hides based on state) */}
+        {isChatPanelOpen && (
+            <ChatPanel
+                messages={conversationHistory}
+                onClose={() => setIsChatPanelOpen(false)}
+                languageModelStatus={languageModelStatus}
+                downloadProgress={downloadProgress}
+                onDownloadModel={handleDownloadModel}
+                onPurgeModel={handlePurgeModel}
+                onPromptSubmit={handlePromptSubmit}
+            />
+        )}
+
+        {/* The New Activity Bar (always visible) */}
+        <ActivityBar 
+            onToggleChatPanel={() => setIsChatPanelOpen(!isChatPanelOpen)} 
         />
       </div>
     </div>
@@ -187,3 +211,4 @@ function App() {
 }
 
 export default App;
+

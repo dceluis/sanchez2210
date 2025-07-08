@@ -6,7 +6,7 @@ Here's what some of my clients have said about working with me:
 
 <img src="/img/suspendus-h.png" alt="Suspend'us" style="height: 64px; margin-bottom: 24px; display: block;" />
 
-> "Luis is a very competent Back End developer. He has a very good understanding of the client's needs, and is able to suggest some improvements to the project at each milestone. He doesn't hesitate to g wive his opinion and come up with alternatives which are always welcome. We have appreciated to work with Luis, always available and a source of proposals. We recommend anyone to hire Luis."
+> "Luis is a very competent Back End developer. He has a very good understanding of the client's needs, and is able to suggest some improvements to the project at each milestone. He doesn't hesitate to give his opinion and come up with alternatives which are always welcome. We have appreciated to work with Luis, always available and a source of proposals. We recommend anyone to hire Luis."
 
 **Laure Oriol** • *Founder, Suspend'us*
 
