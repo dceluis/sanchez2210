@@ -65,21 +65,7 @@ function App() {
       const statusCallback = (status, progress) => {
         setLanguageModelStatus(status);
         
-        if (status === 'downloading' && progress !== undefined) {
-          setConversationHistory(prev => {
-            const newHistory = [...prev];
-            const lastMessage = newHistory[newHistory.length - 1];
-            if (lastMessage && lastMessage.sender === 'system' && lastMessage.text.includes('downloading')) {
-              lastMessage.text = `AI model downloading... ${progress}%`;
-            } else {
-              newHistory.push({
-                sender: 'system',
-                text: `AI model downloading... ${progress}%`
-              });
-            }
-            return newHistory;
-          });
-        } else if (status === 'loading_model') {
+        if (status === 'loading_model') {
           setConversationHistory(prev => [...prev, {
             sender: 'system',
             text: 'Initializing AI model...'

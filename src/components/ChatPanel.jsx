@@ -1,5 +1,4 @@
 import React from 'react';
-import { X } from 'lucide-react';
 import StatusToolbar from './StatusToolbar';
 import PromptInput from './PromptInput';
 
@@ -12,7 +11,7 @@ const ChatPanel = ({
   onPromptSubmit,
 }) => {
   return (
-    <div className="flex flex-col w-96 bg-white border-l border-gray-200 shadow-lg h-full">
+    <div className="flex flex-col w-84 bg-white shadow-lg h-full">
 
       {/* Status Area */}
       <div className="p-2 border-b border-gray-200">
@@ -45,7 +44,7 @@ const ChatPanel = ({
 
       {/* Input Area */}
       <div className="p-4 border-t border-gray-200">
-        <PromptInput onPromptSubmit={onPromptSubmit} />
+        <PromptInput onPromptSubmit={onPromptSubmit} languageModelStatus={languageModelStatus} />
       </div>
     </div>
   );

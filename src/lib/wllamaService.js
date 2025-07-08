@@ -22,20 +22,24 @@ const MODEL_CONFIG = {
   embedding: false
 };
 
-// Initialize wllama
+// --- Private helper to ensure wllama is initialized ---
+async function _ensureWllamaInitialized() {
+  if (wllama) return; // Already initialized, do nothing
+
+  console.log("Creating a new wllama instance...");
+  const pathConfig = {
+    'single-thread/wllama.wasm': singleThreadWasm,
+    'multi-thread/wllama.wasm': multiThreadWasm,
+  };
+  wllama = new Wllama(pathConfig);
+  modelManager = new ModelManager();
+}
+
+// Initialize wllama and check for cached models
 export async function initWllama(statusCallback) {
   try {
-    if (!wllama) {
-      const pathConfig = {
-        'single-thread/wllama.wasm': singleThreadWasm,
-        'multi-thread/wllama.wasm': multiThreadWasm,
-      };
-      
-      wllama = new Wllama(pathConfig);
-      modelManager = new ModelManager();
-    }
+    await _ensureWllamaInitialized();
     
-    // Check if model is already cached
     const models = await modelManager.getModels();
     const cachedModel = models.find(m => m.url === MODEL_URL);
 
@@ -59,21 +63,21 @@ export async function initWllama(statusCallback) {
 // Download and load model from Hugging Face
 export async function downloadModel(progressCallback, statusCallback) {
   try {
-    statusCallback('loading_model');
+    // Ensure we have a fresh wllama instance if it was purged
+    await _ensureWllamaInitialized();
+
+    statusCallback('downloading'); // Changed from loading_model to downloading
     
-    // Progress callback for download tracking
     const onProgress = ({ loaded, total }) => {
       const progress = Math.round((loaded / total) * 100);
-      console.log(`AI model download progress: ${progress}%`);
       progressCallback(progress);
-      statusCallback('downloading', progress);
     };
 
-    // Load model from Hugging Face with progress tracking
     const model = await modelManager.downloadModel(MODEL_URL, {
       progressCallback: onProgress,
     });
     
+    statusCallback('loading_model'); // Now show loading status
     await wllama.loadModel(model, MODEL_CONFIG);
     
     isModelLoaded = true;
@@ -85,7 +89,7 @@ export async function downloadModel(progressCallback, statusCallback) {
   }
 }
 
-// Purge model from cache
+// Purge model from cache AND terminate the wllama instance
 export async function purgeModel() {
   if (!modelManager) return;
   
@@ -95,7 +99,17 @@ export async function purgeModel() {
       await model.remove();
     }
     isModelLoaded = false;
-    console.log('AI model cache purged.');
+    
+    // --- THIS IS THE KEY FIX ---
+    // If a wllama instance exists, terminate it.
+    if (wllama) {
+      await wllama.exit();
+      wllama = null; // Set to null so it can be re-initialized later
+      console.log('AI model cache purged and wllama instance terminated.');
+    } else {
+      console.log('AI model cache purged.');
+    }
+
   } catch (error) {
     console.error('Failed to purge model cache:', error);
     throw new Error('Failed to purge model cache. Please try again.');
@@ -110,23 +124,11 @@ export async function promptWllama(prompt, context, thinkingCallback, responseCa
   }
   
   try {
-    // Show thinking status
     thinkingCallback();
     
-    // Construct the full prompt with context
     const systemPrompt = "You are a helpful AI assistant for Luis Sanchez's portfolio. Answer questions about his work, projects, and experience based on the provided context. Be concise, professional, and helpful.";
     
-    const fullPrompt = `<|begin_of_text|><|start_header_id|>system<|end_header_id|>
-
-${systemPrompt}<|eot_id|><|start_header_id|>user<|end_header_id|>
-
-Here is the content of the current section:
-
-${context}
-
-Based on this context, please answer the following question: ${prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
-
-`;
+    const fullPrompt = `<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n${systemPrompt}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\nHere is the content of the current section:\n\n${context}\n\nBased on this context, please answer the following question: ${prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n`;
 
     const response = await wllama.createCompletion(fullPrompt, {
       nPredict: 512,
