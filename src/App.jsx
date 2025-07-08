@@ -1,14 +1,13 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import Sidebar from './components/Sidebar';
 import ContentArea from './components/ContentArea';
 import ActivityBar from './components/ActivityBar';
-import ChatPanel from './components/ChatPanel';
+import Sidebar from './components/Sidebar';
 import { initWllama, downloadModel, promptWllama, purgeModel } from './lib/wllamaService';
 
 function App() {
   const [activeSection, setActiveSection] = useState('about');
-  const [isChatPanelOpen, setIsChatPanelOpen] = useState(false);
+  const [activeView, setActiveView] = useState('files');
   const [conversationHistory, setConversationHistory] = useState([]);
   const [languageModelStatus, setLanguageModelStatus] = useState('checking');
   const [downloadProgress, setDownloadProgress] = useState(0);
@@ -173,38 +172,29 @@ function App() {
   return (
     <div className="w-screen h-screen bg-gray-100 p-4">
       <div className="flex w-full h-full bg-white rounded-lg shadow-lg overflow-hidden">
-        {/* Main Content (Sidebar + ContentArea) */}
-        <div className="flex-1 flex overflow-hidden">
-          <div className="h-full w-64 border-r border-gray-200">
-            <Sidebar 
-              activeSection={activeSection} 
-              onSectionChange={setActiveSection} 
-            />
-          </div>
-          <div className="flex-1 overflow-scroll">
-            <ContentArea 
-              activeSection={activeSection} 
-            />
-          </div>
-        </div>
+        {/* Column 1: Activity Bar */}
+        <ActivityBar onViewChange={setActiveView} activeView={activeView} />
 
-        {/* The New Chat Panel (shows/hides based on state) */}
-        {isChatPanelOpen && (
-            <ChatPanel
-                messages={conversationHistory}
-                onClose={() => setIsChatPanelOpen(false)}
-                languageModelStatus={languageModelStatus}
-                downloadProgress={downloadProgress}
-                onDownloadModel={handleDownloadModel}
-                onPurgeModel={handlePurgeModel}
-                onPromptSubmit={handlePromptSubmit}
-            />
-        )}
-
-        {/* The New Activity Bar (always visible) */}
-        <ActivityBar 
-            onToggleChatPanel={() => setIsChatPanelOpen(!isChatPanelOpen)} 
+        {/* Column 2: Our new, intelligent Sidebar */}
+        <Sidebar
+          activeView={activeView}
+          // Pass ALL the necessary props for both FilesPanel and ChatPanel here
+          activeSection={activeSection}
+          onSectionChange={setActiveSection}
+          conversationHistory={conversationHistory}
+          languageModelStatus={languageModelStatus}
+          downloadProgress={downloadProgress}
+          onDownloadModel={handleDownloadModel}
+          onPurgeModel={handlePurgeModel}
+          onPromptSubmit={handlePromptSubmit}
         />
+
+        {/* Column 3: Main Content Area */}
+        <div className="flex-1 overflow-scroll">
+          <ContentArea 
+            activeSection={activeSection} 
+          />
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,6 @@ import PromptInput from './PromptInput';
 
 const ChatPanel = ({
   messages,
-  onClose,
   languageModelStatus,
   downloadProgress,
   onDownloadModel,
@@ -14,17 +13,6 @@ const ChatPanel = ({
 }) => {
   return (
     <div className="flex flex-col w-96 bg-white border-l border-gray-200 shadow-lg h-full">
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold">AI Assistant</h2>
-        <button
-          onClick={onClose}
-          className="p-1 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          aria-label="Close AI Chat Panel"
-        >
-          <X className="w-5 h-5 text-gray-600" />
-        </button>
-      </div>
 
       {/* Status Area */}
       <div className="p-2 border-b border-gray-200">

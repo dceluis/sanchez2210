@@ -1,48 +1,42 @@
 import React from 'react';
+import FilesPanel from './FilesPanel';
+import ChatPanel from './ChatPanel';
 
-function Sidebar({ activeSection, onSectionChange }) {
-  const sections = [
-    { id: 'about', label: 'About', file: 'about.md' },
-    { id: 'projects', label: 'Projects', file: 'projects.md' },
-    { id: 'testimonials', label: 'Testimonials', file: 'testimonials.md' },
-    { id: 'contact', label: 'Contact', file: 'contact.md' }
-  ];
+// This component receives the active view and all the props needed by its children
+function Sidebar({ activeView, ...props }) {
+  const getTitle = () => {
+    if (activeView === 'files') return 'Explorer';
+    if (activeView === 'chat') return 'AI Assistant';
+    return ''; // Default case
+  };
 
   return (
-    <div className="size-full bg-white overflow-y-scroll flex flex-col">
-      <div className="flex-1 p-6">
-        {/* Profile Section */}
-        <div className="flex items-center mb-6">
-          <img 
-            className="w-12 h-12 rounded-full mr-3" 
-            src="/img/portrait_small.jpeg" 
-            alt="Luis Sanchez" 
+    <div className="h-full w-64 flex flex-col bg-white border-r border-gray-200">
+      {/* 1. Permanent Header */}
+      <div className="p-4 border-b border-gray-200">
+        <h2 className="text-md font-semibold text-gray-800 uppercase tracking-wider">
+          {getTitle()}
+        </h2>
+      </div>
+
+      {/* 2. Dynamic Content Area */}
+      <div className="flex-1 overflow-y-auto">
+        {activeView === 'files' && (
+          <FilesPanel
+            activeSection={props.activeSection}
+            onSectionChange={props.onSectionChange}
           />
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900">Luis Sanchez</h2>
-            <p className="text-sm text-gray-600">Software Engineer</p>
-          </div>
-        </div>
-
-        {/* Divider */}
-        <div className="border-b border-gray-200"></div>
-
-        {/* Explorer Section */}
-        <nav className="space-y-2 mt-6">
-          {sections.map((section) => (
-            <button
-              key={section.id}
-              onClick={() => onSectionChange(section.id)}
-              className={`w-full text-left px-4 py-3 rounded-lg transition-colors duration-200 ${
-                activeSection === section.id
-                  ? 'bg-indigo-100 text-indigo-700 font-medium'
-                  : 'text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              {section.label}
-            </button>
-          ))}
-        </nav>
+        )}
+        {activeView === 'chat' && (
+          <ChatPanel
+            messages={props.conversationHistory}
+            languageModelStatus={props.languageModelStatus}
+            downloadProgress={props.downloadProgress}
+            onDownloadModel={props.onDownloadModel}
+            onPurgeModel={props.onPurgeModel}
+            onPromptSubmit={props.onPromptSubmit}
+          />
+        )}
       </div>
     </div>
   );
