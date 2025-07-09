@@ -1,7 +1,7 @@
 import React from 'react';
-import { CheckCircle, Download, Loader2, AlertCircle, Clock, Trash2 } from 'lucide-react';
+import { CheckCircle, Download, Loader2, AlertCircle, Clock } from 'lucide-react';
 
-function StatusToolbar({ languageModelStatus, downloadProgress, onDownloadModel, onPurgeModel }) {
+function StatusToolbar({ languageModelStatus, downloadProgress, onViewChange }) {
   const getStatusIcon = () => {
     switch (languageModelStatus) {
       case 'available':
@@ -22,15 +22,15 @@ function StatusToolbar({ languageModelStatus, downloadProgress, onDownloadModel,
   const getStatusText = () => {
     switch (languageModelStatus) {
       case 'available':
-        return 'AI Ready';
+        return 'Ready';
       case 'ready_to_download':
-        return 'AI Ready to Download';
+        return 'Ready to Download';
       case 'downloading':
         return `Downloading ${downloadProgress}%`;
       case 'loading_model':
-        return 'Loading AI';
+        return 'Loading';
       case 'unavailable':
-        return 'AI Unavailable';
+        return 'Unavailable';
       default:
         return 'Checking AI';
     }
@@ -54,34 +54,18 @@ function StatusToolbar({ languageModelStatus, downloadProgress, onDownloadModel,
   };
 
   return (
-    <div className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+    <button
+      onClick={() => onViewChange('settings')}
+      className="flex items-center justify-between w-full p-2 bg-secondary hover:bg-interactive-hover focus:outline-none focus:ring-2 focus:ring-border-interactive"
+      aria-label="Open AI Settings"
+    >
       <div className="flex items-center space-x-2">
         {getStatusIcon()}
         <span className={`text-sm font-medium ${getStatusColor()}`}>
           {getStatusText()}
         </span>
       </div>
-      <div className="flex space-x-2">
-        {languageModelStatus === 'ready_to_download' && (
-          <button
-            onClick={onDownloadModel}
-            className="p-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs"
-            title="Download AI Model"
-          >
-            <Download className="w-4 h-4" />
-          </button>
-        )}
-        {languageModelStatus === 'available' && (
-          <button
-            onClick={onPurgeModel}
-            className="p-1 rounded-md bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 text-xs"
-            title="Purge AI Model Cache"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
-        )}
-      </div>
-    </div>
+    </button>
   );
 }
 

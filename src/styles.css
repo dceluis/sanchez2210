@@ -1,73 +1,96 @@
-/* Custom styles for the .prose class from @tailwindcss/typography */
+/* src/styles.css */
 
-.prose {
-  /* General text color */
-  --tw-prose-body: theme('colors.gray.700');
-  --tw-prose-headings: theme('colors.gray.900');
-  --tw-prose-lead: theme('colors.gray.600');
-  
-  /* Link styles */
-  --tw-prose-links: theme('colors.indigo.600');
-  --tw-prose-links-hover: theme('colors.indigo.700');
-  
-  /* Strong (bold) text */
-  --tw-prose-strong: theme('colors.gray.900');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  /* Horizontal rule */
-  --tw-prose-hr: theme('colors.gray.200');
+@layer base {
+  :root {
+    /* Background Colors */
+    --color-bg-primary: theme('colors.gray.100');
+    --color-bg-secondary: theme('colors.white');
 
-  /* Quotes and blockquotes */
-  --tw-prose-quotes: theme('colors.gray.900');
-  --tw-prose-quote-borders: theme('colors.indigo.200');
+    /* Text Colors */
+    --color-text-primary: theme('colors.gray.900');
+    --color-text-secondary: theme('colors.gray.600');
+    --color-text-inverted: theme('colors.white');
 
-  /* Code blocks */
-  --tw-prose-code: theme('colors.indigo.700');
-  --tw-prose-pre-code: theme('colors.gray.200');
-  --tw-prose-pre-bg: theme('colors.gray.800');
-  
-  /* Tables */
-  --tw-prose-th-borders: theme('colors.gray.300');
-  --tw-prose-td-borders: theme('colors.gray.200');
-}
+    /* Border Colors */
+    --color-border-primary: theme('colors.gray.200');
+    --color-border-interactive: theme('colors.indigo.500');
 
-/* Further custom overrides */
-.prose h1, .prose h2, .prose h3, .prose h4 {
-  font-weight: 700;
-  letter-spacing: -0.025em;
-}
+    /* Interactive Element Colors */
+    --color-interactive-idle: theme('colors.gray.100');
+    --color-interactive-hover: theme('colors.gray.200');
+    --color-interactive-active: theme('colors.indigo.100');
+    --color-interactive-active-text: theme('colors.indigo.700');
 
-.prose a {
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s ease-in-out;
-}
+    /* Accent Colors */
+    --color-accent-primary: theme('colors.blue.500');
+    --color-accent-primary-hover: theme('colors.blue.600');
+    --color-accent-danger: theme('colors.red.500');
+    --color-accent-danger-hover: theme('colors.red.600');
 
-.prose a:hover {
-  text-decoration: underline;
-}
+    /* === PROSE THEMING (LIGHT) === */
+    --tw-prose-body: var(--color-text-primary);
+    --tw-prose-headings: var(--color-text-primary);
+    --tw-prose-lead: var(--color-text-secondary);
+    --tw-prose-links: theme('colors.indigo.600');
+    --tw-prose-bold: var(--color-text-primary);
+    --tw-prose-counters: var(--color-text-secondary);
+    --tw-prose-bullets: theme('colors.gray.300');
+    --tw-prose-hr: theme('colors.gray.200');
+    --tw-prose-quotes: var(--color-text-primary);
+    --tw-prose-quote-borders: theme('colors.indigo.200');
+    --tw-prose-captions: var(--color-text-secondary);
+    --tw-prose-code: theme('colors.indigo.700');
+    --tw-prose-pre-code: theme('colors.gray.200');
+    --tw-prose-pre-bg: theme('colors.gray.800');
+    --tw-prose-th-borders: theme('colors.gray.300');
+    --tw-prose-td-borders: theme('colors.gray.200');
 
-.prose blockquote {
-  border-left-width: 3px;
-  padding-left: 1rem;
-}
+    /* === PROSE THEMING (DARK) === */
+    --tw-prose-invert-body: theme('colors.gray.200');
+    --tw-prose-invert-headings: theme('colors.white');
+    --tw-prose-invert-lead: theme('colors.gray.400');
+    --tw-prose-invert-links: theme('colors.indigo.400');
+    --tw-prose-invert-bold: theme('colors.white');
+    --tw-prose-invert-counters: theme('colors.gray.400');
+    --tw-prose-invert-bullets: theme('colors.gray.600');
+    --tw-prose-invert-hr: theme('colors.gray.700');
+    --tw-prose-invert-quotes: theme('colors.gray.100');
+    --tw-prose-invert-quote-borders: theme('colors.indigo.700');
+    --tw-prose-invert-captions: theme('colors.gray.400');
+    --tw-prose-invert-code: theme('colors.indigo.300');
+    --tw-prose-invert-pre-code: theme('colors.gray.300');
+    --tw-prose-invert-pre-bg: theme('colors.gray.900');
+    --tw-prose-invert-th-borders: theme('colors.gray.600');
+    --tw-prose-invert-td-borders: theme('colors.gray.700');
+  }
 
-.prose pre {
-  border-radius: 0.5rem; /* 8px */
-  border: 1px solid theme('colors.gray.700');
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-}
+  html.dark {
+    /* Background Colors */
+    --color-bg-primary: theme('colors.gray.900');
+    --color-bg-secondary: theme('colors.gray.800');
 
-.prose code {
-  font-size: 0.875em;
-  font-weight: 500;
-}
+    /* Text Colors */
+    --color-text-primary: theme('colors.gray.200');
+    --color-text-secondary: theme('colors.gray.400');
+    --color-text-inverted: theme('colors.gray.900');
 
-/* Style for inline code */
-.prose code:not(pre > code) {
-  background-color: theme('colors.indigo.50');
-  color: theme('colors.indigo.700');
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
+    /* Border Colors */
+    --color-border-primary: theme('colors.gray.700');
+
+    /* Interactive Element Colors */
+    --color-interactive-idle: theme('colors.gray.700');
+    --color-interactive-hover: theme('colors.gray.600');
+    --color-interactive-active: theme('colors.gray.700');
+    --color-interactive-active-text: theme('colors.gray.200');
+
+    /* NOTE: The dark mode prose variables are already defined in :root */
+    /* and will be applied by the 'prose-invert' class. */
+    /* You can remove the old prose definitions from here. */
+  }
 }
 
 .prose shadowed {

@@ -4,6 +4,7 @@ import ContentArea from './components/ContentArea';
 import ActivityBar from './components/ActivityBar';
 import Sidebar from './components/Sidebar';
 import { initWllama, downloadModel, promptWllama, purgeModel } from './lib/wllamaService';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 function App() {
   const [activeSection, setActiveSection] = useState('about');
@@ -27,11 +28,6 @@ function App() {
           setConversationHistory(prev => [...prev, {
             sender: 'system',
             text: 'AI assistant is ready! Ask me anything about Luis\'s work and experience.'
-          }]);
-        } else if (status === 'loading_model') {
-          setConversationHistory(prev => [...prev, {
-            sender: 'system',
-            text: 'Loading AI model from cache...'
           }]);
         } else if (status === 'unavailable') {
           setConversationHistory(prev => [...prev, {
@@ -156,33 +152,36 @@ function App() {
   };
 
   return (
-    <div className="w-screen h-screen bg-gray-100 p-4">
-      <div className="flex w-full h-full bg-white rounded-lg shadow-lg overflow-hidden">
-        {/* Column 1: Activity Bar */}
-        <ActivityBar onViewChange={setActiveView} activeView={activeView} />
+    <ThemeProvider>
+      <div className="w-screen h-screen bg-primary p-4">
+        <div className="flex w-full h-full bg-secondary rounded-lg shadow-lg overflow-hidden">
+          {/* Column 1: Activity Bar */}
+          <ActivityBar onViewChange={setActiveView} activeView={activeView} />
 
-        {/* Column 2: Our new, intelligent Sidebar */}
-        <Sidebar
-          activeView={activeView}
-          // Pass ALL the necessary props for both FilesPanel and ChatPanel here
-          activeSection={activeSection}
-          onSectionChange={setActiveSection}
-          conversationHistory={conversationHistory}
-          languageModelStatus={languageModelStatus}
-          downloadProgress={downloadProgress}
-          onDownloadModel={handleDownloadModel}
-          onPurgeModel={handlePurgeModel}
-          onPromptSubmit={handlePromptSubmit}
-        />
-
-        {/* Column 3: Main Content Area */}
-        <div className="flex-1 overflow-scroll">
-          <ContentArea 
-            activeSection={activeSection} 
+          {/* Column 2: Our new, intelligent Sidebar */}
+          <Sidebar
+            activeView={activeView}
+            onViewChange={setActiveView}
+            // Pass ALL the necessary props for both FilesPanel and ChatPanel here
+            activeSection={activeSection}
+            onSectionChange={setActiveSection}
+            conversationHistory={conversationHistory}
+            languageModelStatus={languageModelStatus}
+            downloadProgress={downloadProgress}
+            onDownloadModel={handleDownloadModel}
+            onPurgeModel={handlePurgeModel}
+            onPromptSubmit={handlePromptSubmit}
           />
+
+          {/* Column 3: Main Content Area */}
+          <div className="flex-1 overflow-scroll">
+            <ContentArea 
+              activeSection={activeSection} 
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
 

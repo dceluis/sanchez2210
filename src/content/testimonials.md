@@ -14,7 +14,7 @@ Here's what some of my clients have said about working with me:
 
 ## Agency LA
 
-<img class="invert" src="/img/agency-h.png" alt="Agency LA" style="height: 48px; margin-bottom: 24px;" />
+<img src="/img/agency-h.png" alt="Agency LA" style="height: 48px; margin-bottom: 24px;" />
 
 > "We hired Luis to enhance our engineering effort for a Ruby on Rails project. We enjoyed his presence and would certainly recommend him. He's an excellent coder who cares not just about getting the code right but also about the bigger picture of the project, which is very important to us."
 
@@ -24,7 +24,7 @@ Here's what some of my clients have said about working with me:
 
 ## Tavour
 
-<img src="/img/tavour.png" alt="Tavour" style="height: 48px; margin-bottom: 24px; filter: contrast(0.5) invert(1);" />
+<img src="/img/tavour.png" alt="Tavour" style="height: 48px; margin-bottom: 24px;" />
 
 > "Luis is an excellent engineer. He is experienced, professional, proactive, and creative. While initially hired to upgrade our Ruby on Rails Platform it quickly became clear that his ability to contribute to the quality of the system reached far beyond upgrading it. He assisted across the board from improving test suite runtimes to reducing deployment costs and solving complex throughput bottlenecks. He rose to every challenge. I would hire Luis again in a heartbeat."
 

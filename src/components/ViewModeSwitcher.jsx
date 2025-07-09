@@ -11,15 +11,15 @@ function ViewModeSwitcher({ mode, onModeChange }) {
   return (
     <button
       onClick={handleToggle}
-      className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors flex items-center justify-center group relative"
+      className="p-2 rounded-full bg-interactive-idle hover:bg-interactive-hover transition-colors flex items-center justify-center group relative"
       title={tooltipText}
     >
       {mode === 'edit' ? (
-        <BookOpen className="w-5 h-5 text-gray-700" />
+        <BookOpen className="w-5 h-5 text-text-secondary" />
       ) : (
-        <Pencil className="w-5 h-5 text-gray-700" />
+        <Pencil className="w-5 h-5 text-text-secondary" />
       )}
-      <span className="absolute bottom-full mb-2 hidden group-hover:block px-2 py-1 bg-gray-800 text-white text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <span className="absolute bottom-full mb-2 hidden group-hover:block px-2 py-1 bg-text-primary text-bg-primary text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         {tooltipText}
       </span>
     </button>

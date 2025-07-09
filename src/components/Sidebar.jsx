@@ -1,20 +1,22 @@
 import React from 'react';
 import FilesPanel from './FilesPanel';
 import ChatPanel from './ChatPanel';
+import SettingsPanel from './SettingsPanel';
 
 // This component receives the active view and all the props needed by its children
 function Sidebar({ activeView, ...props }) {
   const getTitle = () => {
     if (activeView === 'files') return 'Explorer';
     if (activeView === 'chat') return 'AI Assistant';
+    if (activeView === 'settings') return 'Settings';
     return ''; // Default case
   };
 
   return (
-    <div className={`h-full ${ activeView === 'files' ? 'w-64' : 'w-80'} flex flex-col bg-white border-r border-gray-200`}>
+    <div className={`h-full ${ activeView === 'files' ? 'w-64' : 'w-80'} flex flex-col bg-secondary border-r border-border-primary`}>
       {/* 1. Permanent Header */}
-      <div className="p-4 border-b border-gray-200">
-        <h2 className="text-md font-semibold text-gray-800 uppercase tracking-wider">
+      <div className="p-4 border-b border-border-primary bg-secondary">
+        <h2 className="text-md font-semibold text-text-primary uppercase tracking-wider">
           {getTitle()}
         </h2>
       </div>
@@ -35,6 +37,15 @@ function Sidebar({ activeView, ...props }) {
             onDownloadModel={props.onDownloadModel}
             onPurgeModel={props.onPurgeModel}
             onPromptSubmit={props.onPromptSubmit}
+            onViewChange={props.onViewChange}
+          />
+        )}
+        {activeView === 'settings' && (
+          <SettingsPanel
+            languageModelStatus={props.languageModelStatus}
+            downloadProgress={props.downloadProgress}
+            onDownloadModel={props.onDownloadModel}
+            onPurgeModel={props.onPurgeModel}
           />
         )}
       </div>

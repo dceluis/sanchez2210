@@ -24,10 +24,10 @@ This was my first introduction into the field and I challenged myself to learn t
 
 Built with **YoloV8** for object detection, **Gemini 1.0** for visual understanding, and **ffmpeg** for video rendering.
 
-<a href="https://github.com/dceluis/vacocam_render" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; padding: 8px 16px; border-radius: 6px; background-color: #1f2937; color: white; text-decoration: none; margin-right: 16px; margin-bottom: 8px;">
+<a href="https://github.com/dceluis/vacocam_render" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 mr-4 mb-2">
   <i class="fab fa-github" style="margin-right: 8px;"></i> View on GitHub
 </a>
-<a href="https://x.com/dceluis/status/1748170461941202954" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; padding: 8px 16px; border-radius: 6px; background-color: #4f46e5; color: white; text-decoration: none; margin-bottom: 8px;">
+<a href="https://x.com/dceluis/status/1748170461941202954" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-text-inverted bg-accent-primary hover:bg-accent-primary-hover mb-2">
   <i class="fab fa-twitter" style="margin-right: 8px;"></i> See Twitter Thread
 </a>
 
@@ -51,7 +51,7 @@ When I encountered established frameworks later, I recognized their strengths an
 
 Built with **Gemini 2.0 Flash** for reasoning, **Aiogram** for creating the Telegram bot, and **OpenTelemetry** for instrumentation.
 
-<a href="https://github.com/dceluis/libre_agent" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; padding: 8px 16px; border-radius: 6px; background-color: #1f2937; color: white; text-decoration: none; margin-bottom: 8px;">
+<a href="https://github.com/dceluis/libre_agent" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 mb-2">
   <i class="fab fa-github" style="margin-right: 8px;"></i> View on GitHub
 </a>
 
@@ -73,6 +73,6 @@ This project was built over a weekend for Toolhouse.ai and pulsemcp.com's Hackat
 
 Built with **Python**, **Termux**, and **Tasker**.
 
-<a href="https://github.com/dceluis/mcp-hackathon" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; padding: 8px 16px; border-radius: 6px; background-color: #1f2937; color: white; text-decoration: none; margin-bottom: 8px;">
+<a href="https://github.com/dceluis/mcp-hackathon" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-content-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 mb-2">
   <i class="fab fa-github" style="margin-right: 8px;"></i> View on GitHub
 </a>

@@ -9,17 +9,19 @@ const ChatPanel = ({
   onDownloadModel,
   onPurgeModel,
   onPromptSubmit,
+  onViewChange,
 }) => {
   return (
-    <div className="flex flex-col w-84 bg-white shadow-lg h-full">
+    <div className="flex flex-col w-84 bg-secondary shadow-lg h-full">
 
       {/* Status Area */}
-      <div className="p-2 border-b border-gray-200">
+      <div className="border-b border-border-primary">
         <StatusToolbar
           languageModelStatus={languageModelStatus}
           downloadProgress={downloadProgress}
           onDownloadModel={onDownloadModel}
           onPurgeModel={onPurgeModel}
+          onViewChange={onViewChange}
         />
       </div>
 
@@ -32,8 +34,8 @@ const ChatPanel = ({
           >
             <div
               className={`max-w-[70%] p-3 rounded-lg ${msg.sender === 'user'
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200 text-gray-800'
+                ? 'bg-accent-primary text-text-inverted'
+                : 'bg-interactive-idle text-text-primary'
               }`}
             >
               {msg.text}
@@ -43,7 +45,7 @@ const ChatPanel = ({
       </div>
 
       {/* Input Area */}
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4 border-t border-border-primary">
         <PromptInput onPromptSubmit={onPromptSubmit} languageModelStatus={languageModelStatus} />
       </div>
     </div>

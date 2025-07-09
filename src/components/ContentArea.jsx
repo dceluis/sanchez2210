@@ -55,7 +55,7 @@ function ContentArea({ activeSection }) {
   };
 
   return (
-    <div className="size-full flex flex-col bg-white">
+    <div className="size-full flex flex-col bg-secondary">
       {/* View Mode Switcher */}
       <div className="flex flex-none justify-end p-2">
         <ViewModeSwitcher 

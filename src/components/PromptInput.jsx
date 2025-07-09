@@ -33,10 +33,10 @@ function PromptInput({ onPromptSubmit, fileContent, languageModelStatus }) {
     <div className="flex-none">
       <div className={`w-full flex items-center px-4 py-3 rounded-md border transition-colors font-mono text-sm ${
         isInputDisabled 
-          ? 'bg-gray-100 border-gray-200 text-gray-400' 
-          : 'bg-white border-gray-300 text-gray-900 focus-within:border-indigo-500'
+          ? 'bg-interactive-idle border-border-primary text-text-secondary opacity-75' 
+          : 'bg-secondary border-border-primary text-text-primary focus-within:border-border-interactive'
       }`}>
-        <span className="text-gray-500 mr-2">ask:</span>
+        <span className="text-text-secondary mr-2">&gt;</span>
         <input
           type="text"
           value={promptValue}
@@ -44,9 +44,9 @@ function PromptInput({ onPromptSubmit, fileContent, languageModelStatus }) {
           onKeyDown={handleKeyDown}
           placeholder={getPlaceholderText()}
           disabled={isInputDisabled}
-          className="flex-1 bg-transparent outline-none placeholder-gray-400 font-mono"
+          className="flex-1 bg-transparent outline-none placeholder-text-secondary font-mono"
         />
-        <span className="text-gray-400 ml-2 animate-pulse">|</span>
+        <span className="text-text-secondary ml-2 animate-pulse">|</span>
       </div>
     </div>
   );
