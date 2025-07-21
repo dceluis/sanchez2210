@@ -1,4 +1,3 @@
-import './tailwind.css';
 import './styles.css';
 import React from 'react';
 import { createRoot } from 'react-dom/client';

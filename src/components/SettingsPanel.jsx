@@ -21,7 +21,7 @@ const SettingsPanel = ({
           {languageModelStatus === 'ready_to_download' && (
             <button
               onClick={onDownloadModel}
-              className="px-4 py-2 bg-accent-primary text-text-inverted rounded-lg hover:bg-accent-primary-hover"
+              className="px-4 py-2 bg-accent-primary text-white rounded-lg hover:bg-accent-primary-hover"
             >
               Download
             </button>
@@ -29,7 +29,7 @@ const SettingsPanel = ({
           {languageModelStatus === 'available' && (
             <button
               onClick={onPurgeModel}
-              className="px-4 py-2 bg-accent-danger text-text-inverted rounded-lg hover:bg-accent-danger-hover"
+              className="px-4 py-2 bg-accent-danger text-white rounded-lg hover:bg-accent-danger-hover"
             >
               Purge
             </button>
@@ -62,30 +62,24 @@ const SettingsPanel = ({
         <div className="inline-flex rounded-lg shadow-sm">
           <button
             onClick={() => setTheme('light')}
-            className={`flex-1 px-4 py-2 text-sm font-medium rounded-l-lg focus:outline-none transition-colors duration-200 ${
-              theme === 'light'
-                ? 'bg-accent-primary text-text-inverted'
-                : 'bg-interactive-idle border border-border-primary text-text-primary'
+            className={`flex-1 px-4 py-2 text-sm font-medium border border-border-primary rounded-l-lg focus:outline-none transition-colors duration-200 ${
+              theme === 'light' ? 'bg-accent-primary text-white' : 'bg-interactive-idle text-text-primary'
             }`}
           >
             Day
           </button>
           <button
             onClick={() => setTheme('dark')}
-            className={`flex-1 px-4 py-2 text-sm font-medium border-x border-border-primary focus:outline-none transition-colors duration-200 ${
-              theme === 'dark'
-                ? 'bg-accent-primary text-text-inverted'
-                : 'bg-interactive-idle border border-border-primary text-text-primary'
+            className={`flex-1 px-4 py-2 text-sm font-medium border-y border-border-primary rounded-none focus:outline-none transition-colors duration-200 ${
+              theme === 'dark' ? 'bg-accent-primary text-white' : 'bg-interactive-idle text-text-primary'
             }`}
           >
             Night
           </button>
           <button
             onClick={() => setTheme('auto')}
-            className={`flex-1 px-4 py-2 text-sm font-medium rounded-r-lg focus:outline-none transition-colors duration-200 ${
-              theme === 'auto'
-                ? 'bg-accent-primary text-text-inverted'
-                : 'bg-interactive-idle border border-border-primary text-text-primary'
+            className={`flex-1 px-4 py-2 text-sm font-medium border border-border-primary rounded-r-lg focus:outline-none transition-colors duration-200 ${
+              theme === 'auto' ? 'bg-accent-primary text-white' : 'bg-interactive-idle text-text-primary'
             }`}
           >
             Auto
