@@ -11,7 +11,7 @@ function ViewModeSwitcher({ mode, onModeChange }) {
   return (
     <button
       onClick={handleToggle}
-      className="p-2 rounded-full bg-interactive-idle hover:bg-interactive-hover transition-colors flex items-center justify-center group relative"
+      className="p-2 rounded-full hover:bg-interactive-hover transition-colors flex items-center justify-center group relative"
       title={tooltipText}
     >
       {mode === 'edit' ? (
