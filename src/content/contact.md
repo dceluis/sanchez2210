@@ -1,27 +1,19 @@
-# Get in Touch
+# Get in touch
 
 Reach out to me through any of these channels:
 
-## Twitter
-
-Follow me for updates on my latest projects and thoughts on AI development.
-
-<a href="https://twitter.com/dceluis" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-accent-primary hover:bg-accent-primary-hover mb-4 not-prose">
-  <i class="fab fa-twitter" style="margin-right: 8px; font-size: 20px;"></i> @dceluis
+<a href="https://twitter.com/dceluis" target="_blank" rel="noopener noreferrer" class="text-base font-medium text-text-primary no-underline">
+  <i class="fab fa-twitter mr-2 text-lg"></i> @dceluis
 </a>
 
-## Email
+<br>
 
-Send me a message directly for project inquiries or collaboration opportunities.
-
-<a href="mailto:contact@dceluis.dev" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-accent-primary hover:bg-accent-primary-hover mb-4 not-prose">
-  <i class="fas fa-envelope" style="margin-right: 8px; font-size: 20px;"></i> contact@dceluis.dev
+<a href="mailto:contact@dceluis.dev" target="_blank" rel="noopener noreferrer" class="text-base font-medium text-text-primary no-underline">
+  <i class="fas fa-envelope mr-2 text-lg"></i> contact@dceluis.dev
 </a>
 
-## LinkedIn
+<br>
 
-Connect with me professionally to stay updated on my career journey.
-
-<a href="https://www.linkedin.com/in/luis-sanchez-dev/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-accent-primary hover:bg-accent-primary-hover mb-4 not-prose">
-  <i class="fab fa-linkedin" style="margin-right: 8px; font-size: 20px;"></i> Luis Sanchez
+<a href="https://www.linkedin.com/in/luis-sanchez-dev/" target="_blank" rel="noopener noreferrer" class="text-base font-medium text-text-primary no-underline">
+  <i class="fab fa-linkedin mr-2 text-lg"></i> Luis Sanchez
 </a>
