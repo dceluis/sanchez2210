@@ -9,6 +9,7 @@
     /* Background Colors */
     --color-bg-primary: theme('colors.gray.100');
     --color-bg-secondary: theme('colors.white');
+    --color-bg-tertiary: theme('colors.gray.200');
 
     /* Text Colors */
     --color-text-primary: theme('colors.gray.900');
@@ -28,21 +29,19 @@
     /* Accent Colors */
     --color-accent-primary: theme('colors.blue.500');
     --color-accent-primary-hover: theme('colors.blue.600');
-    --color-accent-danger: theme('colors.red.500');
-    --color-accent-danger-hover: theme('colors.red.600');
 
     /* === PROSE THEMING (LIGHT) === */
-    --tw-prose-body: var(--color-text-primary);
-    --tw-prose-headings: var(--color-text-primary);
-    --tw-prose-lead: var(--color-text-secondary);
+    --tw-prose-body: theme('colors.gray.900');
+    --tw-prose-headings: theme('colors.gray.900');
+    --tw-prose-lead: theme('colors.gray.600');
     --tw-prose-links: theme('colors.indigo.600');
-    --tw-prose-bold: var(--color-text-primary);
-    --tw-prose-counters: var(--color-text-secondary);
+    --tw-prose-bold: theme('colors.gray.900');
+    --tw-prose-counters: theme('colors.gray.600');
     --tw-prose-bullets: theme('colors.gray.300');
     --tw-prose-hr: theme('colors.gray.200');
-    --tw-prose-quotes: var(--color-text-primary);
+    --tw-prose-quotes: theme('colors.gray.900');
     --tw-prose-quote-borders: theme('colors.indigo.200');
-    --tw-prose-captions: var(--color-text-secondary);
+    --tw-prose-captions: theme('colors.gray.600');
     --tw-prose-code: theme('colors.indigo.700');
     --tw-prose-pre-code: theme('colors.gray.200');
     --tw-prose-pre-bg: theme('colors.gray.800');
@@ -72,6 +71,7 @@
     /* Background Colors */
     --color-bg-primary: theme('colors.gray.900');
     --color-bg-secondary: theme('colors.gray.800');
+    --color-bg-tertiary: theme('colors.gray.800');
 
     /* Text Colors */
     --color-text-primary: theme('colors.gray.200');
@@ -80,12 +80,17 @@
 
     /* Border Colors */
     --color-border-primary: theme('colors.gray.700');
+    --color-border-interactive: theme('colors.indigo.500');
 
     /* Interactive Element Colors */
-    --color-interactive-idle: theme('colors.gray.700');
-    --color-interactive-hover: theme('colors.gray.600');
-    --color-interactive-active: theme('colors.gray.700');
-    --color-interactive-active-text: theme('colors.gray.200');
+    --color-interactive-idle: theme('colors.gray.900');
+    --color-interactive-hover: theme('colors.gray.800');
+    --color-interactive-active: theme('colors.indigo.800');
+    --color-interactive-active-text: theme('colors.indigo.100');
+
+    /* Accent Colors */
+    --color-accent-primary: theme('colors.indigo.500');
+    --color-accent-primary-hover: theme('colors.indigo.600');
 
     /* NOTE: The dark mode prose variables are already defined in :root */
     /* and will be applied by the 'prose-invert' class. */

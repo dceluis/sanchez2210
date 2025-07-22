@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import ContentArea from './components/ContentArea';
 import ActivityBar from './components/ActivityBar';
 import Sidebar from './components/Sidebar';
+import DraggableWindow from './components/DraggableWindow'; // Import the new component
 import { initWllama, downloadModel, promptWllama, purgeModel } from './lib/wllamaService';
 import { ThemeProvider } from './contexts/ThemeContext';
 
@@ -22,7 +23,7 @@ function App() {
         if (status === 'ready_to_download') {
           setConversationHistory(prev => [...prev, {
             sender: 'system',
-            text: 'AI assistant is ready to download. Click "Download AI Assistant" to get started.'
+            text: 'AI assistant is ready to download. Download the AI model to get started.'
           }]);
         } else if (status === 'available') {
           setConversationHistory(prev => [...prev, {
@@ -153,33 +154,39 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div className="w-screen h-screen bg-primary p-4">
-        <div className="flex w-full h-full bg-secondary rounded-lg shadow-lg overflow-hidden">
-          {/* Column 1: Activity Bar */}
-          <ActivityBar onViewChange={setActiveView} activeView={activeView} />
+      {/* This div is now the "desktop" background */}
+      <div className="w-screen h-screen bg-bg-secondary overflow-hidden">
+        
+        {/* Our new draggable window component */}
+        <DraggableWindow title="Luis Sanchez - Portfolio IDE">
+          {/* The original application layout is now a child */}
+          <div className="flex w-full h-full bg-bg-primary">
+            {/* Column 1: Activity Bar */}
+            <ActivityBar onViewChange={setActiveView} activeView={activeView} />
 
-          {/* Column 2: Our new, intelligent Sidebar */}
-          <Sidebar
-            activeView={activeView}
-            onViewChange={setActiveView}
-            // Pass ALL the necessary props for both FilesPanel and ChatPanel here
-            activeSection={activeSection}
-            onSectionChange={setActiveSection}
-            conversationHistory={conversationHistory}
-            languageModelStatus={languageModelStatus}
-            downloadProgress={downloadProgress}
-            onDownloadModel={handleDownloadModel}
-            onPurgeModel={handlePurgeModel}
-            onPromptSubmit={handlePromptSubmit}
-          />
-
-          {/* Column 3: Main Content Area */}
-          <div className="flex-1 overflow-scroll">
-            <ContentArea 
-              activeSection={activeSection} 
+            {/* Column 2: Our new, intelligent Sidebar */}
+            <Sidebar
+              activeView={activeView}
+              onViewChange={setActiveView}
+              activeSection={activeSection}
+              onSectionChange={setActiveSection}
+              conversationHistory={conversationHistory}
+              languageModelStatus={languageModelStatus}
+              downloadProgress={downloadProgress}
+              onDownloadModel={handleDownloadModel}
+              onPurgeModel={handlePurgeModel}
+              onPromptSubmit={handlePromptSubmit}
             />
+
+            {/* Column 3: Main Content Area */}
+            <div className="flex-1 overflow-scroll">
+              <ContentArea 
+                activeSection={activeSection} 
+              />
+            </div>
           </div>
-        </div>
+        </DraggableWindow>
+
       </div>
     </ThemeProvider>
   );

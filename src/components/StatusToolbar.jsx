@@ -10,8 +10,10 @@ function StatusToolbar({ languageModelStatus, downloadProgress, onViewChange }) 
         return <Download className="w-4 h-4 text-blue-500" />;
       case 'downloading':
         return <Loader2 className="w-4 h-4 text-blue-500 animate-spin" />;
+      case 'checking':
+        return <Loader2 className="w-4 h-4 text-blue-500 animate-spin" />;
       case 'loading_model':
-        return <Clock className="w-4 h-4 text-yellow-500" />;
+        return <Loader2 className="w-4 h-4 text-blue-500 animate-spin" />;
       case 'unavailable':
         return <AlertCircle className="w-4 h-4 text-red-500" />;
       default:
@@ -22,17 +24,19 @@ function StatusToolbar({ languageModelStatus, downloadProgress, onViewChange }) 
   const getStatusText = () => {
     switch (languageModelStatus) {
       case 'available':
-        return 'Ready';
+        return 'ready';
       case 'ready_to_download':
-        return 'Ready to Download';
+        return 'ready to download';
+      case 'checking':
+        return 'checking';
       case 'downloading':
-        return `Downloading ${downloadProgress}%`;
+        return `downloading ${downloadProgress}%`;
       case 'loading_model':
-        return 'Loading';
+        return 'loading';
       case 'unavailable':
-        return 'Unavailable';
+        return 'unavailable';
       default:
-        return 'Checking AI';
+        return 'status unknown';
     }
   };
 
@@ -56,13 +60,13 @@ function StatusToolbar({ languageModelStatus, downloadProgress, onViewChange }) 
   return (
     <button
       onClick={() => onViewChange('settings')}
-      className="flex items-center justify-between w-full p-2 bg-secondary hover:bg-interactive-hover focus:outline-none focus:ring-2 focus:ring-border-interactive"
-      aria-label="Open AI Settings"
+      className="flex items-center justify-between w-full px-4 py-2 ring-inset hover:bg-interactive-hover focus:outline-none focus:ring-2 focus:ring-border-interactive"
+      aria-label="Settings"
     >
       <div className="flex items-center space-x-2">
         {getStatusIcon()}
         <span className={`text-sm font-medium ${getStatusColor()}`}>
-          {getStatusText()}
+          Model {getStatusText()}
         </span>
       </div>
     </button>

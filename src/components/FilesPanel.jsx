@@ -9,7 +9,7 @@ function FilesPanel({ activeSection, onSectionChange }) {
   ];
 
   return (
-    <div className="size-full bg-secondary overflow-y-scroll flex flex-col">
+    <div className="size-full overflow-y-scroll flex flex-col">
 
       <div className="flex flex-col flex-1">
         {/* Explorer Section */}
@@ -18,7 +18,7 @@ function FilesPanel({ activeSection, onSectionChange }) {
             <button
               key={section.id}
               onClick={() => onSectionChange(section.id)}
-              className={`w-full text-left px-4 py-3 transition-colors duration-200 ${
+              className={`w-full text-left px-4 py-3 transition-colors duration-200 ring-inset focus:outline-none focus:ring-2 focus:ring-border-interactive ${
                 activeSection === section.id
                   ? 'bg-interactive-active text-interactive-active-text font-medium'
                   : 'text-text-primary hover:bg-interactive-hover'

@@ -70,7 +70,10 @@ function ContentDisplay({ viewMode, content, onContentChange, editorRef, editorV
       {viewMode === 'edit' ? (
         <div ref={editorRef} className="flex-1 w-full overflow-hidden" />
       ) : (
-        <div className={`prose prose-lg max-w-4xl h-fit flex-1 py-8 ${isDarkMode ? 'prose-invert' : ''}`}>
+        <div
+            className={`prose prose-lg max-w-4xl h-fit flex-1 py-8 ${
+              isDarkMode ? 'prose-invert' : ''}
+            `}>
             <ReactMarkdown 
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeRaw]}

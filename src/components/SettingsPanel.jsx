@@ -9,38 +9,44 @@ const SettingsPanel = ({
 }) => {
   const { theme, setTheme } = useContext(ThemeContext);
 
+  const themeOptions = [
+    { label: 'Day', value: 'light', colors: ['white', 'gray-200'] },
+    { label: 'Night', value: 'dark', colors: ['black', 'gray-800'] },
+    { label: 'Auto', value: 'auto', colors: ['white', 'black'] },
+  ];
+
   return (
-    <div className="p-4 bg-secondary h-full">
+    <div className="p-4 bg-bg-primary h-full">
       {/* AI Model Settings */}
       <div className="mb-6">
         <h4 className="text-md font-semibold mb-2 text-text-primary">AI Model</h4>
-        <p className="text-sm text-text-secondary mb-2">
+        <p className="text-sm text-text-secondary mb-4">
           The AI model runs locally on your machine. All data remains private and is not sent to any external servers.
         </p>
         <div className="flex space-x-2">
           {languageModelStatus === 'ready_to_download' && (
             <button
               onClick={onDownloadModel}
-              className="px-4 py-2 bg-accent-primary text-white rounded-lg hover:bg-accent-primary-hover"
+              className="cursor-pointer underline font-bold text-text-secondary hover:text-text-primary"
             >
-              Download
+              <i className="fas fa-download mr-1"></i> Download
             </button>
           )}
           {languageModelStatus === 'available' && (
             <button
               onClick={onPurgeModel}
-              className="px-4 py-2 bg-accent-danger text-white rounded-lg hover:bg-accent-danger-hover"
+              className="cursor-pointer underline font-bold text-text-secondary hover:text-text-primary"
             >
-              Purge
+              <i className="fas fa-trash-alt mr-1"></i> Purge
             </button>
           )}
         </div>
         {languageModelStatus === 'downloading' && (
           <div className="mt-2">
             <p className="text-sm text-text-secondary">Downloading model...</p>
-            <div className="w-full bg-border-primary rounded-full h-2.5">
+            <div className="w-full rounded-full h-2.5">
               <div
-                className="bg-accent-primary-hover h-2.5 rounded-full"
+                className="bg-accent-primary h-2.5 rounded-full"
                 style={{ width: `${downloadProgress}%` }}
               ></div>
             </div>
@@ -59,31 +65,30 @@ const SettingsPanel = ({
       {/* Appearance Settings */}
       <div>
         <h4 className="text-md font-semibold mb-2 text-text-primary">Appearance</h4>
-        <div className="inline-flex rounded-lg shadow-sm">
-          <button
-            onClick={() => setTheme('light')}
-            className={`flex-1 px-4 py-2 text-sm font-medium border border-border-primary rounded-l-lg focus:outline-none transition-colors duration-200 ${
-              theme === 'light' ? 'bg-accent-primary text-white' : 'bg-interactive-idle text-text-primary'
-            }`}
-          >
-            Day
-          </button>
-          <button
-            onClick={() => setTheme('dark')}
-            className={`flex-1 px-4 py-2 text-sm font-medium border-y border-border-primary rounded-none focus:outline-none transition-colors duration-200 ${
-              theme === 'dark' ? 'bg-accent-primary text-white' : 'bg-interactive-idle text-text-primary'
-            }`}
-          >
-            Night
-          </button>
-          <button
-            onClick={() => setTheme('auto')}
-            className={`flex-1 px-4 py-2 text-sm font-medium border border-border-primary rounded-r-lg focus:outline-none transition-colors duration-200 ${
-              theme === 'auto' ? 'bg-accent-primary text-white' : 'bg-interactive-idle text-text-primary'
-            }`}
-          >
-            Auto
-          </button>
+        <p className="text-sm text-text-secondary mb-4">
+          Choose the theme for the app. Auto will use your system theme.
+        </p>
+        <div className="flex space-x-2">
+          {themeOptions.map((option) => (
+            <button
+              key={option.value}
+              onClick={() => setTheme(option.value)}
+              className={`
+                flex flex-col items-center justify-center p-2 rounded-lg w-24 h-24
+                border border-border-primary
+                ring-inset ring-transparent
+                focus:outline-none focus:ring-2 focus:ring-accent-primary
+                transition-colors duration-200
+                ${theme === option.value ? 'bg-accent-primary text-white focus:ring-black' : 'bg-interactive-idle text-text-primary'}
+              `}
+            >
+              <div className="flex w-12 h-8 rounded overflow-hidden mb-1 border border-border-secondary">
+                <div className={`flex-1 bg-${option.colors[0]}`}></div>
+                <div className={`flex-1 bg-${option.colors[1]}`}></div>
+              </div>
+              <span className="text-sm font-medium">{option.label}</span>
+            </button>
+          ))}
         </div>
       </div>
     </div>

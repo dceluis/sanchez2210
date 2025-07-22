@@ -55,7 +55,7 @@ function ContentArea({ activeSection }) {
   };
 
   return (
-    <div className="size-full flex flex-col bg-secondary">
+    <div className="size-full flex flex-col bg-bg-secondary">
       {/* View Mode Switcher */}
       <div className="flex flex-none justify-end p-2">
         <ViewModeSwitcher 
@@ -64,7 +64,7 @@ function ContentArea({ activeSection }) {
         />
       </div>
       
-      <div className="flex flex-1 overflow-scroll">
+      <div className="flex flex-1 overflow-scroll ring-inset focus:outline-none focus:ring-2 focus:ring-border-interactive">
         <ContentDisplay
           viewMode={currentSectionViewMode}
           content={currentSectionContent}

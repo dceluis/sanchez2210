@@ -13,9 +13,9 @@ function Sidebar({ activeView, ...props }) {
   };
 
   return (
-    <div className={`h-full ${ activeView === 'files' ? 'w-64' : 'w-80'} flex flex-col bg-secondary border-r border-border-primary`}>
+    <div className={`h-full ${ activeView === 'files' ? 'w-64' : 'w-80'} flex flex-col bg-bg-primary border-x border-border-primary`}>
       {/* 1. Permanent Header */}
-      <div className="p-4 border-b border-border-primary bg-secondary">
+      <div className="p-4 border-b border-border-primary">
         <h2 className="text-md font-semibold text-text-primary uppercase tracking-wider">
           {getTitle()}
         </h2>

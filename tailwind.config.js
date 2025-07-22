@@ -8,8 +8,9 @@ export default {
     extend: {
       colors: {
         // Add new semantic colors mapped to CSS variables
-        primary: 'var(--color-bg-primary)',
-        secondary: 'var(--color-bg-secondary)',
+        'bg-primary': 'var(--color-bg-primary)',
+        'bg-secondary': 'var(--color-bg-secondary)',
+        'bg-tertiary': 'var(--color-bg-tertiary)',
         'text-primary': 'var(--color-text-primary)',
         'text-secondary': 'var(--color-text-secondary)',
         'text-inverted': 'var(--color-text-inverted)',
