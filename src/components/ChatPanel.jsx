@@ -26,7 +26,7 @@ const ChatPanel = ({
       </div>
 
       {/* Conversation Area */}
-      <div className="flex flex-col flex-1 px-4 py-3 overflow-y-scroll">
+      <div className="flex flex-col flex-1 px-4 py-3 overflow-y-auto scrollbar-one">
           {messages.map((msg, index) => (
             <div
               className={`w-full text-sm font-medium rounded-lg whitespace-pre-wrap ${msg.sender === 'user'

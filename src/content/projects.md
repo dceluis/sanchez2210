@@ -1,6 +1,6 @@
 # Project Showcase
 
-Here are some of the projects I've built in my road to learn AI.
+Here are some of the projects I've built with love and curiosity:
 
 ## VacoCam
 
@@ -12,7 +12,7 @@ Generate tracked sports video using AI vision.
 
 <video controls preload="auto" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 8px;" src="/videos/vacocam_demo.mp4"></video>
 
-*VacoCam demonstration video.*
+<p class="text-center mt-0"><i>VacoCam demonstration video.</i></p>
 
 VacoCam uses a Visual Large Language Model to generate focused sports video from unfocused raw footage. I learned how to maintain an object detection dataset and train and evaluate a custom YoloV8 model.
 
@@ -37,11 +37,11 @@ Built with **YoloV8** for object detection, **Gemini 1.0** for visual understand
 
 **A long-lived reasoning agent that stores memories as a living entity.**
 
-<img src="/img/libre_agent_bot.png" alt="LibreAgent Bot" style="width: 100%; border-radius: 8px; margin-bottom: 16px;" />
-
-<img src="/img/libre_agent.png" alt="LibreAgent Demo" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 8px;" />
-
-*LibreAgent running as a Telegram bot.*
+<div class="flex w-full gap-4 mb-0">
+  <img src="/img/libre_agent_bot.png" alt="LibreAgent Bot" class="w-1/2" />
+  <img src="/img/libre_agent.png" alt="LibreAgent Demo" class="w-1/2" />
+</div>
+<p class="text-center mt-0"><i>LibreAgent running as a Telegram bot.</i></p>
 
 LibreAgent is a long-lived agentic system that gathers and refines memories to feel like a living being.
 
@@ -61,11 +61,9 @@ Built with **Gemini 2.0 Flash** for reasoning, **Aiogram** for creating the Tele
 
 **An MCP server to control your phone through any LLM chat app.**
 
-<img src="/img/phone_operator.png" alt="Phone Operator screenshot" style="width: 100%; border-radius: 8px; margin-bottom: 16px;" />
+<img src="/img/phone_operator.png" alt="Phone Operator screenshot" style="object-fit: cover;" class="w-full mb-4 border border-2 border-bg-tertiary" />
 
-<img src="/img/phone_operator.png" alt="Phone Operator screenshot" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 8px;" />
-
-*Phone Operator running.*
+<p class="text-center mt-0"><i>Phone Operator.</i></p>
 
 Phone Operator bridges AI assistants and automating your phone capabilities. Allowing tools like Claude, Cursor, and any MCP compatible client operate on your phone.
 
@@ -73,6 +71,6 @@ This project was built over a weekend for Toolhouse.ai and pulsemcp.com's Hackat
 
 Built with **Python**, **Termux**, and **Tasker**.
 
-<a href="https://github.com/dceluis/mcp-hackathon" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-content-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 mb-2 not-prose">
+<a href="https://github.com/dceluis/tasker-mcp" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-content-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 mb-2 not-prose">
   <i class="fab fa-github" style="margin-right: 8px;"></i> View on GitHub
 </a>

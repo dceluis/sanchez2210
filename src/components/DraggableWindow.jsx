@@ -3,7 +3,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 const DraggableWindow = ({ children, title = "Luis Sanchez - AI Portfolio" }) => {
-  const [position, setPosition] = useState({ x: 100, y: 100 });
+  const [position, setPosition] = useState(() => {
+    const initialWidth = Math.max(window.innerWidth * 0.8, 800); // 80vw or 800px
+    const initialHeight = Math.max(window.innerHeight * 0.9, 600); // 90vh or 600px
+    return {
+      x: (window.innerWidth - initialWidth) / 2,
+      y: (window.innerHeight - initialHeight) / 2,
+    };
+  });
   const [isDragging, setIsDragging] = useState(false);
   const dragOffset = useRef({ x: 0, y: 0 });
   const windowRef = useRef(null);
@@ -48,7 +55,7 @@ const DraggableWindow = ({ children, title = "Luis Sanchez - AI Portfolio" }) =>
   return (
     <div
       ref={windowRef}
-      className="w-[80vw] h-[80vh] min-w-[800px] min-h-[600px] absolute flex flex-col rounded-lg dark:shadow-black shadow-2xl overflow-hidden border border-border-primary"
+      className="w-[80vw] h-[90vh] min-w-[800px] min-h-[600px] absolute flex flex-col rounded-lg dark:shadow-black shadow-2xl overflow-hidden border border-border-primary"
       style={{ top: `${position.y}px`, left: `${position.x}px` }}
     >
       {/* Title Bar */}

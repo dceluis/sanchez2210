@@ -179,7 +179,7 @@ function App() {
             />
 
             {/* Column 3: Main Content Area */}
-            <div className="flex-1 overflow-scroll">
+            <div className="flex-1 overflow-auto">
               <ContentArea 
                 activeSection={activeSection} 
               />

@@ -64,7 +64,7 @@ function ContentArea({ activeSection }) {
         />
       </div>
       
-      <div className="flex flex-1 overflow-scroll ring-inset focus:outline-none focus:ring-2 focus:ring-border-interactive">
+      <div className="flex-1 overflow-auto scrollbar-two ring-inset focus:outline-none focus:ring-2 focus:ring-border-interactive">
         <ContentDisplay
           viewMode={currentSectionViewMode}
           content={currentSectionContent}

@@ -66,12 +66,12 @@ function ContentDisplay({ viewMode, content, onContentChange, editorRef, editorV
   }, [viewMode, content, onContentChange, editorRef, editorViewRef, theme]); // Add theme to dependencies
 
   return (
-    <div className="flex flex-1 justify-around">
+    <div className="flex justify-around">
       {viewMode === 'edit' ? (
         <div ref={editorRef} className="flex-1 w-full overflow-hidden" />
       ) : (
         <div
-            className={`prose prose-lg max-w-4xl h-fit flex-1 py-8 ${
+            className={`prose prose-lg max-w-4xl h-fit flex-1 mx-8 py-8 ${
               isDarkMode ? 'prose-invert' : ''}
             `}>
             <ReactMarkdown 

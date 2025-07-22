@@ -9,7 +9,7 @@ function FilesPanel({ activeSection, onSectionChange }) {
   ];
 
   return (
-    <div className="size-full overflow-y-scroll flex flex-col">
+    <div className="size-full overflow-y-auto flex flex-col">
 
       <div className="flex flex-col flex-1">
         {/* Explorer Section */}

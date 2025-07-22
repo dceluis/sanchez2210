@@ -4,7 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
+
   :root {
     /* Background Colors */
     --color-bg-primary: theme('colors.gray.100');
@@ -97,6 +99,52 @@
     /* You can remove the old prose definitions from here. */
   }
 }
+
+@layer utilities {
+  /* Custom Scrollbar Styles */
+  /* For Webkit browsers (Chrome, Safari, Edge) */
+  .scrollbar-one {
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px; /* For horizontal scrollbars */
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--color-bg-primary);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--color-bg-secondary);
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: var(--color-bg-secondary);
+    }
+  }
+
+  .scrollbar-two {
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px; /* For horizontal scrollbars */
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--color-bg-secondary);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--color-bg-primary);
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: var(--color-bg-primary);
+    }
+  }
+}
+
+
 
 .prose shadowed {
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
