@@ -170,11 +170,9 @@ function App() {
         {/* Our new draggable window component */}
         <DraggableWindow title="Luis Sanchez - Portfolio IDE">
           {/* The original application layout is now a child */}
-          <div className="flex flex-row w-full h-full bg-bg-primary">
+          <div className="flex flex-row w-full h-full">
             {/* Column 2: Our new, intelligent Sidebar */}
-            <div className={`border-r border-border-primary ${
-              isSidebarOpen ? 'block' : 'hidden'
-            }`}>
+            <div className={`border-r border-border-primary ${ isSidebarOpen ? 'block' : 'hidden' }`}>
               <Sidebar
                 activeView={activeView}
                 onViewChange={setActiveView}
