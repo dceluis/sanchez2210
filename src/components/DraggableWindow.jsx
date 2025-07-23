@@ -5,7 +5,7 @@ import useBreakpoint from '../hooks/useBreakpoint';
 
 const DraggableWindow = ({ children, title = "Luis Sanchez - AI Portfolio" }) => {
   const isDesktop = useBreakpoint(1024);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragOffset = useRef({ x: 0, y: 0 });
   const windowRef = useRef(null);
@@ -36,20 +36,7 @@ const DraggableWindow = ({ children, title = "Luis Sanchez - AI Portfolio" }) =>
   };
 
   useEffect(() => {
-    const getInitialPosition = () => {
-      const initialWidth = Math.max(window.innerWidth * 0.8, 800);
-      const initialHeight = Math.max(window.innerHeight * 0.9, 600); // 90vh or 600px
-      return {
-        x: (window.innerWidth - initialWidth) / 2,
-        y: (window.innerHeight - initialHeight) / 2,
-      };
-    }
-
-    if (isDesktop) {
-      setPosition(getInitialPosition());
-    } else {
-      setPosition({ x: 0, y: 0 });
-    }
+    setPosition(null);
   }, [isDesktop]);
 
   useEffect(() => {
@@ -70,10 +57,10 @@ const DraggableWindow = ({ children, title = "Luis Sanchez - AI Portfolio" }) =>
       className="
         rounded-lg dark:shadow-black shadow-2xl border border-border-primary
         flex flex-col overflow-hidden
-        w-[80vw] h-[90vh] min-w-[800px] min-h-[600px]
+        lg:left-[10vw] lg:top-[5vh] lg:w-[80vw] lg:h-[90vh]
         lg:absolute
       "
-      style={{ top: `${position.y}px`, left: `${position.x}px` }}
+      style={ (isDesktop && position) ? { top: `${position.y}px`, left: `${position.x}px` } : {}}
     >
       {/* Title Bar */}
       <div
