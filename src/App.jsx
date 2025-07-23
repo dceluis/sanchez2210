@@ -170,9 +170,18 @@ function App() {
         {/* Our new draggable window component */}
         <DraggableWindow title="Luis Sanchez - Portfolio IDE">
           {/* The original application layout is now a child */}
-          <div className="flex flex-row w-full h-full">
-            {/* Column 2: Our new, intelligent Sidebar */}
-            <div className={`border-r border-border-primary ${ isSidebarOpen ? 'block' : 'hidden' }`}>
+          <div className="flex flex-row w-full h-full relative">
+            {/* Sidebar - Mobile: floating, Desktop: static */}
+            <div
+              className={`
+                ${isDesktop ? 'relative' : 'absolute'}
+                h-full
+                z-20
+                transition-transform duration-300 ease-in-out
+                ${isDesktop && (isSidebarOpen ? 'block' : 'hidden')}
+                ${!isDesktop && (isSidebarOpen ? 'translate-x-0' : '-translate-x-full')}
+              `}
+            >
               <Sidebar
                 activeView={activeView}
                 onViewChange={setActiveView}
@@ -186,6 +195,14 @@ function App() {
                 onPromptSubmit={handlePromptSubmit}
               />
             </div>
+
+            {/* Overlay for mobile when sidebar is open */}
+            {!isDesktop && isSidebarOpen && (
+              <div
+                className="fixed inset-0 z-10"
+                onClick={toggleSidebar}
+              ></div>
+            )}
 
             {/* Column 3: Main Content Area */}
             <div className="flex-1 overflow-auto">
