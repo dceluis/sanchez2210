@@ -1,16 +1,11 @@
 // src/components/DraggableWindow.jsx
 
 import React, { useState, useRef, useEffect } from 'react';
+import useBreakpoint from '../hooks/useBreakpoint';
 
 const DraggableWindow = ({ children, title = "Luis Sanchez - AI Portfolio" }) => {
-  const [position, setPosition] = useState(() => {
-    const initialWidth = Math.max(window.innerWidth * 0.8, 800); // 80vw or 800px
-    const initialHeight = Math.max(window.innerHeight * 0.9, 600); // 90vh or 600px
-    return {
-      x: (window.innerWidth - initialWidth) / 2,
-      y: (window.innerHeight - initialHeight) / 2,
-    };
-  });
+  const isDesktop = useBreakpoint(1024);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const dragOffset = useRef({ x: 0, y: 0 });
   const windowRef = useRef(null);
@@ -41,6 +36,23 @@ const DraggableWindow = ({ children, title = "Luis Sanchez - AI Portfolio" }) =>
   };
 
   useEffect(() => {
+    const getInitialPosition = () => {
+      const initialWidth = Math.max(window.innerWidth * 0.8, 800);
+      const initialHeight = Math.max(window.innerHeight * 0.9, 600); // 90vh or 600px
+      return {
+        x: (window.innerWidth - initialWidth) / 2,
+        y: (window.innerHeight - initialHeight) / 2,
+      };
+    }
+
+    if (isDesktop) {
+      setPosition(getInitialPosition());
+    } else {
+      setPosition({ x: 0, y: 0 });
+    }
+  }, [isDesktop]);
+
+  useEffect(() => {
     // Add global listeners
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
@@ -55,7 +67,12 @@ const DraggableWindow = ({ children, title = "Luis Sanchez - AI Portfolio" }) =>
   return (
     <div
       ref={windowRef}
-      className="w-[80vw] h-[90vh] min-w-[800px] min-h-[600px] absolute flex flex-col rounded-lg dark:shadow-black shadow-2xl overflow-hidden border border-border-primary"
+      className="
+        rounded-lg dark:shadow-black shadow-2xl border border-border-primary
+        flex flex-col overflow-hidden
+        w-[80vw] h-[90vh] min-w-[800px] min-h-[600px]
+        lg:absolute
+      "
       style={{ top: `${position.y}px`, left: `${position.x}px` }}
     >
       {/* Title Bar */}

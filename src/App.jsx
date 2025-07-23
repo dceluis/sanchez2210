@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import ContentArea from './components/ContentArea';
-import ActivityBar from './components/ActivityBar';
 import Sidebar from './components/Sidebar';
 import DraggableWindow from './components/DraggableWindow'; // Import the new component
 import { initWllama, downloadModel, promptWllama, purgeModel } from './lib/wllamaService';
 import { ThemeProvider } from './contexts/ThemeContext';
+import useBreakpoint from './hooks/useBreakpoint';
 
 function App() {
   const [activeSection, setActiveSection] = useState('about');
@@ -13,6 +13,16 @@ function App() {
   const [conversationHistory, setConversationHistory] = useState([]);
   const [languageModelStatus, setLanguageModelStatus] = useState('checking');
   const [downloadProgress, setDownloadProgress] = useState(0);
+  const isDesktop = useBreakpoint('1024px');
+  const [isSidebarOpen, setSidebarOpen] = useState(isDesktop);
+
+  useEffect(() => {
+    setSidebarOpen(isDesktop);
+  }, [isDesktop]);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
 
   // Initialize wllama service
   useEffect(() => {
@@ -160,28 +170,31 @@ function App() {
         {/* Our new draggable window component */}
         <DraggableWindow title="Luis Sanchez - Portfolio IDE">
           {/* The original application layout is now a child */}
-          <div className="flex w-full h-full bg-bg-primary">
-            {/* Column 1: Activity Bar */}
-            <ActivityBar onViewChange={setActiveView} activeView={activeView} />
-
+          <div className="flex flex-row w-full h-full bg-bg-primary">
             {/* Column 2: Our new, intelligent Sidebar */}
-            <Sidebar
-              activeView={activeView}
-              onViewChange={setActiveView}
-              activeSection={activeSection}
-              onSectionChange={setActiveSection}
-              conversationHistory={conversationHistory}
-              languageModelStatus={languageModelStatus}
-              downloadProgress={downloadProgress}
-              onDownloadModel={handleDownloadModel}
-              onPurgeModel={handlePurgeModel}
-              onPromptSubmit={handlePromptSubmit}
-            />
+            <div className={`border-r border-border-primary ${
+              isSidebarOpen ? 'block' : 'hidden'
+            }`}>
+              <Sidebar
+                activeView={activeView}
+                onViewChange={setActiveView}
+                activeSection={activeSection}
+                onSectionChange={setActiveSection}
+                conversationHistory={conversationHistory}
+                languageModelStatus={languageModelStatus}
+                downloadProgress={downloadProgress}
+                onDownloadModel={handleDownloadModel}
+                onPurgeModel={handlePurgeModel}
+                onPromptSubmit={handlePromptSubmit}
+              />
+            </div>
 
             {/* Column 3: Main Content Area */}
             <div className="flex-1 overflow-auto">
               <ContentArea 
-                activeSection={activeSection} 
+                activeSection={activeSection}
+                onToggleSidebar={toggleSidebar}
+                isSidebarOpen={isSidebarOpen}
               />
             </div>
           </div>
