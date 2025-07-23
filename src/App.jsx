@@ -13,7 +13,7 @@ function App() {
   const [conversationHistory, setConversationHistory] = useState([]);
   const [languageModelStatus, setLanguageModelStatus] = useState('checking');
   const [downloadProgress, setDownloadProgress] = useState(0);
-  const isDesktop = useBreakpoint('1024px');
+  const isDesktop = useBreakpoint(1024);
   const [isSidebarOpen, setSidebarOpen] = useState(isDesktop);
 
   useEffect(() => {
