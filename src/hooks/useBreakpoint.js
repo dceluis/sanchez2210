@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react';
 
-const useBreakpoint = (breakpoint) => {
-  const [isMatch, setIsMatch] = useState(false);
+const useBreakpoint = (breakpoint = 1024) => {
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia(`(min-width: ${breakpoint})`);
-    const handleResize = () => setIsMatch(mediaQuery.matches);
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth > breakpoint);
+    };
 
     handleResize();
-    mediaQuery.addEventListener('change', handleResize);
 
-    return () => mediaQuery.removeEventListener('change', handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, [breakpoint]);
 
-  return isMatch;
+  return isDesktop;
 };
 
 export default useBreakpoint;
