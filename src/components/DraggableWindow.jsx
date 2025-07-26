@@ -57,7 +57,7 @@ const DraggableWindow = ({ children, title = "Luis Sanchez - AI Portfolio" }) =>
       className="
         rounded-lg dark:shadow-black shadow-2xl border border-border-primary
         flex flex-col overflow-hidden
-        w-full h-full
+        w-vw h-dvh
         lg:left-[10vw] lg:top-[5vh] lg:w-[80vw] lg:h-[90vh]
         lg:absolute
       "

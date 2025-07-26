@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ContentArea from './components/ContentArea';
 import Sidebar from './components/Sidebar';
 import DraggableWindow from './components/DraggableWindow'; // Import the new component
@@ -15,6 +15,11 @@ function App() {
   const [downloadProgress, setDownloadProgress] = useState(0);
   const isDesktop = useBreakpoint(1024);
   const [isSidebarOpen, setSidebarOpen] = useState(isDesktop);
+
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
+  const isDragging = useRef(false);
+  const dragTimeout = useRef(null);
 
   useEffect(() => {
     setSidebarOpen(isDesktop);
@@ -162,10 +167,65 @@ function App() {
     promptWllama(prompt, fileContent, thinkingCallback, responseCallback, errorCallback);
   };
 
+  const handleTouchStart = (e) => {
+    if (isDesktop) return;
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    isDragging.current = false;
+
+    dragTimeout.current = setTimeout(() => {
+      isDragging.current = false;
+    }, 100);
+  };
+
+  const handleTouchMove = (e) => {
+    if (isDesktop || !touchStartX.current) return;
+
+    const deltaX = e.touches[0].clientX - touchStartX.current;
+    const deltaY = e.touches[0].clientY - touchStartY.current;
+
+    if (Math.abs(deltaX) > 10 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      isDragging.current = true;
+      clearTimeout(dragTimeout.current);
+    }
+
+    if (isDragging.current) {
+      e.preventDefault();
+    }
+  };
+
+  const handleTouchEnd = (e) => {
+    if (isDesktop) return;
+
+    clearTimeout(dragTimeout.current);
+
+    if (isDragging.current) {
+      const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+      if (deltaX > 50 && !isSidebarOpen) {
+        toggleSidebar();
+      } else if (deltaX < -50 && isSidebarOpen) {
+        toggleSidebar();
+      }
+    }
+
+    touchStartX.current = 0;
+    touchStartY.current = 0;
+    isDragging.current = false;
+  };
+
+  const eventHandlers = !isDesktop ? {
+    onTouchStart: handleTouchStart,
+    onTouchMove: handleTouchMove,
+    onTouchEnd: handleTouchEnd,
+  } : {};
+
   return (
     <ThemeProvider>
       {/* This div is now the "desktop" background */}
-      <div className="w-screen h-screen bg-bg-secondary overflow-hidden">
+      <div 
+        className="w-screen h-screen bg-bg-secondary overflow-hidden"
+        {...eventHandlers}
+      >
         
         {/* Our new draggable window component */}
         <DraggableWindow title="Luis Sanchez - Portfolio IDE">
