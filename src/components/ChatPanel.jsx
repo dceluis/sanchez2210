@@ -10,6 +10,7 @@ const ChatPanel = ({
   onPurgeModel,
   onPromptSubmit,
   onViewChange,
+  toggleSettingsView,
 }) => {
   return (
     <div className="flex flex-col w-84 bg-bg-primary shadow-lg h-full">
@@ -22,6 +23,7 @@ const ChatPanel = ({
           onDownloadModel={onDownloadModel}
           onPurgeModel={onPurgeModel}
           onViewChange={onViewChange}
+          toggleSettingsView={toggleSettingsView}
         />
       </div>
 
@@ -29,6 +31,7 @@ const ChatPanel = ({
       <div className="flex flex-col flex-1 px-4 py-3 overflow-y-auto scrollbar-one">
           {messages.map((msg, index) => (
             <div
+              key={index}
               className={`w-full text-sm font-medium rounded-lg whitespace-pre-wrap ${msg.sender === 'user'
                 ? 'px-3 py-2 mb-2 text-text-primary bg-bg-tertiary'
                 : 'px-1 py-2 mb-4 text-text-secondary'

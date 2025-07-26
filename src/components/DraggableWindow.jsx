@@ -1,9 +1,10 @@
 // src/components/DraggableWindow.jsx
 
 import React, { useState, useRef, useEffect } from 'react';
+import { Settings } from 'lucide-react';
 import useBreakpoint from '../hooks/useBreakpoint';
 
-const DraggableWindow = ({ children, title = "Luis Sanchez - AI Portfolio" }) => {
+const DraggableWindow = ({ children, title = "Luis Sanchez - AI Portfolio", onToggleSettings }) => {
   const isDesktop = useBreakpoint(1024);
   const [position, setPosition] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -78,7 +79,16 @@ const DraggableWindow = ({ children, title = "Luis Sanchez - AI Portfolio" }) =>
           <div className="w-3 h-3 bg-green-500 rounded-full cursor-pointer" onMouseDown={(e) => e.stopPropagation()}></div>
         </div>
         <span className="text-sm text-text-secondary font-medium">{title}</span>
-        <div className="w-16"></div> {/* Spacer to balance title */}
+        <div className="w-16 flex justify-end">
+          <button 
+            onClick={onToggleSettings} 
+            className="p-1 rounded-full hover:bg-interactive-hover"
+            onMouseDown={(e) => e.stopPropagation()}
+            aria-label="Settings"
+          >
+            <Settings className="w-4 h-4 text-text-secondary" />
+          </button>
+        </div>
       </div>
 
       {/* Content Area */}

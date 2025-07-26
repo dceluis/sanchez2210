@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import ContentArea from './components/ContentArea';
 import Sidebar from './components/Sidebar';
+import SettingsPanel from './components/SettingsPanel';
 import DraggableWindow from './components/DraggableWindow'; // Import the new component
 import { initWllama, downloadModel, promptWllama, purgeModel } from './lib/wllamaService';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -15,6 +16,7 @@ function App() {
   const [downloadProgress, setDownloadProgress] = useState(0);
   const isDesktop = useBreakpoint(1024);
   const [isSidebarOpen, setSidebarOpen] = useState(isDesktop);
+  const [isSettingsViewActive, setSettingsViewActive] = useState(false);
 
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
@@ -29,6 +31,10 @@ function App() {
     setSidebarOpen(!isSidebarOpen);
   };
 
+  const toggleSettingsView = () => {
+    setSettingsViewActive(!isSettingsViewActive);
+  };
+
   // Initialize wllama service
   useEffect(() => {
     const initializeWllama = async () => {
@@ -38,7 +44,7 @@ function App() {
         if (status === 'ready_to_download') {
           setConversationHistory(prev => [...prev, {
             sender: 'system',
-            text: 'AI assistant is ready to download. Download the AI model to get started.'
+            text: 'Download the AI model to get started.'
           }]);
         } else if (status === 'available') {
           setConversationHistory(prev => [...prev, {
@@ -228,7 +234,10 @@ function App() {
       >
         
         {/* Our new draggable window component */}
-        <DraggableWindow title="Luis Sanchez - Portfolio IDE">
+        <DraggableWindow 
+          title="Luis Sanchez - Portfolio IDE"
+          onToggleSettings={toggleSettingsView}
+        >
           {/* The original application layout is now a child */}
           <div className="flex flex-row w-full h-full relative">
             {/* Sidebar - Mobile: floating, Desktop: static */}
@@ -253,6 +262,8 @@ function App() {
                 onDownloadModel={handleDownloadModel}
                 onPurgeModel={handlePurgeModel}
                 onPromptSubmit={handlePromptSubmit}
+                isSettingsViewActive={isSettingsViewActive}
+                toggleSettingsView={toggleSettingsView}
               />
             </div>
 

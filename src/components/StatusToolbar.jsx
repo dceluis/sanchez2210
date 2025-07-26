@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckCircle, Download, Loader2, AlertCircle, Clock } from 'lucide-react';
 
-function StatusToolbar({ languageModelStatus, downloadProgress, onViewChange }) {
+function StatusToolbar({ languageModelStatus, downloadProgress, onViewChange, toggleSettingsView }) {
   const getStatusIcon = () => {
     switch (languageModelStatus) {
       case 'available':
@@ -59,7 +59,7 @@ function StatusToolbar({ languageModelStatus, downloadProgress, onViewChange }) 
 
   return (
     <button
-      onClick={() => onViewChange('settings')}
+      onClick={toggleSettingsView}
       className="flex items-center justify-between w-full px-4 py-2 ring-inset hover:bg-interactive-hover focus:outline-none focus:ring-2 focus:ring-border-interactive"
       aria-label="Settings"
     >
