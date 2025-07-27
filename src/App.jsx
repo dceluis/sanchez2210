@@ -320,7 +320,7 @@ function App() {
             {/* Overlay for mobile when sidebar is open */}
             {!isDesktop && isLeftSidebarOpen && (
               <div
-                className="fixed inset-0 z-10"
+                className="absolute inset-0 z-10"
                 onClick={toggleLeftSidebar}
               ></div>
             )}
