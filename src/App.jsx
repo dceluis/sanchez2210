@@ -2,20 +2,61 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import ContentArea from './components/ContentArea';
 import Sidebar from './components/Sidebar';
+import RightSidebar from './components/RightSidebar';
 import SettingsPanel from './components/SettingsPanel';
 import DraggableWindow from './components/DraggableWindow'; // Import the new component
 import { initWllama, downloadModel, promptWllama, purgeModel } from './lib/wllamaService';
 import { ThemeProvider } from './contexts/ThemeContext';
 import useBreakpoint from './hooks/useBreakpoint';
 
+const useSidebarState = (isDesktop) => {
+  const [isLeftSidebarOpen, setLeftSidebarOpen] = useState(isDesktop);
+  const [isRightSidebarOpen, setRightSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    setLeftSidebarOpen(isDesktop);
+    if (!isDesktop) {
+      setRightSidebarOpen(false);
+    }
+  }, [isDesktop]);
+
+  const toggleLeftSidebar = () => {
+    const newIsOpen = !isLeftSidebarOpen;
+    setLeftSidebarOpen(newIsOpen);
+    if (!isDesktop && newIsOpen && isRightSidebarOpen) {
+      setRightSidebarOpen(false);
+    }
+  };
+
+  const toggleRightSidebar = () => {
+    const newIsOpen = !isRightSidebarOpen;
+    setRightSidebarOpen(newIsOpen);
+    if (!isDesktop && newIsOpen && isLeftSidebarOpen) {
+      setLeftSidebarOpen(false);
+    }
+  };
+
+  const openLeftSidebar = () => {
+    setLeftSidebarOpen(true);
+  };
+
+  return { isLeftSidebarOpen, isRightSidebarOpen, toggleLeftSidebar, toggleRightSidebar, openLeftSidebar };
+};
+
+
 function App() {
   const [activeSection, setActiveSection] = useState('about');
-  const [activeView, setActiveView] = useState('files');
   const [conversationHistory, setConversationHistory] = useState([]);
   const [languageModelStatus, setLanguageModelStatus] = useState('checking');
   const [downloadProgress, setDownloadProgress] = useState(0);
   const isDesktop = useBreakpoint(1024);
-  const [isSidebarOpen, setSidebarOpen] = useState(isDesktop);
+  const {
+    isLeftSidebarOpen,
+    isRightSidebarOpen,
+    toggleLeftSidebar,
+    toggleRightSidebar,
+    openLeftSidebar
+  } = useSidebarState(isDesktop);
   const [isSettingsViewActive, setSettingsViewActive] = useState(false);
 
   const touchStartX = useRef(0);
@@ -23,16 +64,23 @@ function App() {
   const isDragging = useRef(false);
   const dragTimeout = useRef(null);
 
-  useEffect(() => {
-    setSidebarOpen(isDesktop);
-  }, [isDesktop]);
+  const openSettingsView = () => {
+    if (!isSettingsViewActive) {
+      setSettingsViewActive(true);
+      openLeftSidebar();
+    }
+  };
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
+  const closeSettingsView = () => {
+    setSettingsViewActive(false);
   };
 
   const toggleSettingsView = () => {
-    setSettingsViewActive(!isSettingsViewActive);
+    setSettingsViewActive(true);
+    if (!isDesktop && isRightSidebarOpen) {
+      toggleRightSidebar();
+    }
+    openLeftSidebar();
   };
 
   // Initialize wllama service
@@ -201,16 +249,22 @@ function App() {
   };
 
   const handleTouchEnd = (e) => {
-    if (isDesktop) return;
+    if (isDesktop || !isDragging.current) return;
 
-    clearTimeout(dragTimeout.current);
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    const swipeThreshold = 50;
 
-    if (isDragging.current) {
-      const deltaX = e.changedTouches[0].clientX - touchStartX.current;
-      if (deltaX > 50 && !isSidebarOpen) {
-        toggleSidebar();
-      } else if (deltaX < -50 && isSidebarOpen) {
-        toggleSidebar();
+    if (deltaX > swipeThreshold) { // Swiping right
+      if (isRightSidebarOpen) {
+        toggleRightSidebar();
+      } else if (!isLeftSidebarOpen) {
+        toggleLeftSidebar();
+      }
+    } else if (deltaX < -swipeThreshold) { // Swiping left
+      if (isLeftSidebarOpen) {
+        toggleLeftSidebar();
+      } else if (!isRightSidebarOpen) {
+        toggleRightSidebar();
       }
     }
 
@@ -240,47 +294,67 @@ function App() {
         >
           {/* The original application layout is now a child */}
           <div className="flex flex-row w-full h-full relative">
-            {/* Sidebar - Mobile: floating, Desktop: static */}
+            {/* Left Sidebar - Mobile: floating, Desktop: static */}
             <div
               className={`
                 ${isDesktop ? 'relative' : 'absolute'}
                 h-full
                 z-20
                 transition-transform duration-300 ease-in-out
-                ${isDesktop && (isSidebarOpen ? 'block' : 'hidden')}
-                ${!isDesktop && (isSidebarOpen ? 'translate-x-0' : '-translate-x-full')}
+                ${isDesktop && (isLeftSidebarOpen ? 'block' : 'hidden')}
+                ${!isDesktop && (isLeftSidebarOpen ? 'translate-x-0' : '-translate-x-full')}
               `}
             >
               <Sidebar
-                activeView={activeView}
-                onViewChange={setActiveView}
                 activeSection={activeSection}
                 onSectionChange={setActiveSection}
+                isSettingsViewActive={isSettingsViewActive}
+                toggleSettingsView={closeSettingsView}
+                languageModelStatus={languageModelStatus}
+                downloadProgress={downloadProgress}
+                onDownloadModel={handleDownloadModel}
+                onPurgeModel={handlePurgeModel}
+              />
+            </div>
+
+            {/* Overlay for mobile when sidebar is open */}
+            {!isDesktop && isLeftSidebarOpen && (
+              <div
+                className="fixed inset-0 z-10"
+                onClick={toggleLeftSidebar}
+              ></div>
+            )}
+
+            {/* Main Content Area */}
+            <div className="flex-1 overflow-auto">
+              <ContentArea 
+                activeSection={activeSection}
+                onToggleSidebar={toggleLeftSidebar}
+                isSidebarOpen={isLeftSidebarOpen}
+                onToggleRightSidebar={toggleRightSidebar}
+                isRightSidebarOpen={isRightSidebarOpen}
+              />
+            </div>
+
+            {/* Right Sidebar */}
+            <div
+              className={`
+                ${isDesktop ? 'relative' : 'absolute right-0'}
+                h-full
+                z-20
+                transition-transform duration-300 ease-in-out
+                ${isDesktop && (isRightSidebarOpen ? 'block' : 'hidden')}
+                ${!isDesktop && (isRightSidebarOpen ? 'translate-x-0' : 'translate-x-full')}
+              `}
+            >
+              <RightSidebar
                 conversationHistory={conversationHistory}
                 languageModelStatus={languageModelStatus}
                 downloadProgress={downloadProgress}
                 onDownloadModel={handleDownloadModel}
                 onPurgeModel={handlePurgeModel}
                 onPromptSubmit={handlePromptSubmit}
-                isSettingsViewActive={isSettingsViewActive}
                 toggleSettingsView={toggleSettingsView}
-              />
-            </div>
-
-            {/* Overlay for mobile when sidebar is open */}
-            {!isDesktop && isSidebarOpen && (
-              <div
-                className="fixed inset-0 z-10"
-                onClick={toggleSidebar}
-              ></div>
-            )}
-
-            {/* Column 3: Main Content Area */}
-            <div className="flex-1 overflow-auto">
-              <ContentArea 
-                activeSection={activeSection}
-                onToggleSidebar={toggleSidebar}
-                isSidebarOpen={isSidebarOpen}
               />
             </div>
           </div>

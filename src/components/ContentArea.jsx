@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ViewModeSwitcher from './ViewModeSwitcher';
 import ContentDisplay from './ContentDisplay';
-import { PanelLeft } from 'lucide-react';
+import { PanelLeft, PanelRight } from 'lucide-react';
 
 // Import markdown content at build time
 import aboutContent from '../content/about.md?raw';
@@ -17,7 +17,7 @@ const sectionContents = {
   contact: contactContent
 };
 
-function ContentArea({ activeSection, onToggleSidebar, isSidebarOpen }) {
+function ContentArea({ activeSection, onToggleSidebar, isSidebarOpen, onToggleRightSidebar, isRightSidebarOpen }) {
   const [viewModes, setViewModes] = useState({});
   const editorRef = useRef(null);
   const editorViewRef = useRef(null);
@@ -78,6 +78,17 @@ function ContentArea({ activeSection, onToggleSidebar, isSidebarOpen }) {
           mode={currentSectionViewMode} 
           onModeChange={updateViewMode} 
         />
+
+        <button
+          onClick={onToggleRightSidebar}
+          className="p-2 rounded-full hover:bg-interactive-hover transition-colors flex items-center justify-center group relative"
+          title="Toggle Chat"
+        >
+          <PanelRight className="w-5 h-5 text-text-secondary" />
+          <span className="absolute bottom-full mb-2 hidden group-hover:block px-2 py-1 bg-text-primary text-bg-primary text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            Toggle Chat
+          </span>
+        </button>
       </div>
       
       <div className="flex-1 overflow-auto scrollbar-two ring-inset focus:outline-none focus:ring-2 focus:ring-border-interactive">
